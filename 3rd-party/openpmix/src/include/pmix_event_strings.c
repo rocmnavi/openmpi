@@ -324,13 +324,11 @@ const pmix_event_string_t pmix_event_strings[] = {
 
     {.index = 158, .name = "PMIX_ERR_NODE_OFFLINE", .code = -232},
 
-    {.index = 159, .name = "PMIX_ERR_PERM", .code = -1361},
+    {.index = 159, .name = "PMIX_ERR_FABRIC_NOT_PARSEABLE", .code = -1363},
 
-    {.index = 160, .name = "PMIX_ERR_FABRIC_NOT_PARSEABLE", .code = -1363},
+    {.index = 160, .name = "PMIX_ERR_TAKE_NEXT_OPTION", .code = -1366},
 
-    {.index = 161, .name = "PMIX_ERR_TAKE_NEXT_OPTION", .code = -1366},
-
-    {.index = 162, .name = "PMIX_ERR_TEMP_UNAVAILABLE", .code = -1367},
+    {.index = 161, .name = "PMIX_ERR_TEMP_UNAVAILABLE", .code = -1367},
 
     {.index = UINT32_MAX, .name = "", .code = -1}
 };

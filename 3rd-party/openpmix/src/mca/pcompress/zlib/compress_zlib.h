@@ -21,7 +21,7 @@
 #ifndef MCA_COMPRESS_ZLIB_EXPORT_H
 #define MCA_COMPRESS_ZLIB_EXPORT_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/util/pmix_output.h"
 

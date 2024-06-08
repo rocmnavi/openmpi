@@ -15,7 +15,7 @@
  * Copyright (c) 2011      Oak Ridge National Labs.  All rights reserved.
  * Copyright (c) 2013-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2015      Mellanox Technologies, Inc.  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -194,6 +194,7 @@ int main(int argc, char **argv)
     pmix_tool_basename = "pquery";
     gethostname(hostname, sizeof(hostname));
 
+    // setup the base infrastructure
     if (PMIX_SUCCESS != pmix_init_util(NULL, 0, NULL)) {
         return PMIX_ERROR;
     }
@@ -211,6 +212,20 @@ int main(int argc, char **argv)
             rc = PMIX_SUCCESS;
         }
         exit(rc);
+    }
+
+    // handle relevant MCA params
+    PMIX_LIST_FOREACH(opt, &results.instances, pmix_cli_item_t) {
+        if (0 == strcmp(opt->key, PMIX_CLI_PMIXMCA)) {
+            for (n=0; NULL != opt->values[n]; n++) {
+                pmix_expose_param(opt->values[n]);
+            }
+        }
+    }
+
+    // setup the base infrastructure
+    if (PMIX_SUCCESS != pmix_init_util(NULL, 0, NULL)) {
+        return PMIX_ERROR;
     }
 
     /* get the argv array of keys they want us to query */

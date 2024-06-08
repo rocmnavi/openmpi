@@ -155,6 +155,9 @@
 /* Define to 1 if you have the <minix/config.h> header file. */
 /* #undef HAVE_MINIX_CONFIG_H */
 
+/* Define to 1 if you have the <mntent.h> header file. */
+#define HAVE_MNTENT_H 1
+
 /* Define to 1 if you have the <netdb.h> header file. */
 #define HAVE_NETDB_H 1
 
@@ -435,6 +438,12 @@
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
+/* Whether or not we have apple */
+#define OAC_HAVE_APPLE 0
+
+/* Whether or not we have solaris */
+#define OAC_HAVE_SOLARIS 0
+
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "https://github.com/openpmix/openpmix/issues"
 
@@ -442,7 +451,7 @@
 #define PACKAGE_NAME "pmix"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "pmix 4.2.8rc1"
+#define PACKAGE_STRING "pmix 5.0.2rc2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "pmix"
@@ -451,7 +460,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.2.8rc1"
+#define PACKAGE_VERSION "5.0.2rc2"
 
 /* The compiler $lower which OMPI was built with */
 #define PMIX_BUILD_PLATFORM_COMPILER_FAMILYID 0
@@ -466,10 +475,10 @@
 #define PMIX_CONFIGURE_CLI " \'--disable-option-checking\' \'--prefix=NONE\' \'--without-tests-examples\' \'--enable-pmix-binaries\' \'--disable-pmix-backward-compatibility\' \'--disable-visibility\' \'--cache-file=/dev/null\' \'--srcdir=.\'"
 
 /* Date when PMIx was built */
-#define PMIX_CONFIGURE_DATE "Wed Dec 20 22:10:53 UTC 2023"
+#define PMIX_CONFIGURE_DATE "Mon Apr  8 15:56:08 UTC 2024"
 
 /* Hostname where PMIx was built */
-#define PMIX_CONFIGURE_HOST "ip-172-31-2-213.us-west-2.compute.internal"
+#define PMIX_CONFIGURE_HOST "ip-172-31-2-9.us-west-2.compute.internal"
 
 /* User who built PMIx */
 #define PMIX_CONFIGURE_USER "ec2-user"
@@ -504,7 +513,7 @@
 /* Whether C compiler supports __thread */
 #define PMIX_C_HAVE___THREAD 1
 
-/* Whether we are in debugging mode or not */
+/* Whether we want developer-level debugging code or not */
 #define PMIX_ENABLE_DEBUG 0
 
 /* Whether we want to enable dlopen support */
@@ -524,9 +533,6 @@
 
 /* If built from a git repo */
 #define PMIX_GIT_REPO_BUILD "1"
-
-/* Whether or not we have apple */
-#define PMIX_HAVE_APPLE 0
 
 /* Whether your compiler has __attribute__ or not */
 #define PMIX_HAVE_ATTRIBUTE 1
@@ -659,9 +665,6 @@
 /* whether socket is found and available */
 #define PMIX_HAVE_SOCKET 1
 
-/* Whether or not we have solaris */
-#define PMIX_HAVE_SOLARIS 0
-
 /* Whether the __sync builtin atomic compare and swap supports 128-bit values
    */
 #define PMIX_HAVE_SYNC_BUILTIN_CSWAP_INT128 1
@@ -679,13 +682,13 @@
 #define PMIX_IDENT_STRING ""
 
 /* The library major version is always available, contrary to VERSION */
-#define PMIX_MAJOR_VERSION 4
+#define PMIX_MAJOR_VERSION 5
 
 /* Whether or not we are using memory sanitizers */
 #define PMIX_MEMORY_SANITIZERS 0
 
 /* The library minor version is always available, contrary to VERSION */
-#define PMIX_MINOR_VERSION 2
+#define PMIX_MINOR_VERSION 0
 
 /* Whether the C compiler supports "bool" without any other help (such as
    <stdbool.h>) */
@@ -695,7 +698,7 @@
 #define PMIX_NO_LIB_DESTRUCTOR 0
 
 /* package/branding string for PMIx */
-#define PMIX_PACKAGE_STRING "PMIx ec2-user@ip-172-31-2-213.us-west-2.compute.internal Distribution"
+#define PMIX_PACKAGE_STRING "PMIx ec2-user@ip-172-31-2-9.us-west-2.compute.internal Distribution"
 
 /* Whether we have lt_dladvise or not */
 #define PMIX_PDL_PLIBLTDL_HAVE_LT_DLADVISE 0
@@ -706,17 +709,14 @@
 /* Where to report bugs */
 #define PMIX_PROXY_BUGREPORT_STRING "https://github.com/openpmix/openpmix"
 
-/* Whether or not we found the optional write_nonrecursive_np flag */
-#define PMIX_PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP 0
-
 /* type to use for ptrdiff_t */
 #define PMIX_PTRDIFF_TYPE ptrdiff_t
 
 /* The library release version is always available, contrary to VERSION */
-#define PMIX_RELEASE_VERSION 8
+#define PMIX_RELEASE_VERSION 2
 
 /* The OpenPMIx Git Revision */
-#define PMIX_REPO_REV "v4.2.8"
+#define PMIX_REPO_REV "v5.0.2"
 
 /* Default value for mca_base_component_show_load_errors MCA variable */
 #define PMIX_SHOW_LOAD_ERRORS_DEFAULT "all"
@@ -740,7 +740,7 @@
 #define PMIX_USE_STDBOOL_H 1
 
 /* The library version is always available, contrary to VERSION */
-#define PMIX_VERSION "4.2.8rc1"
+#define PMIX_VERSION "5.0.2rc2"
 
 /* Enable per-user config files */
 #define PMIX_WANT_HOME_CONFIG_FILES 1

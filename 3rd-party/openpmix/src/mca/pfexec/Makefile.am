@@ -30,6 +30,7 @@ dist_pmixdata_DATA =
 headers = pfexec.h
 libmca_pfexec_la_SOURCES += $(headers)
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

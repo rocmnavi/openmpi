@@ -14,7 +14,7 @@
 #ifndef PMIX_PRM_SLURM_H_
 #define PMIX_PRM_SLURM_H_
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/mca/base/pmix_base.h"
 #include "src/mca/prm/prm.h"

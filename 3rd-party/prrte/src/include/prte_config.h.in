@@ -627,6 +627,9 @@
 /* Whether or not we are using picky compiler settings */
 #undef PRTE_PICKY_COMPILERS
 
+/* Whether or not PMIx has the BASE capability flag set */
+#undef PRTE_PMIX_BASE_CAPABILITY
+
 /* Minimum supported PMIx version */
 #undef PRTE_PMIX_MINIMUM_VERSION
 

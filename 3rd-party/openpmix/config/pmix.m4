@@ -23,7 +23,7 @@ dnl                         and Technology (RIST).  All rights reserved.
 dnl Copyright (c) 2016      Mellanox Technologies, Inc.
 dnl                         All rights reserved.
 dnl
-dnl Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+dnl Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
 dnl Copyright (c) 2018-2022 Amazon.com, Inc. or its affiliates.
 dnl                         All Rights reserved.
 dnl Copyright (c) 2021      FUJITSU LIMITED.  All rights reserved.
@@ -192,23 +192,6 @@ AC_DEFUN([PMIX_SETUP_CORE],[
     fi
     AC_SUBST(PMIX_RELEASE_DATE)
 
-    # Debug mode?
-    AC_MSG_CHECKING([if want pmix maintainer support])
-    pmix_debug=
-    AS_IF([test "$pmix_debug" = "" && test "$enable_debug" = "yes"],
-          [pmix_debug=1
-           pmix_debug_msg="enabled"])
-    AS_IF([test "$pmix_debug" = ""],
-          [pmix_debug=0
-           pmix_debug_msg="disabled"])
-    # Grr; we use #ifndef for PMIX_DEBUG!  :-(
-    AH_TEMPLATE(PMIX_ENABLE_DEBUG, [Whether we are in debugging mode or not])
-    AS_IF([test "$pmix_debug" = "1"], [AC_DEFINE([PMIX_ENABLE_DEBUG])])
-    AC_MSG_RESULT([$pmix_debug_msg])
-
-    AC_MSG_CHECKING([for pmix directory prefix])
-    AC_MSG_RESULT(m4_ifval([$1], pmix_config_prefix, [(none)]))
-
     # Note that private/config.h *MUST* be listed first so that it
     # becomes the "main" config header file.  Any AC-CONFIG-HEADERS
     # after that (pmix/config.h) will only have selective #defines
@@ -263,6 +246,17 @@ AC_DEFUN([PMIX_SETUP_CORE],[
     AC_CHECK_TYPES(intptr_t)
     AC_CHECK_TYPES(uintptr_t)
     AC_CHECK_TYPES(ptrdiff_t)
+
+    # check for sockaddr_in (a good sign we have TCP)
+    # results used in the pif framework
+    AC_CHECK_HEADERS([netdb.h netinet/in.h netinet/tcp.h])
+    AC_CHECK_TYPES([struct sockaddr_in],
+                   [pmix_found_sockaddr=yes],
+                   [pmix_found_sockaddr=no],
+                   [AC_INCLUDES_DEFAULT
+#ifdef HAVE_NETINET_IN_H
+#include <netinet/in.h>
+#endif])
 
     #
     # Check for type sizes
@@ -401,7 +395,7 @@ AC_DEFUN([PMIX_SETUP_CORE],[
                       netdb.h ucred.h zlib.h sys/auxv.h \
                       sys/sysctl.h termio.h termios.h pty.h \
                       libutil.h util.h grp.h sys/cdefs.h utmp.h stropts.h \
-                      sys/utsname.h stdatomic.h])
+                      sys/utsname.h stdatomic.h mntent.h])
 
     AC_CHECK_HEADERS([sys/mount.h], [], [],
                      [AC_INCLUDES_DEFAULT
@@ -731,7 +725,8 @@ AC_DEFUN([PMIX_SETUP_CORE],[
     AC_CHECK_FUNCS([pthread_setaffinity_np])
 
     # Setup HTML and man page processing
-    OAC_SETUP_SPHINX([$srcdir/docs/_build/html/index.html], [])
+    OAC_SETUP_SPHINX([$srcdir/docs/_build/html/index.html], [],
+                     [$srcdir/docs/requirements.txt])
 
     AS_IF([test -n "$OAC_MAKEDIST_DISABLE"],
           [AS_IF([test -n "$PMIX_MAKEDIST_DISABLE"],
@@ -827,13 +822,6 @@ AC_DEFUN([PMIX_SETUP_CORE],[
     pmix_show_title "CURL"
 
     PMIX_CHECK_CURL
-
-    ##################################
-    # Dstore Locking
-    ##################################
-    pmix_show_title "Dstore Locking"
-
-    PMIX_CHECK_DSTOR_LOCK
 
     ##################################
     # MCA
@@ -1020,6 +1008,7 @@ AC_DEFUN([PMIX_SETUP_CORE],[
         pmix_config_prefix[src/tools/pquery/Makefile]
         pmix_config_prefix[src/tools/wrapper/Makefile]
         pmix_config_prefix[src/tools/wrapper/pmixcc-wrapper-data.txt]
+        pmix_config_prefix[src/tools/palloc/Makefile]
         pmix_config_prefix[src/tools/pctrl/Makefile]
         )
 
@@ -1059,7 +1048,21 @@ AC_DEFUN([PMIX_DEFINE_ARGS],[
 #
 # Check the OS flavor here
 #
-PMIX_CHECK_OS_FLAVORS
+OAC_CHECK_OS_FLAVORS
+
+# Debug mode?
+AC_MSG_CHECKING([if want pmix maintainer support])
+pmix_debug=0
+pmix_debug_msg="disabled"
+AS_IF([test "$enable_debug" = "yes"],
+      [pmix_debug=1
+       pmix_debug_msg="enabled"])
+# Grr; we use #ifndef for PMIX_DEBUG!  :-(
+AH_TEMPLATE(PMIX_ENABLE_DEBUG, [Whether we are in debugging mode or not])
+AS_IF([test "$pmix_debug" = "1"], [AC_DEFINE([PMIX_ENABLE_DEBUG])])
+AC_MSG_RESULT([$pmix_debug_msg])
+AC_MSG_CHECKING([for pmix directory prefix])
+AC_MSG_RESULT(m4_ifval([$1], pmix_config_prefix, [(none)]))
 
 #
 # Developer picky compiler options
@@ -1075,14 +1078,12 @@ if test "$enable_devel_check" = "yes"; then
 elif test "$enable_devel_check" = "no"; then
     AC_MSG_RESULT([no])
     WANT_PICKY_COMPILER=0
-    CFLAGS="$CFLAGS -Wno-unused-parameter"
 elif test "$pmix_git_repo_build" = "yes" && test "$pmix_debug" = "1"; then
     AC_MSG_RESULT([yes])
     WANT_PICKY_COMPILER=1
 else
     AC_MSG_RESULT([no])
     WANT_PICKY_COMPILER=0
-    CFLAGS="$CFLAGS -Wno-unused-parameter"
 fi
 
 AC_DEFINE_UNQUOTED(PMIX_PICKY_COMPILERS, $WANT_PICKY_COMPILER,
@@ -1137,7 +1138,7 @@ AC_ARG_ENABLE(debug-symbols,
 AC_MSG_CHECKING([if want to install PMIx header files])
 AC_ARG_WITH(pmix-headers,
     AS_HELP_STRING([--with-pmix-headers],
-                   [Install the PMIx header files (default: enabled)]))
+                   [Install the PMIx header files (pmix.h and friends) (default: enabled)]))
 if test "$with_pmix_headers" != "no"; then
     AC_MSG_RESULT([yes])
     WANT_PRIMARY_HEADERS=1
@@ -1198,22 +1199,6 @@ fi
 AC_DEFINE_UNQUOTED([PMIX_WANT_PRETTY_PRINT_STACKTRACE],
                    [$WANT_PRETTY_PRINT_STACKTRACE],
                    [if want pretty-print stack trace feature])
-
-#
-# Use pthread-based locking
-#
-DSTORE_PTHREAD_LOCK="1"
-AC_MSG_CHECKING([if want dstore pthread-based locking])
-AC_ARG_ENABLE([dstore-pthlck],
-              [AS_HELP_STRING([--disable-dstore-pthlck],
-                              [Disable pthread-based locking in dstor (default: enabled)])])
-if test "$enable_dstore_pthlck" = "no" ; then
-    AC_MSG_RESULT([no])
-    DSTORE_PTHREAD_LOCK="0"
-else
-    AC_MSG_RESULT([yes])
-    DSTORE_PTHREAD_LOCK="1"
-fi
 
 #
 #
@@ -1436,7 +1421,6 @@ AC_DEFUN([PMIX_DO_AM_CONDITIONALS],[
         AM_CONDITIONAL([PMIX_COMPILE_TIMING], [test "$WANT_TIMING" = "1"])
         AM_CONDITIONAL([PMIX_WANT_MUNGE], [test "$pmix_munge_support" = "1"])
         AM_CONDITIONAL([PMIX_WANT_SASL], [test "$pmix_sasl_support" = "1"])
-        AM_CONDITIONAL([WANT_DSTORE], [test "x$enable_dstore" != "xno"])
         AM_CONDITIONAL([WANT_PRIMARY_HEADERS], [test "x$pmix_install_primary_headers" = "xyes"])
         AM_CONDITIONAL(NEED_LIBPMIX, [test "$pmix_need_libpmix" = "1"])
         AM_CONDITIONAL([PMIX_HAVE_JANSSON], [test "x$pmix_check_jansson_happy" = "xyes"])

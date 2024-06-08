@@ -41,6 +41,7 @@
 #include "src/mca/plog/base/base.h"
 #include "src/mca/pnet/base/base.h"
 #include "src/mca/preg/base/base.h"
+#include "src/mca/prm/base/base.h"
 #include "src/mca/psec/base/base.h"
 #include "src/mca/psquash/base/base.h"
 #include "src/mca/ptl/base/base.h"
@@ -63,7 +64,6 @@ void pmix_rte_finalize(void)
     int i;
     pmix_notify_caddy_t *cd;
     pmix_iof_req_t *req;
-    pmix_regattr_input_t *p;
 
     if (!pmix_init_called) {
         return;
@@ -100,6 +100,9 @@ void pmix_rte_finalize(void)
     /* Finalize the network helper subsystem. */
     (void)pmix_net_finalize();
 
+    /* Finalize the prm framework */
+    (void) pmix_mca_base_framework_close(&pmix_prm_base_framework);
+
     /* finalize the mca */
     /* Clear out all the registered MCA params */
     pmix_deregister_params();
@@ -134,9 +137,8 @@ void pmix_rte_finalize(void)
     }
     PMIX_DESTRUCT(&pmix_globals.notifications);
     for (i = 0; i < pmix_globals.iof_requests.size; i++) {
-        if (NULL
-            != (req = (pmix_iof_req_t *) pmix_pointer_array_get_item(&pmix_globals.iof_requests,
-                                                                     i))) {
+        req = (pmix_iof_req_t *) pmix_pointer_array_get_item(&pmix_globals.iof_requests, i);
+        if (NULL != req) {
             PMIX_RELEASE(req);
         }
     }
@@ -148,22 +150,6 @@ void pmix_rte_finalize(void)
     }
     PMIX_LIST_DESTRUCT(&pmix_globals.nspaces);
     PMIX_LIST_DESTRUCT(&pmix_client_globals.groups);
-
-    for (i=0; i < pmix_globals.keyindex.size; i++) {
-        p = (pmix_regattr_input_t*)pmix_pointer_array_get_item(&pmix_globals.keyindex, i);
-        if (NULL != p) {
-            if (NULL != p->name) {
-                free(p->name);
-            }
-            if (NULL != p->string) {
-                free(p->string);
-            }
-            if (NULL != p->description) {
-                PMIx_Argv_free(p->description);
-            }
-            free(p);
-        }
-    }
     PMIX_DESTRUCT(&pmix_globals.keyindex);
     free(pmix_globals.myidval.data.proc);
 

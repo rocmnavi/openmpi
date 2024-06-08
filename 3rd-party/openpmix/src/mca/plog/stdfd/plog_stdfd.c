@@ -19,7 +19,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix_common.h"
 #include "pmix_server.h"
 

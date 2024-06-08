@@ -31,6 +31,7 @@ libmca_psec_la_SOURCES =
 headers = psec.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

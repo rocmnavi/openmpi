@@ -57,9 +57,6 @@ option to the help request as "--help <option>".
 | "--leave-session-    | Do not discard stdout/stderr of remote PRRTE  |
 | attached"            | daemons                                       |
 +----------------------+-----------------------------------------------+
-| "--test-suicide      | Direct that the specified daemon suicide      |
-| <arg0>"              | after delay                                   |
-+----------------------+-----------------------------------------------+
 | "--display <arg0>"   | Comma-delimited list of options for           |
 |                      | displaying information                        |
 +----------------------+-----------------------------------------------+

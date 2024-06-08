@@ -46,7 +46,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * Copyright (c) 2020      Cisco Systems, Inc.  All rights reserved
- * Copyright (c) 2021-2023 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -181,7 +181,9 @@ typedef uint32_t pmix_rank_t;
 #define PMIX_SERVER_GATEWAY                 "pmix.srv.gway"         // (bool) Server is acting as a gateway for PMIx requests
                                                                     //        that cannot be serviced on backend nodes
                                                                     //        (e.g., logging to email)
-#define PMIX_SERVER_SCHEDULER               "pmix.srv.sched"        // (bool) Server supports system scheduler
+#define PMIX_SERVER_SYS_CONTROLLER          "pmix.srv.ctrlr"        // (bool) Server is hosted by the system controller for
+                                                                    //        the cluster
+#define PMIX_SERVER_SCHEDULER               "pmix.srv.sched"        // (bool) Server is hosted by the system scheduler
 #define PMIX_SERVER_START_TIME              "pmix.srv.strtime"      // (char*) Time when the server started - i.e., when the server created
                                                                     //         it's rendezvous file (given in ctime string format)
 #define PMIX_HOMOGENEOUS_SYSTEM             "pmix.homo"             // (bool) The nodes comprising the session are homogeneous - i.e., they
@@ -202,6 +204,22 @@ typedef uint32_t pmix_rank_t;
                                                                     //        a local system-level PMIx server
 #define PMIX_CONNECT_SYSTEM_FIRST           "pmix.cnct.sys.first"   // (bool) Preferentially look for a system-level PMIx server first
 #define PMIX_CONNECT_TO_SCHEDULER           "pmix.cnct.sched"       // (bool) Connect to the system scheduler
+#define PMIX_CONNECT_TO_SYS_CONTROLLER      "pmix.cnct.ctrlr"       // (bool) Connect to the system controller
+#define PMIX_CONNECTION_ORDER               "pmix.cnct.ord"         // (char*) Comma-delimited list of attributes defining the order in which
+                                                                    //        connections should be attempted, from first to last. If the
+                                                                    //        final entry is not an "only" flag (e.g., PMIX_CONNECT_TO_SYSTEM),
+                                                                    //        then connection will default to the local server if no preceding
+                                                                    //        option succeeds. Thus, the following list:
+                                                                    //              PMIX_CONNECT_TO_SCHEDULER
+                                                                    //              PMIX_CONNECT_TO_SYS_CONTROLLER
+                                                                    //              PMIX_CONNECT_TO_SYSTEM
+                                                                    //        would first attempt to connect to the scheduler, then the system
+                                                                    //        controller, and then the local system-level server. If none of those
+                                                                    //        succeed, then the connection attempt will error out.
+                                                                    //        However, if the last entry were PMIX_CONNECT_SYSTEM_FIRST, then the
+                                                                    //        connection procedure would (after failing to connect to a local
+                                                                    //        system-level server) continue to include an attempt to connect
+                                                                    //        to any local server that accepted the connection request.
 #define PMIX_SERVER_URI                     "pmix.srvr.uri"         // (char*) URI of server to be contacted
 #define PMIX_MYSERVER_URI                   "pmix.mysrvr.uri"       // (char*) URI of this proc's listener socket
 #define PMIX_SERVER_HOSTNAME                "pmix.srvr.host"        // (char*) node where target server is located
@@ -346,6 +364,7 @@ typedef uint32_t pmix_rank_t;
 /* topology info */
 #define PMIX_TOPOLOGY2                      "pmix.topo2"            // (pmix_topology_t*) pointer to a PMIx topology object
 #define PMIX_LOCALITY_STRING                "pmix.locstr"           // (char*) string describing a proc's location
+#define PMIX_TOPOLOGY_INDEX                 "pmix.topo.index"       // (int)  index of a topology in a storage array
 
 
 /* request-related info */
@@ -563,6 +582,12 @@ typedef uint32_t pmix_rank_t;
 #define PMIX_QUERY_ALLOC_STATUS             "pmix.query.alloc"      // (char*) return a string reporting status of an allocation request
                                                                     //         REQUIRES a PMIX_ALLOC_REQUEST_ID qualifier indicating the allocation request
                                                                     //         being queried
+#define PMIX_QUERY_ALLOCATION               "pmix.query.allc"       // (pmix_data_array_t*) returns an array of pmix_info_t describing the nodes known to the
+                                                                    //         server. Each array element will consist of the PMIX_NODE_INFO key containing
+                                                                    //         a pmix_data_array_t of pmix_info_t - the first element of the array must be
+                                                                    //         the hostname of that node, with additional info on the node in subsequent entries.
+                                                                    //         SUPPORTED_QUALIFIER: a PMIX_ALLOC_ID qualifier indicating the specific
+                                                                    //         allocation of interest
 #define PMIX_TIME_REMAINING                 "pmix.time.remaining"   // (uint32_t) returns number of seconds remaining in allocation
                                                                     //         for the specified nspace (defaults to allocation containing the caller)
                                                                     //         SUPPORTED QUALIFIERS: PMIX_NSPACE of the nspace whose info is being requested
@@ -604,6 +629,14 @@ typedef uint32_t pmix_rank_t;
                                                                     //         Each of the remaining elements of the array is a pmix_info_t containing the query key
                                                                     //         and the corresponding value returned by the query. This attribute is solely for
                                                                     //         reporting purposes and cannot be used in PMIx_Get or other query operations
+#define PMIX_QUERY_AVAILABLE_SLOTS          "pmix.qry.aslots"       // (uint32_t) Number of slots currently available
+                                                                    //         in the session. This is a snapshot in
+                                                                    //         time as the number may have changed
+                                                                    //         (e.g., if another job was submitted after
+                                                                    //         the host generated its response). Request
+                                                                    //         may optionally specify the session using
+                                                                    //         the PMIX_SESSION_ID attribute - default
+                                                                    //         is the session of the requestor
 
 
 /* query qualifiers - these are used to provide information to narrow/modify the query. Value type shown is the type of data expected
@@ -800,6 +833,7 @@ typedef uint32_t pmix_rank_t;
                                                                     //         the allocated resources in, for example, a call to PMIx_Spawn
 #define PMIX_ALLOC_NUM_NODES                "pmix.alloc.nnodes"     // (uint64_t) number of nodes
 #define PMIX_ALLOC_NODE_LIST                "pmix.alloc.nlist"      // (char*) regex of specific nodes
+#define PMIX_ALLOC_EXCLUDE                  "pmix.alloc.exclude"    // (char*) regex of nodes to exclude from scheduling consideration
 #define PMIX_ALLOC_NUM_CPUS                 "pmix.alloc.ncpus"      // (uint64_t) number of cpus
 #define PMIX_ALLOC_NUM_CPU_LIST             "pmix.alloc.ncpulist"   // (char*) regex of #cpus for each node
 #define PMIX_ALLOC_CPU_LIST                 "pmix.alloc.cpulist"    // (char*) regex of specific cpus indicating the cpus involved.
@@ -831,7 +865,9 @@ typedef uint32_t pmix_rank_t;
                                                                     //         especially if the "required" flag was not set in the request
 #define PMIX_ALLOC_BANDWIDTH                "pmix.alloc.bw"         // (float) Mbits/sec
 #define PMIX_ALLOC_FABRIC_QOS               "pmix.alloc.netqos"     // (char*) quality of service level
-#define PMIX_ALLOC_TIME                     "pmix.alloc.time"       // (uint32_t) time in seconds that the allocation shall remain valid
+#define PMIX_ALLOC_TIME                     "pmix.alloc.time"       // (char*) time that the allocation shall remain valid. Time is specified in
+                                                                    //         usual time format of months:days:hours:minutes:seconds, scanning
+                                                                    //         from right to left (i.e., a value of "2" equates to 2 seconds)
 #define PMIX_ALLOC_FABRIC_TYPE              "pmix.alloc.nettype"    // (char*) type of desired transport (e.g., tcp, udp)
 #define PMIX_ALLOC_FABRIC_PLANE             "pmix.alloc.netplane"   // (char*) id string for the NIC (aka plane) to be used for this allocation
                                                                     //         (e.g., CIDR for Ethernet)
@@ -841,6 +877,28 @@ typedef uint32_t pmix_rank_t;
 #define PMIX_ALLOC_QUEUE                    "pmix.alloc.queue"      // (char*) name of queue being referenced
 #define PMIX_ALLOC_PREEMPTIBLE              "pmix.alloc.preempt"    // (bool) by default, all jobs in the resulting allocation are to be
                                                                     //        considered preemptible (overridable at per-job level)
+#define PMIX_ALLOC_LEND                     "pmix.alloc.lend"       // (char*) estimated time before the lent resources shall be available for
+                                                                    //         return. Time is specified in usual time format of
+                                                                    //         months:days:hours:minutes:seconds, scanning from right to left
+                                                                    //         (i.e., a value of "2" equates to 2 seconds)
+#define PMIX_ALLOC_IMAGE                    "pmix.alloc.image"      // (char*) name of the image that the requested nodes are to have on them
+#define PMIX_ALLOC_WAIT_ALL_NODES           "pmix.alloc.waitall"    // (bool) whether or not to wait for all nodes to be scheduled before
+                                                                    //        starting to initialize and release nodes for use
+#define PMIX_ALLOC_SHARE                    "pmix.alloc.share"      // (bool) Allow non-exclusive use of specified resources
+#define PMIX_ALLOC_NOSHELL                  "pmix.alloc.noshell"    // (bool) Immediately exit after allocating resources, without running a command.
+#define PMIX_ALLOC_DEPENDENCY               "pmix.alloc.depend"     // (char*) Defer the start of allocation until the specified dependencies have
+                                                                    //         successfully completed.
+#define PMIX_ALLOC_BEGIN                    "pmix.alloc.begin"      // (char*) Direct the scheduler to defer allocation until the specified time. Time
+                                                                    //         may be of the form HH:MM:SS to schedule the session to start at a specific
+                                                                    //         time of day (seconds are optional). If that time is already past, the
+                                                                    //         next day is assumed. You may also specify "midnight" or "noon", and you
+                                                                    //         can have a time-of-day suffixed with AM or PM for running in the morning
+                                                                    //         or the evening. You can also say what day the session should start by
+                                                                    //         specifying a date of the form MMDDYY or MM/DD/YY YYYY-MM-DD. Combine date
+                                                                    //         and time using the usual format YYYY-MM-DD[THH:MM[:SS]]. You can also give
+                                                                    //         times like "now + count" time-units, where the time-units can be "seconds"
+                                                                    //         (default), "minutes", "hours", days, or weeks, or you can ask that the
+                                                                    //         allocation be made "today" or "tomorrow".
 
 
 /* job control attributes */
@@ -875,6 +933,47 @@ typedef uint32_t pmix_rank_t;
 #define PMIX_CLEANUP_LEAVE_TOPDIR           "pmix.clnup.lvtop"      // (bool) when recursively cleaning subdirs, do not remove
                                                                     //        the top-level directory (the one given in the
                                                                     //        cleanup request)
+/* session control attributes */
+#define PMIX_SESSION_CTRL_ID                "pmix.ssnctrl.id"       // (char*) provide a string identifier for this request
+
+/* session instantiation attributes - called by scheduler
+ * Schedulers calling to create a session are required to provide:
+ *  - the effective userID and groupID that the session should have
+ *    when instantiated.
+ *  - description of the resources that are to be included in the session
+ *  - if applicable, the image that should be provisioned on nodes
+ *    included in the session
+ *  - an array of applications (if any) that are to be started in the
+ *    session once instantiated
+ */
+#define PMIX_SESSION_APP                    "pmix.ssn.app"          // (pmix_data_array_t*) Array of pmix_app_t to be executed in the assigned
+                                                                    //        session upon session instantiation
+#define PMIX_SESSION_PROVISION              "pmix.ssn.pvn"          // (pmix_data_array_t*) description of nodes to be provisioned with
+                                                                    //       specified image
+#define PMIX_SESSION_PROVISION_NODES        "pmix.ssn.pvnnds"       // (char*) regex identifying nodes that are to be provisioned
+#define PMIX_SESSION_PROVISION_IMAGE        "pmix.ssn.pvnimg"       // (char*) name of the image that is to be provisioned
+
+/* session operational attributes - called by scheduler */
+#define PMIX_SESSION_PAUSE                  "pmix.ssn.pause"        // (bool) pause all jobs in the specified session
+#define PMIX_SESSION_RESUME                 "pmix.ssn.resume"       // (bool) "un-pause" all jobs in the specified session
+#define PMIX_SESSION_TERMINATE              "pmix.ssn.terminate"    // (bool) terminate all jobs in the specified session and recover all
+                                                                    //        resources included in the session.
+#define PMIX_SESSION_PREEMPT                "pmix.ssn.preempt"      // (bool) preempt indicated jobs (given in accompanying pmix_info_t via
+                                                                    //        the PMIX_NSPACE attribute) in the specified session and recover
+                                                                    //        all their resources. If no PMIX_NSPACE is specified, then preempt
+                                                                    //        all jobs in the session.
+#define PMIX_SESSION_RESTORE                "pmix.ssn.restore"      // (bool) restore indicated jobs (given in accompanying pmix_info_t via
+                                                                    //        the PMIX_NSPACE attribute) in the specified session, including
+                                                                    //        all their resources. If no PMIX_NSPACE is specified, then restore
+                                                                    //        all jobs in the session.
+#define PMIX_SESSION_SIGNAL                 "pmix.ssn.sig"          // (int) send given signal to all processes of every job in the session
+
+/* session operational attributes - called by RTE */
+#define PMIX_SESSION_COMPLETE               "pmix.ssn.complete"     // (bool) specified session has completed, all resources have been
+                                                                    //        recovered and are available for scheduling. Must include
+                                                                    //        pmix_info_t indicating ID and returned status of any jobs
+                                                                    //        executing in the session.
+
 
 /* monitoring attributes */
 #define PMIX_MONITOR_ID                     "pmix.monitor.id"       // (char*) provide a string identifier for this request
@@ -1534,10 +1633,10 @@ typedef uint8_t pmix_alloc_directive_t;
                                     // disjoint (i.e., not connected in a job sense) from the requesting allocation
 #define PMIX_ALLOC_EXTEND       2   // extend the existing allocation, either in time or as additional resources
 #define PMIX_ALLOC_RELEASE      3   // release part or all of the existing allocation. Attributes in the accompanying
-                                    // pmix\_info\_t array may be used to specify permanent release of the
-                                    // identified resources, or "lending" of those resources for some period
-                                    // of time.
+                                    // pmix\_info\_t array may be used to specify "lending" of those resources
+                                    // for some period of time.
 #define PMIX_ALLOC_REAQUIRE     4   // reacquire resources that were previously "lent" back to the scheduler
+#define PMIX_ALLOC_REQ_CANCEL   5   // Cancel the indicated allocation request
 
 /* define a value boundary beyond which implementers are free
  * to define their own directive values */
@@ -1565,7 +1664,8 @@ typedef enum {
 
 typedef enum {
     PMIX_GROUP_CONSTRUCT,
-    PMIX_GROUP_DESTRUCT
+    PMIX_GROUP_DESTRUCT,
+    PMIX_GROUP_NONE
 } pmix_group_operation_t;
 
 /* define storage medium values

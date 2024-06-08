@@ -12,7 +12,7 @@
  *
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "pmix_common.h"
 #include "src/mca/mca.h"

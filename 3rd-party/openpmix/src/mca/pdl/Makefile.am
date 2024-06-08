@@ -19,13 +19,15 @@ libmca_pdl_la_SOURCES =
 headers = pdl.h
 libmca_pdl_la_SOURCES += $(headers)
 
-# Ensure that the man pages are rebuilt if the src/include/pmix_config.h file
+# Ensure that the man pages are rebuilt if the pmix_config.h file
 # changes; a "good enough" way to know if configure was run again (and
 # therefore the release date or version may have changed)
-$(nodist_man_MANS): $(top_builddir)/pmix/include/src/include/pmix_config.h
+$(nodist_man_MANS): $(top_builddir)/pmix/include/pmix_config.h
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
+
 
 include base/Makefile.am
 

@@ -29,7 +29,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
@@ -60,7 +60,7 @@
 #    include <libutil.h>
 #endif
 
-#include "pmix.h"
+#include "include/pmix.h"
 #include "pmix_common.h"
 #include "include/pmix_server.h"
 

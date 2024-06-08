@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.9. Network Support &mdash; Open MPI 5.0.1 documentation</title>
+  <title>3.10. Network Support &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3.10. Open MPI Extensions" href="extensions.html" />
-    <link rel="prev" title="3.8. OpenSHMEM Collectives" href="openshmem-collectives.html" /> 
+    <link rel="next" title="3.11. Open MPI Extensions" href="extensions.html" />
+    <link rel="prev" title="3.9. OpenSHMEM Collectives" href="openshmem-collectives.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,20 +46,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">1. Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-help.html">2. Getting help</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. Release notes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="general.html">3.1. General notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="platform.html">3.2. Platform Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compilers.html">3.3. Compiler Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run-time.html">3.4. General Run-Time Support Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpi.html">3.5. MPI Functionality and Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshmem.html">3.6. OpenSHMEM Functionality and Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpi-collectives.html">3.7. MPI Collectives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshmem-collectives.html">3.8. OpenSHMEM Collectives</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.9. Network Support</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#main-network-support-models">3.9.1. Main network support models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#miscellaneous-network-notes">3.9.2. Miscellaneous network notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog/index.html">3.1. Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general.html">3.2. General notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html">3.3. Platform Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilers.html">3.4. Compiler Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-time.html">3.5. General Run-Time Support Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpi.html">3.6. MPI Functionality and Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openshmem.html">3.7. OpenSHMEM Functionality and Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpi-collectives.html">3.8. MPI Collectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openshmem-collectives.html">3.9. OpenSHMEM Collectives</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.10. Network Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main-network-support-models">3.10.1. Main network support models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous-network-notes">3.10.2. Miscellaneous network notes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="extensions.html">3.10. Open MPI Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">3.11. Open MPI Extensions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing-open-mpi/index.html">4. Building and installing Open MPI</a></li>
@@ -75,9 +76,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -95,7 +95,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html"><span class="section-number">3. </span>Release notes</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">3.9. </span>Network Support</li>
+      <li class="breadcrumb-item active"><span class="section-number">3.10. </span>Network Support</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/release-notes/networks.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -108,9 +108,9 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="network-support">
-<h1><span class="section-number">3.9. </span>Network Support<a class="headerlink" href="#network-support" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">3.10. </span>Network Support<a class="headerlink" href="#network-support" title="Permalink to this heading"></a></h1>
 <div class="section" id="main-network-support-models">
-<h2><span class="section-number">3.9.1. </span>Main network support models<a class="headerlink" href="#main-network-support-models" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.10.1. </span>Main network support models<a class="headerlink" href="#main-network-support-models" title="Permalink to this heading"></a></h2>
 <p>There are multiple MPI network models available in this release:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">ob1</span></code> supports a variety of networks using BTL (“Byte Transfer
@@ -183,7 +183,7 @@ MPI_Finalize.  This issue is addressed by UCX release 1.9.0 and
 newer.</p>
 </div>
 <div class="section" id="miscellaneous-network-notes">
-<h2><span class="section-number">3.9.2. </span>Miscellaneous network notes<a class="headerlink" href="#miscellaneous-network-notes" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.10.2. </span>Miscellaneous network notes<a class="headerlink" href="#miscellaneous-network-notes" title="Permalink to this heading"></a></h2>
 <ul>
 <li><p>The main OpenSHMEM network model is <code class="docutils literal notranslate"><span class="pre">ucx</span></code>; it interfaces directly
 with UCX.</p></li>
@@ -235,14 +235,14 @@ larger <code class="docutils literal notranslate"><span class="pre">max_msg_size
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="openshmem-collectives.html" class="btn btn-neutral float-left" title="3.8. OpenSHMEM Collectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="extensions.html" class="btn btn-neutral float-right" title="3.10. Open MPI Extensions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="openshmem-collectives.html" class="btn btn-neutral float-left" title="3.9. OpenSHMEM Collectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="extensions.html" class="btn btn-neutral float-right" title="3.11. Open MPI Extensions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

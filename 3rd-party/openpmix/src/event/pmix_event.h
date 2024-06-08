@@ -57,6 +57,14 @@ typedef struct {
     size_t nprocs;
 } pmix_range_trkr_t;
 
+#define PMIX_RANGE_TRKR_STATIC_INIT     \
+{                                       \
+    .range = PMIX_RANGE_UNDEF,          \
+    .procs = NULL,                      \
+    .nprocs = 0                         \
+}
+
+
 /* define a common struct for tracking event handlers */
 typedef struct {
     pmix_list_item_t super;
@@ -87,6 +95,23 @@ typedef struct {
     size_t ncodes;
 } pmix_event_hdlr_t;
 PMIX_CLASS_DECLARATION(pmix_event_hdlr_t);
+
+#define PMIX_EVENT_HDLR_STATIC_INIT         \
+{                                           \
+    .super = PMIX_LIST_ITEM_STATIC_INIT,    \
+    .name = NULL,                           \
+    .index = SIZE_MAX,                      \
+    .precedence = UINT8_MAX,                \
+    .locator = NULL,                        \
+    .source = PMIX_PROC_STATIC_INIT,        \
+    .rng = PMIX_RANGE_TRKR_STATIC_INIT,     \
+    .affected - NULL,                       \
+    .naffected = 0,                         \
+    .evhdlr = NULL,                         \
+    .cbobject = NULL,                       \
+    .codes = NULL,                          \
+    .ncodes = 0                             \
+}
 
 /* define an object for tracking status codes we are actively
  * registered to receive */
@@ -173,7 +198,7 @@ PMIX_CLASS_DECLARATION(pmix_event_chain_t);
 PMIX_EXPORT pmix_status_t pmix_prep_event_chain(pmix_event_chain_t *chain, const pmix_info_t *info,
                                                 size_t ninfo, bool xfer);
 
-/* invoke the pmix_error.handler that is registered against the given
+/* invoke the error handler that is registered against the given
  * status, passing it the provided info on the procs that were
  * affected, plus any additional info provided by the server */
 PMIX_EXPORT void pmix_invoke_local_event_hdlr(pmix_event_chain_t *chain);

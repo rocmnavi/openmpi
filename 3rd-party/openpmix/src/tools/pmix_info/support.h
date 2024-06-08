@@ -17,7 +17,7 @@
 #ifndef PMIX_INFO_REGISTER_H
 #define PMIX_INFO_REGISTER_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/class/pmix_list.h"
 #include "src/class/pmix_pointer_array.h"

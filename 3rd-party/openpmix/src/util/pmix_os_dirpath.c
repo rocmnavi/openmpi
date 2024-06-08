@@ -12,7 +12,7 @@
  * Copyright (c) 2015-2017 Research Organization for Information Science
  *                         and Technology (RIST). All rights reserved.
  * Copyright (c) 2016-2020 Intel, Inc.  All rights reserved.
- * Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -20,7 +20,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include <errno.h>
 #include <string.h>
@@ -39,6 +39,8 @@
 #endif /* HAVE_DIRENT_H */
 
 #include "pmix_common.h"
+#include "src/include/pmix_globals.h"
+#include "src/server/pmix_server_ops.h"
 #include "src/util/pmix_argv.h"
 #include "src/util/pmix_error.h"
 #include "src/util/pmix_os_dirpath.h"
@@ -50,7 +52,6 @@ static const char path_sep[] = PMIX_PATH_SEP;
 
 int pmix_os_dirpath_create(const char *path, const mode_t mode)
 {
-    struct stat buf;
     char **parts, *tmp;
     int i, len;
     int ret;
@@ -59,21 +60,21 @@ int pmix_os_dirpath_create(const char *path, const mode_t mode)
         return (PMIX_ERR_BAD_PARAM);
     }
 
-    /* coverity[TOCTOU] */
-    if (0 == (ret = stat(path, &buf))) {    /* already exists */
-        if (mode == (mode & buf.st_mode)) { /* has correct mode */
-            return (PMIX_SUCCESS);
-        }
-        if (0 == (ret = chmod(path, (buf.st_mode | mode)))) { /* successfully change mode */
-            return (PMIX_SUCCESS);
-        }
-        pmix_show_help("help-pmix-util.txt", "dir-mode", true, path, mode, strerror(errno));
-        return (PMIX_ERR_NO_PERMISSIONS); /* can't set correct mode */
-    }
-
-    /* quick -- try to make directory */
+    /* try to make directory */
     if (0 == mkdir(path, mode)) {
         return (PMIX_SUCCESS);
+    }
+    ret = errno; // preserve the error
+
+    /* check the error */
+    if (EEXIST == ret) {
+        // already exists - try to set the mode
+        chmod(path, mode);
+    } else if (ENOENT != ret) {
+        // cannot create it
+        pmix_show_help("help-pmix-util.txt", "mkdir-failed", true,
+                       path, strerror(ret));
+        return PMIX_ERR_SILENT;
     }
 
     /* didn't work, so now have to build our way down the tree */
@@ -114,23 +115,14 @@ int pmix_os_dirpath_create(const char *path, const mode_t mode)
         }
 
         /* Now that we have the name, try to create it */
-        mkdir(tmp, mode);
-        ret = errno; // save the errno for an error msg, if needed
-        /* coverity[TOCTOU] */
-        if (0 != stat(tmp, &buf)) {
+        ret = mkdir(tmp, mode);
+        if (0 != ret && EEXIST != errno) {
+            // true error
             pmix_show_help("help-pmix-util.txt", "mkdir-failed", true,
-                           tmp, strerror(ret));
+                           tmp, strerror(errno));
             PMIx_Argv_free(parts);
             free(tmp);
             return PMIX_ERR_SILENT;
-        } else if (i == (len - 1) &&
-                   (mode != (mode & buf.st_mode)) &&
-                   (0 > chmod(tmp, (buf.st_mode | mode)))) {
-            pmix_show_help("help-pmix-util.txt", "dir-mode", true,
-                           tmp, mode, strerror(errno));
-            PMIx_Argv_free(parts);
-            free(tmp);
-            return (PMIX_ERR_SILENT); /* can't set correct mode */
         }
     }
 
@@ -153,22 +145,12 @@ int pmix_os_dirpath_destroy(const char *path, bool recursive,
                             pmix_os_dirpath_destroy_callback_fn_t cbfunc)
 {
     int rc, exit_status = PMIX_SUCCESS;
-    bool is_dir = false;
     DIR *dp;
     struct dirent *ep;
     char *filenm;
-    struct stat buf;
 
     if (NULL == path) { /* protect against error */
         return PMIX_ERROR;
-    }
-
-    /*
-     * Make sure we have access to the base directory
-     */
-    if (PMIX_SUCCESS != (rc = pmix_os_dirpath_access(path, 0))) {
-        exit_status = rc;
-        goto cleanup;
     }
 
     /* Open up the directory */
@@ -185,43 +167,6 @@ int pmix_os_dirpath_destroy(const char *path, bool recursive,
             continue;
         }
 
-        /* Check to see if it is a directory */
-        is_dir = false;
-
-        /* Create a pathname.  This is not always needed, but it makes
-         * for cleaner code just to create it here.  Note that we are
-         * allocating memory here, so we need to free it later on.
-         */
-        filenm = pmix_os_path(false, path, ep->d_name, NULL);
-
-        /* coverity[TOCTOU] */
-        rc = stat(filenm, &buf);
-        if (0 > rc) {
-            /* Handle a race condition. filenm might have been deleted by an
-             * other process running on the same node. That typically occurs
-             * when one task is removing the job_session_dir and an other task
-             * is still removing its proc_session_dir.
-             */
-            free(filenm);
-            continue;
-        }
-        if (S_ISDIR(buf.st_mode)) {
-            is_dir = true;
-        }
-
-        /*
-         * If not recursively descending, then if we find a directory then fail
-         * since we were not told to remove it.
-         */
-        if (is_dir && !recursive) {
-            /* Set the error indicating that we found a directory,
-             * but continue removing files
-             */
-            exit_status = PMIX_ERROR;
-            free(filenm);
-            continue;
-        }
-
         /* Will the caller allow us to remove this file/directory? */
         if (NULL != cbfunc) {
             /*
@@ -229,25 +174,52 @@ int pmix_os_dirpath_destroy(const char *path, bool recursive,
              * continue with the rest of the entries
              */
             if (!(cbfunc(path, ep->d_name))) {
-                free(filenm);
                 continue;
             }
         }
-        /* Directories are recursively destroyed */
-        if (is_dir) {
-            rc = pmix_os_dirpath_destroy(filenm, recursive, cbfunc);
-            free(filenm);
-            if (PMIX_SUCCESS != rc) {
-                exit_status = rc;
-                closedir(dp);
-                goto cleanup;
-            }
-        } else {
-            /* Files are removed right here */
-            if (0 != (rc = unlink(filenm))) {
+
+        /* Create a pathname.  This is not always needed, but it makes
+         * for cleaner code just to create it here.  Note that we are
+         * allocating memory here, so we need to free it later on.
+         */
+        filenm = pmix_os_path(false, path, ep->d_name, NULL);
+
+        // attempt to unlink it
+        rc = unlink(filenm);
+        if (0 > rc) {
+            // we failed to unlink it - save the error
+            rc = errno;
+            if (EPERM == rc || EISDIR == rc) {
+                // it's a directory - attempt to remove it
+                rc = rmdir(filenm);
+                if (0 == rc) {
+                    // success
+                    continue;
+                }
+                /* if it wasn't empty and we are recursively removing
+                 * paths, then proceed downwards */
+                if (ENOTEMPTY == errno && recursive) {
+                    rc = pmix_os_dirpath_destroy(filenm, recursive, cbfunc);
+                    free(filenm);
+                    if (PMIX_SUCCESS != rc) {
+                        exit_status = rc;
+                        closedir(dp);
+                        goto cleanup;
+                    }
+                }
+            } else if (EBUSY == rc) {
+                /* file system mount point or another process
+                 * is using it */
                 exit_status = PMIX_ERROR;
+                continue;
+            } else {
+                // uncorrectable error
+                pmix_show_help("help-pmix-util.txt", "unlink-error", true,
+                               filenm,  strerror(rc));
+                free(filenm);
+                exit_status = PMIX_ERROR;
+                break;
             }
-            free(filenm);
         }
     }
 
@@ -257,9 +229,11 @@ int pmix_os_dirpath_destroy(const char *path, bool recursive,
 cleanup:
 
     /*
-     * If the directory is empty, them remove it
+     * If the directory is empty, then remove it - but
+     * leave the system tmpdir alone!
      */
-    if (pmix_os_dirpath_is_empty(path)) {
+    if (NULL == pmix_server_globals.system_tmpdir ||
+        0 != strcmp(path, pmix_server_globals.system_tmpdir)) {
         rmdir(path);
     }
 
@@ -289,28 +263,11 @@ bool pmix_os_dirpath_is_empty(const char *path)
     return true;
 }
 
-int pmix_os_dirpath_access(const char *path, const mode_t in_mode)
+/**
+ * Stale function left for PRRTE backward compatility
+ */
+int pmix_os_dirpath_access(const char *path, const mode_t mode)
 {
-    struct stat buf;
-    mode_t loc_mode = S_IRWXU; /* looking for full rights */
-
-    /*
-     * If there was no mode specified, use the default mode
-     */
-    if (0 != in_mode) {
-        loc_mode = in_mode;
-    }
-
-    /* coverity[TOCTOU] */
-    if (0 == stat(path, &buf)) {                    /* exists - check access */
-        if ((buf.st_mode & loc_mode) == loc_mode) { /* okay, I can work here */
-            return (PMIX_SUCCESS);
-        } else {
-            /* Don't have access rights to the existing path */
-            return (PMIX_ERR_NO_PERMISSIONS);
-        }
-    } else {
-        /* We could not find the path */
-        return (PMIX_ERR_NOT_FOUND);
-    }
+    PMIX_HIDE_UNUSED_PARAMS(path, mode);
+    return PMIX_SUCCESS;
 }

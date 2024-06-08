@@ -699,6 +699,9 @@
 /* Define to 1 if you have the `sysconf' function. */
 #undef HAVE_SYSCONF
 
+/* Define to 1 if you have the <syslimits.h> header file. */
+#undef HAVE_SYSLIMITS_H
+
 /* Define to 1 if you have the `syslog' function. */
 #undef HAVE_SYSLOG
 

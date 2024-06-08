@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2.6. CUDA &mdash; Open MPI 5.0.1 documentation</title>
+  <title>11.2.6. CUDA &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -104,9 +104,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -171,7 +170,7 @@ see the UCX documentation for <a class="reference external" href="https://openuc
 shell$<span class="w"> </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/path/to/ucx-cuda-install<span class="w"> </span>--with-cuda<span class="o">=</span>/usr/local/cuda<span class="w"> </span>--with-gdrcopy<span class="o">=</span>/usr
 
 <span class="c1"># Configure Open MPI this way</span>
-shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<span class="o">=</span>/usr/local/cuda<span class="w"> </span>--with-cuda-libdir<span class="o">=</span>/usr/local/cuda/lib64/stubs/<span class="w"> </span>--with-ucx<span class="o">=</span>/path/to/ucx-cuda-install<span class="w"> </span>&lt;other<span class="w"> </span>configure<span class="w"> </span>params&gt;
+shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<span class="o">=</span>/usr/local/cuda<span class="w"> </span>--with-ucx<span class="o">=</span>/path/to/ucx-cuda-install<span class="w"> </span>&lt;other<span class="w"> </span>configure<span class="w"> </span>params&gt;
 </pre></div>
 </div>
 </li>
@@ -179,8 +178,10 @@ shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<spa
 </ol>
 <p>Regardless of which flavor of CUDA support (or both) you plan to use,
 Open MPI should be configured using the <code class="docutils literal notranslate"><span class="pre">--with-cuda=&lt;path-to-cuda&gt;</span></code>
-and <code class="docutils literal notranslate"><span class="pre">--with-cuda-libdir=&lt;path-to-libcuda.so&gt;</span></code> configure options to
-build CUDA support into Open MPI.</p>
+configure option to build CUDA support into Open MPI. The configure
+script will automatically search the path given for <code class="docutils literal notranslate"><span class="pre">libcuda.so</span></code>. If it cannot
+be found, please also pass <code class="docutils literal notranslate"><span class="pre">--with-cuda-libdir</span></code>. For example:
+<code class="docutils literal notranslate"><span class="pre">--with-cuda=&lt;path-to-cuda&gt;</span> <span class="pre">--with-cuda-libdir=/usr/local/cuda/lib64/stubs</span></code>.</p>
 <p>Open MPI supports building with CUDA libraries and running on systems
 without CUDA libraries or hardware. In order to take advantage of
 this functionality, when compiling, you have to specify the CUDA
@@ -192,7 +193,7 @@ as the <code class="docutils literal notranslate"><span class="pre">rgpusm</span
 <p>An example configure command would look like the following:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure Open MPI this way</span>
-shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<span class="o">=</span>/usr/local/cuda<span class="w"> </span>--with-cuda-libdir<span class="o">=</span>/usr/local/cuda/lib64/stubs<span class="w"> </span><span class="se">\</span>
+shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<span class="o">=</span>/usr/local/cuda<span class="w"> </span><span class="se">\</span>
 <span class="w">       </span>--enable-mca-dso<span class="o">=</span>btl-smcuda,rcache-rgpusm,rcache-gpusm,accelerator-cuda<span class="w"> </span>&lt;other<span class="w"> </span>configure<span class="w"> </span>params&gt;
 </pre></div>
 </div>
@@ -784,7 +785,7 @@ for more information.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

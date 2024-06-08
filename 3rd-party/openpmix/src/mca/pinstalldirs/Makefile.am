@@ -19,6 +19,7 @@ libmca_pinstalldirs_la_SOURCES =
 headers = pinstalldirs.h pinstalldirs_types.h
 libmca_pinstalldirs_la_SOURCES += $(headers)
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

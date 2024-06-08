@@ -18,6 +18,7 @@
  *                         and Technology (RIST). All rights reserved.
  * Copyright (c) 2016      IBM Corporation.  All rights reserved.
  * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2024      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -367,7 +368,10 @@ int main(int argc, char **argv)
     /* we have a single namespace for all clients */
     atmp = NULL;
     for (n = 0; n < nprocs; n++) {
-        asprintf(&tmp, "%d", n);
+        if (0 > asprintf(&tmp, "%d", n)) {
+            errno = ENOMEM;
+            abort();
+        }
         PMIx_Argv_append_nosize(&atmp, tmp);
         free(tmp);
     }
@@ -432,7 +436,7 @@ int main(int argc, char **argv)
     PMIX_RELEASE(x);
 
     /* fork/exec the test */
-    pmix_strncpy(proc.nspace, ncache, PMIX_MAX_NSLEN);
+    pmix_strncpy(proc.nspace, "foobar", PMIX_MAX_NSLEN);
     for (n = 0; n < nprocs; n++) {
         proc.rank = n;
         x = PMIX_NEW(myxfer_t);

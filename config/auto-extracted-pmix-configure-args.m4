@@ -16,84 +16,79 @@ AC_DEFUN([OMPI_PMIX_ADD_ARGS],[
     AC_ARG_WITH([pmix-package-string],
          [AS_HELP_STRING([--with-pmix-package-string=STRING],
                          [Use a branding string throughout PMIx])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:225
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:208
 
 # Warning: Excluded: show-load-errors
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:849
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:837
 
 # Warning: Excluded: dlopen
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1042
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1031
 
 AC_ARG_ENABLE(devel-check,
     AS_HELP_STRING([--enable-devel-check],
                    [enable developer-level compiler pickyness when building PMIx (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1071
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1074
 
 AC_ARG_ENABLE(memory-sanitizers,
     AS_HELP_STRING([--memory-sanitizers],
                    [enable developer-level memory sanitizers when building PMIx (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1094
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1095
 
 # Warning: Excluded: debug
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1115
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1116
 
 # Warning: Excluded: debug-symbols
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1133
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1134
 
 AC_ARG_WITH(pmix-headers,
     AS_HELP_STRING([--with-pmix-headers],
-                   [Install the PMIx header files (default: enabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1140
+                   [Install the PMIx header files (pmix.h and friends) (default: enabled)]))
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1141
 
 AC_ARG_WITH([tests-examples],
     [AS_HELP_STRING([--with-tests-examples],
             [Whether or not to install the tests and example programs.])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1155
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1156
 
 # Warning: Excluded: per-user-config-files
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1172
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1173
 
 # Warning: Excluded: pretty-print-stacktrace
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1188
-
-AC_ARG_ENABLE([dstore-pthlck],
-              [AS_HELP_STRING([--disable-dstore-pthlck],
-                              [Disable pthread-based locking in dstor (default: enabled)])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1209
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1189
 
 # Warning: Excluded: ident-string
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1223
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1208
 
 AC_ARG_ENABLE(pmix-timing,
               AS_HELP_STRING([--enable-pmix-timing],
                              [enable PMIx developer-level timing code (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1249
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1234
 
 AC_ARG_ENABLE(pmix-binaries,
               AS_HELP_STRING([--enable-pmix-binaries],
                              [enable PMIx tools]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1267
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1252
 
 AC_ARG_ENABLE(python-bindings,
               AS_HELP_STRING([--enable-python-bindings],
                              [enable Python bindings (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1284
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1269
 
 AC_ARG_ENABLE([nonglobal-dlopen],
               AS_HELP_STRING([--enable-nonglobal-dlopen],
                              [enable non-global dlopen (default: enabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1367
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1352
 
 # Warning: Excluded: pty-support
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1381
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1366
 
 AC_ARG_ENABLE(dummy-handshake,
               AS_HELP_STRING([--enable-dummy-handshake],
                              [Enables psec dummy component intended to check the PTL handshake scenario (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1401
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1386
 
 # Warning: Excluded: ipv6
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1415
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1400
 
     AC_ARG_WITH([alps-libdir],
                 [AS_HELP_STRING([--with-alps-libdir=DIR],
@@ -132,16 +127,6 @@ AC_ARG_ENABLE(dummy-handshake,
            [AS_HELP_STRING([--with-slurm],
                            [Build SLURM scheduler component (default: yes)])])
 # ---------------------------------------- Above from 3rd-party/openpmix//config/pmix_check_slurm.m4:33
-
-    AC_ARG_WITH([tm],
-                [AS_HELP_STRING([--with-tm(=DIR)],
-                                [Build TM (Torque, PBSPro, and compatible) support, optionally adding DIR/include, DIR/lib, and DIR/lib64 to the search path for headers and libraries])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix_check_tm.m4:132
-
-    AC_ARG_WITH([tm-libdir],
-                [AS_HELP_STRING([--with-tm-libdir=DIR],
-                                [Search for Torque libraries in DIR])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix_check_tm.m4:135
 
 # Warning: Excluded: visibility
 # ---------------------------------------- Above from 3rd-party/openpmix//config/pmix_check_visibility.m4:32
@@ -280,6 +265,23 @@ AC_ARG_ENABLE(werror,
 
     AC_ARG_WITH([simptest], [AS_HELP_STRING([--with-simptest], [Include simptest fabric support])])
 # ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pnet/simptest/configure.m4:20
+
+    AC_ARG_WITH([slingshot], [AS_HELP_STRING([--with-slingshot], [Include Slingshot fabric support])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pnet/sshot/configure.m4:23
+
+    AC_ARG_WITH([cxi], [AS_HELP_STRING([--with-cxi(=DIR)],
+                                       [Include CXI service library support, optionally adding DIR/include, DIR/include/cxi, DIR/lib, and DIR/lib64 to the search path for headers and libraries])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pnet/sshot/configure.m4:27
+
+    AC_ARG_WITH([cxi-libdir],
+                [AS_HELP_STRING([--with-cxi-libdir=DIR],
+                                [Search for CXI libraries in DIR])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pnet/sshot/configure.m4:32
+
+    AC_ARG_WITH([pbs],
+           [AS_HELP_STRING([--with-pbs],
+                           [Build PBS scheduler component (default: yes)])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/prm/pbs/configure.m4:32
 
     AC_ARG_WITH([munge],
                 [AS_HELP_STRING([--with-munge=DIR],

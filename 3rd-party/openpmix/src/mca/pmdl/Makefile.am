@@ -31,6 +31,7 @@ libmca_pmdl_la_SOURCES =
 headers = pmdl.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

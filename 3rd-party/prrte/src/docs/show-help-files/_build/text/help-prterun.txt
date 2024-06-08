@@ -81,9 +81,6 @@ option to the help request as "--help <option>".
 | "--stop-in-app"      | Direct the specified processes to stop at an  |
 |                      | application-controlled location               |
 +----------------------+-----------------------------------------------+
-| "--test-suicide      | Direct that the specified daemon suicide      |
-| <arg0>"              | after delay                                   |
-+----------------------+-----------------------------------------------+
 | "--do-not-launch"    | Perform all necessary operations to prepare   |
 |                      | to launch the application, but do not         |
 |                      | actually launch it (usually used to test      |

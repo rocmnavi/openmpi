@@ -12,9 +12,9 @@
 
 BEGIN_C_DECLS
 
-PMIX_EXPORT extern const pmix_event_string_t pmix_event_strings[164];
+PMIX_EXPORT extern const pmix_event_string_t pmix_event_strings[163];
 
-#define PMIX_EVENT_INDEX_BOUNDARY 163
+#define PMIX_EVENT_INDEX_BOUNDARY 162
 
 END_C_DECLS
 

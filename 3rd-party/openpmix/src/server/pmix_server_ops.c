@@ -8,8 +8,8 @@
  * Copyright (c) 2016-2019 Mellanox Technologies, Inc.
  *                         All rights reserved.
  * Copyright (c) 2016-2020 IBM Corporation.  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
- * Copyright (c) 2022      Triad National Security, LLC. All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2022-2023 Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -61,7 +61,7 @@
 #include "src/common/pmix_attributes.h"
 #include "src/common/pmix_iof.h"
 #include "src/hwloc/pmix_hwloc.h"
-#include "src/mca/bfrops/bfrops.h"
+#include "src/mca/bfrops/base/base.h"
 #include "src/mca/gds/base/base.h"
 #include "src/mca/plog/plog.h"
 #include "src/mca/pnet/pnet.h"
@@ -126,7 +126,8 @@ pmix_server_module_t pmix_host_server = {
     .push_stdin = NULL,
     .group = NULL,
     .fabric = NULL,
-    .client_connected2 = NULL
+    .client_connected2 = NULL,
+    .session_control = NULL
 };
 
 pmix_status_t pmix_server_abort(pmix_peer_t *peer, pmix_buffer_t *buf,
@@ -645,7 +646,7 @@ static pmix_status_t _collect_data(pmix_server_trkr_t *trk,
     pmix_status_t rc = PMIX_SUCCESS;
     pmix_rank_t rel_rank;
     pmix_nspace_caddy_t *nm;
-    bool found, data_added = false;
+    bool found, data_added;
     pmix_list_t rank_blobs;
     rank_blob_t *blob;
     uint32_t kmap_size;
@@ -703,9 +704,6 @@ static pmix_status_t _collect_data(pmix_server_trkr_t *trk,
                 }
                 PMIX_DESTRUCT(&cb);
             }
-
-            key_count = PMIX_VALUE_ARRAY_GET_BASE(key_count_array, uint32_t);
-
             for (i = 0; i < PMIx_Argv_count(kmap); i++) {
                 pmix_buffer_t tmp;
                 size_t kname_size;
@@ -759,7 +757,7 @@ static pmix_status_t _collect_data(pmix_server_trkr_t *trk,
                 rc = PMIX_ERR_NOT_FOUND;
                 PMIX_ERROR_LOG(rc);
                 PMIX_DESTRUCT(&cb);
-                PMIX_DESTRUCT(&rank_blobs);
+                PMIX_LIST_DESTRUCT(&rank_blobs);
                 PMIX_RELEASE(pbkt);
                 goto cleanup;
             }
@@ -770,49 +768,17 @@ static pmix_status_t _collect_data(pmix_server_trkr_t *trk,
             if (PMIX_SUCCESS != rc) {
                 PMIX_ERROR_LOG(rc);
                 PMIX_DESTRUCT(&cb);
-                PMIX_DESTRUCT(&rank_blobs);
+                PMIX_LIST_DESTRUCT(&rank_blobs);
                 PMIX_RELEASE(pbkt);
                 goto cleanup;
             }
+            data_added = false;
             PMIX_CONSTRUCT(&cb, pmix_cb_t);
             cb.proc = &pcs;
             cb.scope = PMIX_REMOTE;
             cb.copy = true;
             PMIX_GDS_FETCH_KV(rc, pmix_globals.mypeer, &cb);
             if (PMIX_SUCCESS == rc) {
-                /* calculate the throughout rank */
-                rel_rank = 0;
-                found = false;
-                if (pmix_list_get_size(&trk->nslist) == 1) {
-                    found = true;
-                } else {
-                    PMIX_LIST_FOREACH (nm, &trk->nslist, pmix_nspace_caddy_t) {
-                        if (0 == strcmp(nm->ns->nspace, pcs.nspace)) {
-                            found = true;
-                            break;
-                        }
-                        rel_rank += nm->ns->nprocs;
-                    }
-                }
-                if (false == found) {
-                    rc = PMIX_ERR_NOT_FOUND;
-                    PMIX_ERROR_LOG(rc);
-                    PMIX_DESTRUCT(&cb);
-                    PMIX_DESTRUCT(&rank_blobs);
-                    goto cleanup;
-                }
-                rel_rank += pcs.rank;
-
-                /* pack the relative rank */
-                pbkt = PMIX_NEW(pmix_buffer_t);
-                PMIX_BFROPS_PACK(rc, pmix_globals.mypeer, pbkt, &rel_rank, 1, PMIX_PROC_RANK);
-                if (PMIX_SUCCESS != rc) {
-                    PMIX_ERROR_LOG(rc);
-                    PMIX_DESTRUCT(&cb);
-                    PMIX_DESTRUCT(&rank_blobs);
-                    PMIX_RELEASE(pbkt);
-                    goto cleanup;
-                }
                 /* pack the returned kval's */
                 PMIX_LIST_FOREACH (kv, &cb.kvs, pmix_kval_t) {
                     rc = pmix_gds_base_modex_pack_kval(kmap_type, pbkt, &kmap, kv);
@@ -834,6 +800,9 @@ static pmix_status_t _collect_data(pmix_server_trkr_t *trk,
                 pbkt = NULL;
             }
             PMIX_DESTRUCT(&cb);
+            if (NULL != pbkt) {
+                PMIX_RELEASE(pbkt);
+            }
         }
         /* mark the collection type so we can check on the
          * receiving end that all participants did the same. Note
@@ -2602,7 +2571,8 @@ static void intermed_step(pmix_status_t status, void *cbdata)
         /* let the callback function respond for us */
         return;
     }
-    if (PMIX_OPERATION_SUCCEEDED == rc) {
+    if (PMIX_OPERATION_SUCCEEDED == rc ||
+        PMIX_ERR_NOT_SUPPORTED == rc) {
         rc = PMIX_SUCCESS; // local_cbfunc will not be called
     }
 
@@ -2864,7 +2834,10 @@ pmix_status_t pmix_server_alloc(pmix_peer_t *peer, pmix_buffer_t *buf,
     pmix_proc_t proc;
     pmix_alloc_directive_t directive;
 
-    pmix_output_verbose(2, pmix_server_globals.base_output, "recvd query from client");
+    pmix_output_verbose(2, pmix_server_globals.base_output,
+                        "%s recvd allocate request from client %s",
+                        PMIX_NAME_PRINT(&pmix_globals.myid),
+                        PMIX_PEER_PRINT(peer));
 
     if (NULL == pmix_host_server.allocate) {
         return PMIX_ERR_NOT_SUPPORTED;
@@ -3006,13 +2979,11 @@ pmix_status_t pmix_server_job_ctrl(pmix_peer_t *peer, pmix_buffer_t *buf,
                 /* we need to find the precise peer - we can only
                  * do cleanup for a local client */
                 for (m = 0; m < pmix_server_globals.clients.size; m++) {
-                    if (NULL
-                        == (pr = (pmix_peer_t *)
-                                pmix_pointer_array_get_item(&pmix_server_globals.clients, m))) {
+                    pr = (pmix_peer_t *)pmix_pointer_array_get_item(&pmix_server_globals.clients, m);
+                    if (NULL == pr) {
                         continue;
                     }
-                    if (0
-                        != strncmp(pr->info->pname.nspace, cd->targets[n].nspace, PMIX_MAX_NSLEN)) {
+                    if (!PMIX_CHECK_NSPACE(pr->info->pname.nspace, cd->targets[n].nspace)) {
                         continue;
                     }
                     if (pr->info->pname.rank == cd->targets[n].rank) {
@@ -3765,6 +3736,11 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
     pmix_kval_t kp;
     pmix_value_t val;
     pmix_data_array_t darray;
+    char **nspaces = NULL;
+    pmix_proc_t proc;
+    pmix_buffer_t pbkt;
+    pmix_kval_t *kptr;
+    pmix_cb_t cb;
 
     PMIX_ACQUIRE_OBJECT(scd);
     PMIX_HIDE_UNUSED_PARAMS(sd, args);
@@ -3783,9 +3759,8 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
                         "server:grpcbfunc processing WITH %d CALLBACKS",
                         (int) pmix_list_get_size(&trk->local_cbs));
 
-    /* the tracker's "hybrid" field is used to indicate construct
-     * vs destruct - true is destruct */
-    if (trk->hybrid) {
+    // if this is a destruct operation, there is nothing more to do
+    if (PMIX_GROUP_DESTRUCT == trk->grpop) {
         goto release;
     }
 
@@ -3810,22 +3785,21 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
      * store it for us before releasing the group members */
     if (NULL != bo) {
         /* get the indices of the types of data */
-        p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_ENDPT_DATA);
+        p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_ENDPT_DATA, NULL);
         endptidx = p->index;
-        p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_INFO);
+        p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_INFO, NULL);
         infoidx = p->index;
 
         PMIX_CONSTRUCT(&xfer, pmix_buffer_t);
         PMIX_LOAD_BUFFER(pmix_globals.mypeer, &xfer, bo->bytes, bo->size);
         PMIX_CONSTRUCT(&nslist, pmix_list_t);
-        /* Collect the nptr list with uniq GDS components of all local
-         * participants. It does not allow multiple storing to the
-         * same GDS if participants have mutual GDS. */
+        /* Collect the nptr list with unique nspaces */
         PMIX_LIST_FOREACH (cd, &trk->local_cbs, pmix_server_caddy_t) {
             // see if we already have this nspace
             found = false;
             PMIX_LIST_FOREACH (nptr, &nslist, pmix_nspace_caddy_t) {
-                if (0 == strcmp(nptr->ns->compat.gds->name, cd->peer->nptr->compat.gds->name)) {
+                // if we already have this nspace, ignore this entry
+                if (PMIX_CHECK_NSPACE(nptr->ns->nspace, cd->peer->nptr->nspace)) {
                     found = true;
                     break;
                 }
@@ -3861,18 +3835,24 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
                 PMIX_DESTRUCT(&xfer);
                 goto release;
             }
-            PMIX_CONSTRUCT(&dblob, pmix_buffer_t);
-            PMIX_LOAD_BUFFER(pmix_globals.mypeer, &dblob, pbo.bytes, pbo.size);
-            PMIX_BYTE_OBJECT_DESTRUCT(&pbo);
 
             if (index == endptidx) {
                 PMIX_LIST_FOREACH (nptr, &nslist, pmix_nspace_caddy_t) {
+                    PMIX_CONSTRUCT(&dblob, pmix_buffer_t);
+                    ret = pmix_bfrops_base_embed_payload(&dblob, &pbo);  // does NOT alter the pbo
+                    if (PMIX_SUCCESS != ret) {
+                        PMIX_ERROR_LOG(ret);
+                        break;
+                    }
                     PMIX_GDS_STORE_MODEX(ret, nptr->ns, &dblob, trk);
                     if (PMIX_SUCCESS != ret) {
                         PMIX_ERROR_LOG(ret);
                         break;
                     }
+                    PMIX_DESTRUCT(&dblob);
                 }
+                PMIX_BYTE_OBJECT_DESTRUCT(&pbo);
+
             } else if (index == infoidx) {
                 /* this is packed differently, at least for now, so we have
                  * to unpack it and process it directly */
@@ -3881,6 +3861,9 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
                      * of the contributing proc followed by the pmix_info_t they
                      * provided */
                     ret = PMIX_SUCCESS;
+                    PMIX_CONSTRUCT(&dblob, pmix_buffer_t);
+                    PMIX_LOAD_BUFFER(pmix_globals.mypeer, &dblob, pbo.bytes, pbo.size);
+                    PMIX_BYTE_OBJECT_DESTRUCT(&pbo);
                     while (PMIX_SUCCESS == ret) {
                         cnt = 1;
                         PMIX_BFROPS_UNPACK(ret, pmix_globals.mypeer, &dblob, &pbo, &cnt, PMIX_BYTE_OBJECT);
@@ -3926,7 +3909,7 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
                             PMIX_INFO_FREE(grpinfo, ngrpinfo);
                             goto release;
                         }
-                        /* reconstruct each value as a qualified one based
+                        /* reconstruct each value as a qualified one basd
                          * on the ctxid */
                         PMIX_CONSTRUCT(&kp, pmix_kval_t);
                         kp.value = &val;
@@ -3958,9 +3941,9 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
                         PMIX_DESTRUCT(&rankblob);
                         ret = PMIX_SUCCESS;
                     }
+                    PMIX_DESTRUCT(&dblob);
                 }
             }
-            PMIX_DESTRUCT(&dblob);
             /* get the next blob */
             cnt = 1;
             PMIX_BFROPS_UNPACK(ret, pmix_globals.mypeer, &xfer, &index, &cnt, PMIX_UINT32);
@@ -3973,6 +3956,24 @@ static void _grpcbfunc(int sd, short args, void *cbdata)
     }
 
 release:
+    /* find the unique nspaces that are participating */
+    PMIX_LIST_FOREACH (cd, &trk->local_cbs, pmix_server_caddy_t) {
+        if (NULL == nspaces) {
+            PMIx_Argv_append_nosize(&nspaces, cd->peer->info->pname.nspace);
+        } else {
+            found = false;
+            for (n = 0; NULL != nspaces[n]; n++) {
+                if (0 == strcmp(nspaces[n], cd->peer->info->pname.nspace)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                PMIx_Argv_append_nosize(&nspaces, cd->peer->info->pname.nspace);
+            }
+        }
+    }
+
     /* loop across all procs in the tracker, sending them the reply */
     PMIX_LIST_FOREACH (cd, &trk->local_cbs, pmix_server_caddy_t) {
         reply = PMIX_NEW(pmix_buffer_t);
@@ -3986,7 +3987,7 @@ release:
             PMIX_RELEASE(reply);
             break;
         }
-        if (!trk->hybrid) {
+        if (PMIX_SUCCESS == scd->status && PMIX_GROUP_CONSTRUCT == trk->grpop) {
             /* add the final membership */
             PMIX_BFROPS_PACK(ret, cd->peer, reply, &nmembers, 1, PMIX_SIZE);
             if (PMIX_SUCCESS != ret) {
@@ -4009,7 +4010,77 @@ release:
                 PMIX_RELEASE(reply);
                 break;
             }
+            /* loop across all participating nspaces and include their
+             * job-related info */
+            for (n = 0; NULL != nspaces[n]; n++) {
+                /* if this is the local proc's own nspace, then
+                 * ignore it - it already has this info */
+                if (PMIX_CHECK_NSPACE(nspaces[n], cd->peer->info->pname.nspace)) {
+                    continue;
+                }
+
+                /* this is a local request, so give the gds the option
+                 * of returning a copy of the data, or a pointer to
+                 * local storage */
+                /* add the job-level info, if necessary */
+                PMIX_LOAD_PROCID(&proc, nspaces[n], PMIX_RANK_WILDCARD);
+                PMIX_CONSTRUCT(&cb, pmix_cb_t);
+                /* this is for a local client, so give the gds the
+                 * option of returning a complete copy of the data,
+                 * or returning a pointer to local storage */
+                cb.proc = &proc;
+                cb.scope = PMIX_SCOPE_UNDEF;
+                cb.copy = false;
+                PMIX_GDS_FETCH_KV(ret, cd->peer, &cb);
+                if (PMIX_SUCCESS != ret) {
+                    /* try getting it from our storage */
+                    PMIX_GDS_FETCH_KV(ret, pmix_globals.mypeer, &cb);
+                    if (PMIX_SUCCESS != ret) {
+                        PMIX_ERROR_LOG(ret);
+                        PMIX_RELEASE(reply);
+                        PMIX_DESTRUCT(&cb);
+                        goto done;
+                    }
+                }
+                PMIX_CONSTRUCT(&pbkt, pmix_buffer_t);
+                /* pack the nspace name */
+                PMIX_BFROPS_PACK(ret, cd->peer, &pbkt, &nspaces[n], 1, PMIX_STRING);
+                if (PMIX_SUCCESS != ret) {
+                    PMIX_ERROR_LOG(ret);
+                    PMIX_RELEASE(reply);
+                    PMIX_DESTRUCT(&pbkt);
+                    PMIX_DESTRUCT(&cb);
+                    goto done;
+                }
+                PMIX_LIST_FOREACH (kptr, &cb.kvs, pmix_kval_t) {
+                    PMIX_BFROPS_PACK(ret, cd->peer, &pbkt, kptr, 1, PMIX_KVAL);
+                    if (PMIX_SUCCESS != ret) {
+                        PMIX_ERROR_LOG(ret);
+                        PMIX_RELEASE(reply);
+                        PMIX_DESTRUCT(&pbkt);
+                        PMIX_DESTRUCT(&cb);
+                        goto done;
+                    }
+                }
+                PMIX_DESTRUCT(&cb);
+
+
+                PMIX_UNLOAD_BUFFER(&pbkt, pbo.bytes, pbo.size);
+                PMIX_BFROPS_PACK(ret, cd->peer, reply, &pbo, 1, PMIX_BYTE_OBJECT);
+                PMIX_BYTE_OBJECT_DESTRUCT(&pbo);
+                if (PMIX_SUCCESS != ret) {
+                    PMIX_ERROR_LOG(ret);
+                    PMIX_RELEASE(reply);
+                    PMIX_DESTRUCT(&pbkt);
+                    PMIX_DESTRUCT(&cb);
+                    goto done;
+                }
+
+                PMIX_DESTRUCT(&pbkt);
+            }
         }
+
+  done:
         pmix_output_verbose(2, pmix_server_globals.group_output,
                             "server:grp_cbfunc reply being sent to %s:%u",
                             cd->peer->info->pname.nspace, cd->peer->info->pname.rank);
@@ -4022,6 +4093,11 @@ release:
     /* remove the tracker from the list */
     pmix_list_remove_item(&pmix_server_globals.collectives, &trk->super);
     PMIX_RELEASE(trk);
+
+    // cleanup
+    if (NULL != nspaces) {
+        PMIx_Argv_free(nspaces);
+    }
 
     /* we are done */
     if (NULL != scd->cbfunc.relfn) {
@@ -4101,7 +4177,6 @@ static void grp_timeout(int sd, short args, void *cbdata)
     }
 
     trk->event_active = false;
-
     /* record this group as failed */
     PMIx_Argv_append_nosize(&pmix_server_globals.failedgrps, trk->id);
     /* remove the tracker from the list */
@@ -4120,7 +4195,7 @@ pmix_status_t pmix_server_grpconstruct(pmix_server_caddy_t *cd, pmix_buffer_t *b
     char *grpid;
     pmix_proc_t *procs;
     pmix_info_t *info = NULL, *iptr = NULL, *grpinfoptr = NULL;
-    size_t n, ninfo, ninf, nprocs, n2, niptr, ngrpinfo = 0;
+    size_t n, ninfo, ninf, niptr, nprocs, n2, ngrpinfo = 0;
     pmix_server_trkr_t *trk;
     bool need_cxtid = false;
     bool match, force_local = false;
@@ -4266,7 +4341,7 @@ pmix_status_t pmix_server_grpconstruct(pmix_server_caddy_t *cd, pmix_buffer_t *b
          * upon completion of the construct operation */
         trk->collect_type = PMIX_COLLECT_YES;
         /* mark as being a construct operation */
-        trk->hybrid = false;
+        trk->grpop = PMIX_GROUP_CONSTRUCT;
         /* it is possible that different participants will
          * provide different attributes, so collect the
          * aggregate of them */
@@ -4490,7 +4565,7 @@ pmix_status_t pmix_server_grpconstruct(pmix_server_caddy_t *cd, pmix_buffer_t *b
             /* add the endpt data */
             PMIX_CONSTRUCT(&bucket, pmix_buffer_t);
             if (0 < bo.size) {
-                p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_ENDPT_DATA);
+                p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_ENDPT_DATA, NULL);
                 PMIX_BFROPS_PACK(rc, pmix_globals.mypeer, &bucket, &p->index, 1, PMIX_UINT32);
                 if (PMIX_SUCCESS != rc) {
                     PMIX_ERROR_LOG(rc);
@@ -4506,7 +4581,7 @@ pmix_status_t pmix_server_grpconstruct(pmix_server_caddy_t *cd, pmix_buffer_t *b
                 PMIX_BYTE_OBJECT_DESTRUCT(&bo);
             }
             if (0 < pmix_list_get_size(&trk->grpinfo)) {
-                p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_INFO);
+                p = pmix_hash_lookup_key(UINT32_MAX, PMIX_GROUP_INFO, NULL);
                 PMIX_BFROPS_PACK(rc, pmix_globals.mypeer, &bucket, &p->index, 1, PMIX_UINT32);
                 if (PMIX_SUCCESS != rc) {
                     PMIX_ERROR_LOG(rc);
@@ -4575,7 +4650,7 @@ pmix_status_t pmix_server_grpdestruct(pmix_server_caddy_t *cd, pmix_buffer_t *bu
     pmix_peer_t *peer = (pmix_peer_t *) cd->peer;
     int32_t cnt, m;
     pmix_status_t rc;
-    char *grpid;
+    char *grpid = NULL;
     pmix_info_t *info = NULL, *iptr;
     size_t n, ninfo, ninf, niptr;
     pmix_server_trkr_t *trk;
@@ -4679,7 +4754,7 @@ pmix_status_t pmix_server_grpdestruct(pmix_server_caddy_t *cd, pmix_buffer_t *bu
         }
         trk->collect_type = PMIX_COLLECT_NO;
         /* mark as being a destruct operation */
-        trk->hybrid = true;
+        trk->grpop = PMIX_GROUP_DESTRUCT;
         /* see if this destructor only references local processes */
         trk->local = true;
         for (n = 0; n < nmembers; n++) {
@@ -4689,12 +4764,22 @@ pmix_status_t pmix_server_grpdestruct(pmix_server_caddy_t *cd, pmix_buffer_t *bu
                 PMIX_RANK_LOCAL_NODE == members[n].rank) {
                 continue;
             }
-            /* see if it references a specific local proc */
+            /* see if it references a specific local proc - note that
+             * the member name could include rank=wildcard */
             match = false;
             for (m = 0; m < pmix_server_globals.clients.size; m++) {
                 pr = (pmix_peer_t *) pmix_pointer_array_get_item(&pmix_server_globals.clients, m);
                 if (NULL == pr) {
                     continue;
+                }
+                // cannot use PMIX_CHECK_PROCID here as pmix_peer_t includes a pname field
+                // and not a pmix_proc_t
+                if (PMIX_RANK_WILDCARD == members[n].rank ||
+                    PMIX_RANK_WILDCARD == pr->info->pname.rank) {
+                    if (PMIX_CHECK_NSPACE(members[n].nspace, pr->info->pname.nspace)) {
+                        match = true;
+                        break;
+                    }
                 }
                 if (PMIX_CHECK_NAMES(&members[n], &pr->info->pname)) {
                     match = true;
@@ -4803,6 +4888,8 @@ pmix_status_t pmix_server_grpdestruct(pmix_server_caddy_t *cd, pmix_buffer_t *bu
                 if (PMIX_OPERATION_SUCCEEDED == rc) {
                     /* let the grpcbfunc threadshift the result */
                     grpcbfunc(PMIX_SUCCESS, NULL, 0, trk, NULL, NULL);
+                    PMIX_PROC_FREE(members, nmembers);
+                    free(grpid);
                     return PMIX_SUCCESS;
                 }
                 /* remove the tracker from the list */
@@ -4849,6 +4936,8 @@ pmix_status_t pmix_server_grpdestruct(pmix_server_caddy_t *cd, pmix_buffer_t *bu
         /* remove the tracker from the list */
         pmix_list_remove_item(&pmix_server_globals.collectives, &trk->super);
         PMIX_RELEASE(trk);
+        PMIX_PROC_FREE(members, nmembers);
+        free(grpid);
         return rc;
     }
 
@@ -5152,6 +5241,71 @@ cleanup:
     return rc;
 }
 
+pmix_status_t pmix_server_refresh_cache(pmix_server_caddy_t *cd,
+                                        pmix_buffer_t *buf,
+                                        pmix_op_cbfunc_t cbfunc)
+{
+    pmix_proc_t p;
+    char *nspace;
+    int cnt;
+    pmix_status_t rc;
+    pmix_cb_t cb;
+    pmix_buffer_t *pbkt;
+    pmix_kval_t *kv;
+    PMIX_HIDE_UNUSED_PARAMS(cbfunc);
+
+    // unpack the ID of the proc being requested
+    cnt = 1;
+    PMIX_BFROPS_UNPACK(rc, cd->peer, buf, &nspace, &cnt, PMIX_STRING);
+    if (PMIX_SUCCESS != rc) {
+        PMIX_ERROR_LOG(rc);
+        return rc;
+    }
+    PMIX_LOAD_NSPACE(p.nspace, nspace);
+    free(nspace);
+
+    cnt = 1;
+    PMIX_BFROPS_UNPACK(rc, cd->peer, buf, &p.rank, &cnt, PMIX_PROC_RANK);
+    if (PMIX_SUCCESS != rc) {
+        PMIX_ERROR_LOG(rc);
+        return rc;
+    }
+
+    /* retrieve the data for the specific rank they are asking about */
+    PMIX_CONSTRUCT(&cb, pmix_cb_t);
+    cb.proc = &p;
+    cb.scope = PMIX_REMOTE;
+    cb.copy = false;
+    PMIX_GDS_FETCH_KV(rc, pmix_globals.mypeer, &cb);
+
+    // pack it up
+    pbkt = PMIX_NEW(pmix_buffer_t);
+    // start with the status
+    PMIX_BFROPS_PACK(rc, cd->peer, pbkt, &cb.status, 1, PMIX_STATUS);
+    if (PMIX_SUCCESS != rc) {
+        PMIX_ERROR_LOG(rc);
+        PMIX_RELEASE(pbkt);
+        return rc;
+    }
+    PMIX_LIST_FOREACH(kv, &cb.kvs, pmix_kval_t) {
+        PMIX_BFROPS_PACK(rc, cd->peer, pbkt, kv, 1, PMIX_KVAL);
+        if (PMIX_SUCCESS != rc) {
+            PMIX_ERROR_LOG(rc);
+            PMIX_RELEASE(pbkt);
+            return rc;
+        }
+    }
+    PMIX_DESTRUCT(&cb);
+
+    // send it back to the requestor
+    PMIX_SERVER_QUEUE_REPLY(rc, cd->peer, cd->hdr.tag, pbkt);
+    if (PMIX_SUCCESS != rc) {
+        PMIX_RELEASE(pbkt);
+    }
+
+    return PMIX_SUCCESS;
+}
+
 /*****    INSTANCE SERVER LIBRARY CLASSES    *****/
 static void gcon(pmix_grpinfo_t *p)
 {
@@ -5185,6 +5339,7 @@ static void tcon(pmix_server_trkr_t *t)
     t->info = NULL;
     t->ninfo = 0;
     PMIX_CONSTRUCT(&t->grpinfo, pmix_list_t);
+    t->grpop = PMIX_GROUP_NONE;
     /* this needs to be set explicitly */
     t->collect_type = PMIX_COLLECT_INVALID;
     t->modexcbfunc = NULL;
@@ -5205,15 +5360,12 @@ static void tdes(pmix_server_trkr_t *t)
     if (NULL != t->info) {
         PMIX_INFO_FREE(t->info, t->ninfo);
     }
-    pmix_nspace_caddy_t *nm, *nm_next;
-    PMIX_LIST_FOREACH_SAFE (nm, nm_next, &t->nslist, pmix_nspace_caddy_t) {
-        pmix_list_remove_item(&t->nslist, &nm->super);
-        PMIX_RELEASE(nm);
-    }
     PMIX_LIST_DESTRUCT(&t->grpinfo);
-    PMIX_DESTRUCT(&t->nslist);
+    PMIX_LIST_DESTRUCT(&t->nslist);
 }
-PMIX_CLASS_INSTANCE(pmix_server_trkr_t, pmix_list_item_t, tcon, tdes);
+PMIX_CLASS_INSTANCE(pmix_server_trkr_t,
+                    pmix_list_item_t,
+                    tcon, tdes);
 
 static void cdcon(pmix_server_caddy_t *cd)
 {
@@ -5239,7 +5391,9 @@ static void cddes(pmix_server_caddy_t *cd)
         PMIX_INFO_FREE(cd->info, cd->ninfo);
     }
 }
-PMIX_CLASS_INSTANCE(pmix_server_caddy_t, pmix_list_item_t, cdcon, cddes);
+PMIX_CLASS_INSTANCE(pmix_server_caddy_t,
+                    pmix_list_item_t,
+                    cdcon, cddes);
 
 static void scadcon(pmix_setup_caddy_t *p)
 {
@@ -5295,7 +5449,9 @@ static void scaddes(pmix_setup_caddy_t *p)
         free(p->flags.directory);
     }
 }
-PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_setup_caddy_t, pmix_object_t, scadcon, scaddes);
+PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_setup_caddy_t,
+                                pmix_object_t,
+                                scadcon, scaddes);
 
 PMIX_CLASS_INSTANCE(pmix_trkr_caddy_t, pmix_object_t, NULL, NULL);
 
@@ -5309,13 +5465,16 @@ static void dmdes(pmix_dmdx_remote_t *p)
         PMIX_RELEASE(p->cd);
     }
 }
-PMIX_CLASS_INSTANCE(pmix_dmdx_remote_t, pmix_list_item_t, dmcon, dmdes);
+PMIX_CLASS_INSTANCE(pmix_dmdx_remote_t,
+                    pmix_list_item_t,
+                    dmcon, dmdes);
 
 static void dmrqcon(pmix_dmdx_request_t *p)
 {
     memset(&p->ev, 0, sizeof(pmix_event_t));
     p->event_active = false;
     p->lcd = NULL;
+    p->key = NULL;
 }
 static void dmrqdes(pmix_dmdx_request_t *p)
 {
@@ -5325,8 +5484,13 @@ static void dmrqdes(pmix_dmdx_request_t *p)
     if (NULL != p->lcd) {
         PMIX_RELEASE(p->lcd);
     }
+    if (NULL != p->key) {
+        free(p->key);
+    }
 }
-PMIX_CLASS_INSTANCE(pmix_dmdx_request_t, pmix_list_item_t, dmrqcon, dmrqdes);
+PMIX_CLASS_INSTANCE(pmix_dmdx_request_t,
+                    pmix_list_item_t,
+                    dmrqcon, dmrqdes);
 
 static void lmcon(pmix_dmdx_local_t *p)
 {
@@ -5342,7 +5506,9 @@ static void lmdes(pmix_dmdx_local_t *p)
     }
     PMIX_LIST_DESTRUCT(&p->loc_reqs);
 }
-PMIX_CLASS_INSTANCE(pmix_dmdx_local_t, pmix_list_item_t, lmcon, lmdes);
+PMIX_CLASS_INSTANCE(pmix_dmdx_local_t,
+                    pmix_list_item_t,
+                    lmcon, lmdes);
 
 static void prevcon(pmix_peer_events_info_t *p)
 {
@@ -5359,7 +5525,9 @@ static void prevdes(pmix_peer_events_info_t *p)
         PMIX_PROC_FREE(p->affected, p->naffected);
     }
 }
-PMIX_CLASS_INSTANCE(pmix_peer_events_info_t, pmix_list_item_t, prevcon, prevdes);
+PMIX_CLASS_INSTANCE(pmix_peer_events_info_t,
+                    pmix_list_item_t,
+                    prevcon, prevdes);
 
 static void regcon(pmix_regevents_info_t *p)
 {
@@ -5369,7 +5537,9 @@ static void regdes(pmix_regevents_info_t *p)
 {
     PMIX_LIST_DESTRUCT(&p->peers);
 }
-PMIX_CLASS_INSTANCE(pmix_regevents_info_t, pmix_list_item_t, regcon, regdes);
+PMIX_CLASS_INSTANCE(pmix_regevents_info_t,
+                    pmix_list_item_t,
+                    regcon, regdes);
 
 static void ilcon(pmix_inventory_rollup_t *p)
 {
@@ -5391,9 +5561,13 @@ static void ildes(pmix_inventory_rollup_t *p)
     PMIX_DESTRUCT_LOCK(&p->lock);
     PMIX_LIST_DESTRUCT(&p->payload);
 }
-PMIX_CLASS_INSTANCE(pmix_inventory_rollup_t, pmix_object_t, ilcon, ildes);
+PMIX_CLASS_INSTANCE(pmix_inventory_rollup_t,
+                    pmix_object_t,
+                    ilcon, ildes);
 
-PMIX_CLASS_INSTANCE(pmix_group_caddy_t, pmix_list_item_t, NULL, NULL);
+PMIX_CLASS_INSTANCE(pmix_group_caddy_t,
+                    pmix_list_item_t,
+                    NULL, NULL);
 
 static void iocon(pmix_iof_cache_t *p)
 {
@@ -5408,7 +5582,9 @@ static void iodes(pmix_iof_cache_t *p)
         PMIX_INFO_FREE(p->info, p->ninfo);
     }
 }
-PMIX_CLASS_INSTANCE(pmix_iof_cache_t, pmix_list_item_t, iocon, iodes);
+PMIX_CLASS_INSTANCE(pmix_iof_cache_t,
+                    pmix_list_item_t,
+                    iocon, iodes);
 
 static void pscon(pmix_pset_t *p)
 {
@@ -5425,4 +5601,6 @@ static void psdes(pmix_pset_t *p)
         free(p->members);
     }
 }
-PMIX_CLASS_INSTANCE(pmix_pset_t, pmix_list_item_t, pscon, psdes);
+PMIX_CLASS_INSTANCE(pmix_pset_t,
+                    pmix_list_item_t,
+                    pscon, psdes);

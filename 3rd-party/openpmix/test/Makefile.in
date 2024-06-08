@@ -128,6 +128,7 @@ TESTS = run_tests00.pl run_tests01.pl run_tests02.pl run_tests03.pl \
 subdir = test
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
+	$(top_srcdir)/config/oac/oac_check_os_flavors.m4 \
 	$(top_srcdir)/config/oac/oac_check_package.m4 \
 	$(top_srcdir)/config/oac/oac_check_vendor.m4 \
 	$(top_srcdir)/config/oac/oac_init.m4 \
@@ -149,8 +150,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/config/pmix_check_compiler_version.m4 \
 	$(top_srcdir)/config/pmix_check_curl.m4 \
 	$(top_srcdir)/config/pmix_check_jansson.m4 \
-	$(top_srcdir)/config/pmix_check_lock.m4 \
-	$(top_srcdir)/config/pmix_check_os_flavors.m4 \
+	$(top_srcdir)/config/pmix_check_lustre.m4 \
 	$(top_srcdir)/config/pmix_check_pthread_pids.m4 \
 	$(top_srcdir)/config/pmix_check_slurm.m4 \
 	$(top_srcdir)/config/pmix_check_visibility.m4 \
@@ -175,13 +175,15 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pdl/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/configure.m4 \
-	$(top_srcdir)/src/mca/common/dstore/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds12/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds21/configure.m4 \
+	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
+	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
 	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv4/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv6/configure.m4 \
 	$(top_srcdir)/src/mca/pif/linux_ipv6/configure.m4 \
@@ -190,12 +192,20 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/config/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/env/configure.m4 \
 	$(top_srcdir)/src/mca/plog/syslog/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/opa/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/simptest/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/sshot/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/tcp/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/usnic/configure.m4 \
+	$(top_srcdir)/src/mca/prm/alps/configure.m4 \
+	$(top_srcdir)/src/mca/prm/hpesmf/configure.m4 \
+	$(top_srcdir)/src/mca/prm/pbs/configure.m4 \
 	$(top_srcdir)/src/mca/prm/slurm/configure.m4 \
 	$(top_srcdir)/src/mca/psec/munge/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/test/configure.m4 \
+	$(top_srcdir)/src/mca/pstrg/lustre/configure.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -538,7 +548,7 @@ TEST_LOGS = $(am__test_logs2:.test.log=.log)
 TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/./config/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
-DIST_SUBDIRS = simple python
+DIST_SUBDIRS = simple sshot util python
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/run_tests00.pl.in \
 	$(srcdir)/run_tests01.pl.in $(srcdir)/run_tests02.pl.in \
 	$(srcdir)/run_tests03.pl.in $(srcdir)/run_tests04.pl.in \
@@ -651,13 +661,6 @@ MCA_pmix_bfrops_DSO_SUBDIRS = @MCA_pmix_bfrops_DSO_SUBDIRS@
 MCA_pmix_bfrops_STATIC_COMPONENTS = @MCA_pmix_bfrops_STATIC_COMPONENTS@
 MCA_pmix_bfrops_STATIC_LTLIBS = @MCA_pmix_bfrops_STATIC_LTLIBS@
 MCA_pmix_bfrops_STATIC_SUBDIRS = @MCA_pmix_bfrops_STATIC_SUBDIRS@
-MCA_pmix_common_ALL_COMPONENTS = @MCA_pmix_common_ALL_COMPONENTS@
-MCA_pmix_common_ALL_SUBDIRS = @MCA_pmix_common_ALL_SUBDIRS@
-MCA_pmix_common_DSO_COMPONENTS = @MCA_pmix_common_DSO_COMPONENTS@
-MCA_pmix_common_DSO_SUBDIRS = @MCA_pmix_common_DSO_SUBDIRS@
-MCA_pmix_common_STATIC_COMPONENTS = @MCA_pmix_common_STATIC_COMPONENTS@
-MCA_pmix_common_STATIC_LTLIBS = @MCA_pmix_common_STATIC_LTLIBS@
-MCA_pmix_common_STATIC_SUBDIRS = @MCA_pmix_common_STATIC_SUBDIRS@
 MCA_pmix_gds_ALL_COMPONENTS = @MCA_pmix_gds_ALL_COMPONENTS@
 MCA_pmix_gds_ALL_SUBDIRS = @MCA_pmix_gds_ALL_SUBDIRS@
 MCA_pmix_gds_DSO_COMPONENTS = @MCA_pmix_gds_DSO_COMPONENTS@
@@ -756,13 +759,6 @@ MCA_pmix_psensor_DSO_SUBDIRS = @MCA_pmix_psensor_DSO_SUBDIRS@
 MCA_pmix_psensor_STATIC_COMPONENTS = @MCA_pmix_psensor_STATIC_COMPONENTS@
 MCA_pmix_psensor_STATIC_LTLIBS = @MCA_pmix_psensor_STATIC_LTLIBS@
 MCA_pmix_psensor_STATIC_SUBDIRS = @MCA_pmix_psensor_STATIC_SUBDIRS@
-MCA_pmix_pshmem_ALL_COMPONENTS = @MCA_pmix_pshmem_ALL_COMPONENTS@
-MCA_pmix_pshmem_ALL_SUBDIRS = @MCA_pmix_pshmem_ALL_SUBDIRS@
-MCA_pmix_pshmem_DSO_COMPONENTS = @MCA_pmix_pshmem_DSO_COMPONENTS@
-MCA_pmix_pshmem_DSO_SUBDIRS = @MCA_pmix_pshmem_DSO_SUBDIRS@
-MCA_pmix_pshmem_STATIC_COMPONENTS = @MCA_pmix_pshmem_STATIC_COMPONENTS@
-MCA_pmix_pshmem_STATIC_LTLIBS = @MCA_pmix_pshmem_STATIC_LTLIBS@
-MCA_pmix_pshmem_STATIC_SUBDIRS = @MCA_pmix_pshmem_STATIC_SUBDIRS@
 MCA_pmix_psquash_ALL_COMPONENTS = @MCA_pmix_psquash_ALL_COMPONENTS@
 MCA_pmix_psquash_ALL_SUBDIRS = @MCA_pmix_psquash_ALL_SUBDIRS@
 MCA_pmix_psquash_DSO_COMPONENTS = @MCA_pmix_psquash_DSO_COMPONENTS@
@@ -901,7 +897,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 libpmi2_so_version = @libpmi2_so_version@
 libpmi_so_version = @libpmi_so_version@
-libpmix_mca_common_dstore_so_version = @libpmix_mca_common_dstore_so_version@
 libpmix_so_version = @libpmix_so_version@
 localedir = @localedir@
 localstatedir = @localstatedir@
@@ -927,6 +922,9 @@ pmixminor = @pmixminor@
 pmixnumeric = @pmixnumeric@
 pmixrelease = @pmixrelease@
 prefix = @prefix@
+prm_alps_CPPFLAGS = @prm_alps_CPPFLAGS@
+prm_alps_LDFLAGS = @prm_alps_LDFLAGS@
+prm_alps_LIBS = @prm_alps_LIBS@
 prm_slurm_CPPFLAGS = @prm_slurm_CPPFLAGS@
 prm_slurm_LDFLAGS = @prm_slurm_LDFLAGS@
 prm_slurm_LIBS = @prm_slurm_LIBS@
@@ -935,6 +933,9 @@ psdir = @psdir@
 psec_munge_CPPFLAGS = @psec_munge_CPPFLAGS@
 psec_munge_LDFLAGS = @psec_munge_LDFLAGS@
 psec_munge_LIBS = @psec_munge_LIBS@
+pstrg_lustre_CPPFLAGS = @pstrg_lustre_CPPFLAGS@
+pstrg_lustre_LDFLAGS = @pstrg_lustre_LDFLAGS@
+pstrg_lustre_LIBS = @pstrg_lustre_LIBS@
 pyexecdir = @pyexecdir@
 pythondir = @pythondir@
 runstatedir = @runstatedir@
@@ -953,7 +954,7 @@ top_srcdir = @top_srcdir@
 
 # these tests use internal symbols
 # use --disable-visibility
-@WANT_HIDDEN_FALSE@SUBDIRS = simple $(am__append_1)
+@WANT_HIDDEN_FALSE@SUBDIRS = simple sshot util $(am__append_1)
 headers = test_common.h cli_stages.h server_callbacks.h utils.h test_fence.h \
         test_publish.h test_spawn.h test_cd.h test_resolve_peers.h test_error.h \
         test_replace.h test_internal.h test_server.h

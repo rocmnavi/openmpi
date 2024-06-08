@@ -16,6 +16,7 @@
  * Copyright (c) 2013-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2015      Mellanox Technologies, Inc.  All rights reserved.
  * Copyright (c) 2021-2022 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2024      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -42,7 +43,6 @@ static uint32_t nprocs;
 static pmix_proc_t myproc;
 static uint32_t getcount = 0;
 static int msgnum = 0;
-static int exitstatus = 0;
 
 #define PMIX_WAIT_FOR_COMPLETION(a) \
     do {                            \
@@ -70,14 +70,12 @@ static void valcbfunc(pmix_status_t status, pmix_value_t *val, void *cbdata)
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s returned wrong type: %d",
                             myproc.rank, msgnum, key, val->type);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
             if (1234 != val->data.uint64) {
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s returned wrong value: %d",
                             myproc.rank, msgnum, key, (int) val->data.uint64);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
         } else if (NULL != strstr(key, "remote")) {
@@ -85,20 +83,17 @@ static void valcbfunc(pmix_status_t status, pmix_value_t *val, void *cbdata)
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s returned wrong type: %d",
                             myproc.rank, msgnum, key, val->type);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
             if (0 != strcmp(val->data.string, "1234")) {
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s returned wrong value: %s",
                             myproc.rank, msgnum, key, val->data.string);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
         } else {
             pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb returned wrong key: %s", myproc.rank, msgnum, key);
             ++msgnum;
-            exitstatus = 1;
             goto done;
         }
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s returned correctly", myproc.rank, msgnum, key);
@@ -106,7 +101,6 @@ static void valcbfunc(pmix_status_t status, pmix_value_t *val, void *cbdata)
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Get_nb Key %s failed: %s", myproc.rank, msgnum, key,
                     PMIx_Error_string(status));
         ++msgnum;
-        exitstatus = 1;
     }
 done:
     free(key);
@@ -172,7 +166,6 @@ int main(int argc, char **argv)
     if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, PMIX_JOB_SIZE, NULL, 0, &val))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Get job size failed: %s", myproc.rank, msgnum, PMIx_Error_string(rc));
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
     nprocs = val->data.uint32;
@@ -181,33 +174,39 @@ int main(int argc, char **argv)
     ++msgnum;
 
     /* put a few values */
-    (void) asprintf(&tmp, "%s-%d-internal", myproc.nspace, myproc.rank);
+    if (0 > asprintf(&tmp, "%s-%d-internal", myproc.nspace, myproc.rank)) {
+        errno = ENOMEM;
+        abort();
+    }
     value.type = PMIX_UINT32;
     value.data.uint32 = 1234;
     if (PMIX_SUCCESS != (rc = PMIx_Store_internal(&myproc, tmp, &value))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Store_internal failed: %d", myproc.rank, msgnum, rc);
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
 
-    (void) asprintf(&tmp, "%s-%d-local", myproc.nspace, myproc.rank);
+    if (0 > asprintf(&tmp, "%s-%d-local", myproc.nspace, myproc.rank)) {
+        errno = ENOMEM;
+        abort();
+    }
     value.type = PMIX_UINT64;
     value.data.uint64 = 1234;
     if (PMIX_SUCCESS != (rc = PMIx_Put(PMIX_LOCAL, tmp, &value))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Put internal failed: %d", myproc.rank, msgnum, rc);
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
 
-    (void) asprintf(&tmp, "%s-%d-remote", myproc.nspace, myproc.rank);
+    if (0 > asprintf(&tmp, "%s-%d-remote", myproc.nspace, myproc.rank)) {
+        errno = ENOMEM;
+        abort();
+    }
     value.type = PMIX_STRING;
     value.data.string = "1234";
     if (PMIX_SUCCESS != (rc = PMIx_Put(PMIX_GLOBAL, tmp, &value))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Put internal failed: %d", myproc.rank, msgnum, rc);
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
 
@@ -222,9 +221,8 @@ int main(int argc, char **argv)
     /* commit the data to the server */
     if (PMIX_SUCCESS != (rc = PMIx_Commit())) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Commit failed: %d", myproc.rank, msgnum, rc);
-        ++msgnum;
-        exitstatus = 1;
         goto done;
+        ++msgnum;
     }
 
     if (dofence) {
@@ -236,7 +234,6 @@ int main(int argc, char **argv)
         if (PMIX_SUCCESS != (rc = PMIx_Fence_nb(&proc, 1, NULL, 0, opcbfunc, &active))) {
             pmix_output(0, "Rank %d[msg=%d]: PMIx_Fence failed: %d", myproc.rank, msgnum, rc);
             ++msgnum;
-            exitstatus = 1;
             goto done;
         }
     }
@@ -245,7 +242,6 @@ int main(int argc, char **argv)
     if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, PMIX_LOCAL_PEERS, NULL, 0, &val))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Get local peers failed: %s", myproc.rank, msgnum, PMIx_Error_string(rc));
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
     /* split the returned string to get the rank of each local peer */
@@ -279,24 +275,28 @@ int main(int argc, char **argv)
             }
         }
         if (local) {
-            (void) asprintf(&tmp, "%s-%d-local", myproc.nspace, n);
+            if (0 > asprintf(&tmp, "%s-%d-local", myproc.nspace, n)) {
+                errno = ENOMEM;
+                abort();
+            }
             pmix_output(0, "Rank %u[msg=%d]: retrieving %s from local proc %u", myproc.rank, msgnum, tmp, n);
             ++msgnum;
             proc.rank = n;
             if (PMIX_SUCCESS != (rc = PMIx_Get_nb(&proc, tmp, iptr, ninfo, valcbfunc, tmp))) {
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get %s failed: %d", myproc.rank, msgnum, tmp, rc);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
             ++num_gets;
         } else {
-            (void) asprintf(&tmp, "%s-%d-remote", myproc.nspace, n);
+            if (0 > asprintf(&tmp, "%s-%d-remote", myproc.nspace, n)) {
+                errno = ENOMEM;
+                abort();
+            }
             pmix_output(0, "Rank %u[msg=%d]: retrieving %s from remote proc %u", myproc.rank, msgnum, tmp, n);
             if (PMIX_SUCCESS != (rc = PMIx_Get_nb(&proc, tmp, iptr, ninfo, valcbfunc, tmp))) {
                 pmix_output(0, "Rank %d[msg=%d]: PMIx_Get %s failed: %d", myproc.rank, msgnum, tmp, rc);
                 ++msgnum;
-                exitstatus = 1;
                 goto done;
             }
             ++num_gets;
@@ -321,7 +321,6 @@ int main(int argc, char **argv)
     if (PMIX_SUCCESS != (rc = PMIx_Fence(&proc, 1, NULL, 0))) {
         pmix_output(0, "Rank %d[msg=%d]: PMIx_Fence failed: %d", myproc.rank, msgnum, rc);
         ++msgnum;
-        exitstatus = 1;
         goto done;
     }
 
@@ -335,5 +334,5 @@ done:
         fprintf(stderr, "Rank %d[msg=%d]: PMIx_Finalize successfully completed\n", myproc.rank, msgnum);
     }
     fflush(stderr);
-    return exitstatus;
+    return (0);
 }

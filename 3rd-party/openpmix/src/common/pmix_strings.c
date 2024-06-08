@@ -14,7 +14,7 @@
  * Copyright (c) 2014-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2018      Research Organization for Information Science
  *                         and Technology (RIST).  All rights reserved.
- * Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -37,6 +37,7 @@
 
 #include "src/common/pmix_attributes.h"
 #include "src/include/pmix_globals.h"
+#include "src/util/pmix_name_fns.h"
 #include "src/util/pmix_printf.h"
 
 PMIX_EXPORT const char *PMIx_Proc_state_string(pmix_proc_state_t state)
@@ -267,6 +268,8 @@ PMIX_EXPORT const char *pmix_command_string(pmix_cmd_t cmd)
         return "FABRIC UPDATE";
     case PMIX_COMPUTE_DEVICE_DISTANCES_CMD:
         return "COMPUTE DEVICE DIST";
+    case PMIX_REFRESH_CACHE:
+        return "REFRESH CACHE";
     default:
         return "UNKNOWN";
     }
@@ -460,4 +463,13 @@ char* PMIx_App_string(const pmix_app_t *app)
     tmp = PMIx_Argv_join(ans, '\n');
     PMIx_Argv_free(ans);
     return tmp;
+}
+
+char* PMIx_Proc_string(const pmix_proc_t *proc)
+{
+    char *tmp, *result;
+
+    tmp = pmix_util_print_name_args(proc);
+    result = strdup(tmp);
+    return result;
 }

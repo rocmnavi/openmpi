@@ -200,15 +200,13 @@ pmix_status_t pmix_base_write_rndz_file(char *filename, char *uri, bool *created
 
     dirname = pmix_dirname(filename);
     if (NULL != dirname) {
-        if (0 != pmix_os_dirpath_access(dirname, 0755)) {
-            if (0 != pmix_os_dirpath_create(dirname, 0755)) {
-                pmix_output(0, "System tmpdir %s could not be created\n", dirname);
-                PMIX_ERROR_LOG(PMIX_ERR_FILE_OPEN_FAILURE);
-                free(dirname);
-                return PMIX_ERR_FILE_OPEN_FAILURE;
-            }
-            *created = true;
+        if (0 != pmix_os_dirpath_create(dirname, 0755)) {
+            pmix_output(0, "System tmpdir %s could not be created\n", dirname);
+            PMIX_ERROR_LOG(PMIX_ERR_FILE_OPEN_FAILURE);
+            free(dirname);
+            return PMIX_ERR_FILE_OPEN_FAILURE;
         }
+        *created = true;
         free(dirname);
     }
 
@@ -273,6 +271,7 @@ pmix_status_t pmix_ptl_base_setup_listener(pmix_info_t info[], size_t ninfo)
     int outpipe;
     char *leftover;
     size_t n;
+    FILE *fptst;
 
     pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                         "ptl:tool setup_listener");
@@ -615,9 +614,9 @@ pmix_status_t pmix_ptl_base_setup_listener(pmix_info_t info[], size_t ninfo)
          * just use it as providing the rendezvous info for our
          * server */
         if (PMIX_PEER_IS_TOOL(pmix_globals.mypeer)) {
-            struct stat buf;
-            /* coverity[TOCTOU] */
-            if (0 == stat(pmix_ptl_base.rendezvous_filename, &buf)) {
+            fptst = fopen(pmix_ptl_base.rendezvous_filename, "r");
+            if (NULL != fptst) {
+                fclose(fptst);
                 goto nextstep;
             }
         }
@@ -644,6 +643,21 @@ nextstep:
             goto sockerror;
         }
         pmix_ptl_base.created_scheduler_filename = true;
+    }
+
+    /* if we are the system controller, then drop an appropriately named
+     * contact file so others can find us */
+    if (PMIX_PEER_IS_SYS_CTRLR(pmix_globals.mypeer)) {
+        if (0 > asprintf(&pmix_ptl_base.sysctrlr_filename, "%s/pmix.sysctrlr.%s",
+                         pmix_ptl_base.system_tmpdir, pmix_globals.hostname)) {
+            goto sockerror;
+        }
+        rc = pmix_base_write_rndz_file(pmix_ptl_base.sysctrlr_filename, lt->uri,
+                                       &pmix_ptl_base.created_system_tmpdir);
+        if (PMIX_SUCCESS != rc) {
+            goto sockerror;
+        }
+        pmix_ptl_base.created_sysctrlr_filename = true;
     }
 
     /* if we are going to support tools, then drop contact file(s) */

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>18.1.3. mpisync &mdash; Open MPI 5.0.1 documentation</title>
+  <title>17.1.3. mpisync &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="18.1.4. ompi_info" href="ompi_info.1.html" />
-    <link rel="prev" title="18.1.2. mpirun / mpiexec" href="mpirun.1.html" /> 
+    <link rel="next" title="17.1.4. ompi_info" href="ompi_info.1.html" />
+    <link rel="prev" title="17.1.2. mpirun / mpiexec" href="mpirun.1.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,27 +59,26 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../news/index.html">17. News</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">18. Open MPI manual pages</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">18.1. Commands (section 1)</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="ompi-wrapper-compiler.1.html">18.1.1. Open MPI Wrapper Compilers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mpirun.1.html">18.1.2. mpirun / mpiexec</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">18.1.3. mpisync</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#syntax">18.1.3.1. SYNTAX</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#description">18.1.3.2. DESCRIPTION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#notes">18.1.3.3. NOTES</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#files">18.1.3.4. FILES</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">17. Open MPI manual pages</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">17.1. Commands (section 1)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ompi-wrapper-compiler.1.html">17.1.1. Open MPI Wrapper Compilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mpirun.1.html">17.1.2. mpirun / mpiexec</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">17.1.3. mpisync</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#syntax">17.1.3.1. SYNTAX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#description">17.1.3.2. DESCRIPTION</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">17.1.3.3. NOTES</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#files">17.1.3.4. FILES</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="ompi_info.1.html">18.1.4. ompi_info</a></li>
-<li class="toctree-l3"><a class="reference internal" href="opal_wrapper.1.html">18.1.5. opal_wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ompi_info.1.html">17.1.4. ompi_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="opal_wrapper.1.html">17.1.5. opal_wrapper</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../man3/index.html">18.2. MPI API manual pages (section 3)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../man7/index.html">18.3. General information manual pages (section 7)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../man3/index.html">17.2. MPI API manual pages (section 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../man7/index.html">17.3. General information manual pages (section 7)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -96,9 +95,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">18. </span>Open MPI manual pages</a></li>
-          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">18.1. </span>Commands (section 1)</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">18.1.3. </span>mpisync</li>
+          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">17. </span>Open MPI manual pages</a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">17.1. </span>Commands (section 1)</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">17.1.3. </span>mpisync</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/man-openmpi/man1/mpisync.1.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,16 +110,16 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="mpisync">
-<span id="man1-mpisync"></span><h1><span class="section-number">18.1.3. </span>mpisync<a class="headerlink" href="#mpisync" title="Permalink to this heading"></a></h1>
+<span id="man1-mpisync"></span><h1><span class="section-number">17.1.3. </span>mpisync<a class="headerlink" href="#mpisync" title="Permalink to this heading"></a></h1>
 <p>mpisync — Open MPI timing tools</p>
 <div class="section" id="syntax">
-<h2><span class="section-number">18.1.3.1. </span>SYNTAX<a class="headerlink" href="#syntax" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.3.1. </span>SYNTAX<a class="headerlink" href="#syntax" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mpisync</span> <span class="pre">[options]</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">mpirun_prof</span> <span class="pre">[options]</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">ompi_timing_post</span> <span class="pre">[&lt;timing-file&gt;]</span> <span class="pre">[&lt;processed-file&gt;]</span></code></p>
 </div>
 <div class="section" id="description">
-<h2><span class="section-number">18.1.3.2. </span>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.3.2. </span>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mpisync</span></code>: determines clock offsets relative to Head Node Process
 (HNP). It accepts the following options:</p>
 <ul class="simple">
@@ -137,12 +136,12 @@ performs clock synchronisation and post-processing of the timing
 output file.</p>
 </div>
 <div class="section" id="notes">
-<h2><span class="section-number">18.1.3.3. </span>NOTES<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.3.3. </span>NOTES<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
 <p>The mpisync code was derived from MPIPerf project:
 <a class="reference external" href="http://mpiperf.cpct.sibsutis.ru/index.php/Main/Documentation">http://mpiperf.cpct.sibsutis.ru/index.php/Main/Documentation</a></p>
 </div>
 <div class="section" id="files">
-<h2><span class="section-number">18.1.3.4. </span>FILES<a class="headerlink" href="#files" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.3.4. </span>FILES<a class="headerlink" href="#files" title="Permalink to this heading"></a></h2>
 <p>The output file has following format:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;hostname&gt; &lt;round-trip-time&gt; &lt;offset-from-hnp&gt;
 </pre></div>
@@ -154,14 +153,14 @@ output file.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="mpirun.1.html" class="btn btn-neutral float-left" title="18.1.2. mpirun / mpiexec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="ompi_info.1.html" class="btn btn-neutral float-right" title="18.1.4. ompi_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mpirun.1.html" class="btn btn-neutral float-left" title="17.1.2. mpirun / mpiexec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ompi_info.1.html" class="btn btn-neutral float-right" title="17.1.4. ompi_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

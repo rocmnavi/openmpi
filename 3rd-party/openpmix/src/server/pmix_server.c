@@ -9,7 +9,7 @@
  *                         All rights reserved.
  * Copyright (c) 2016-2018 IBM Corporation.  All rights reserved.
  * Copyright (c) 2018      Cisco Systems, Inc.  All rights reserved
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * Copyright (c) 2022-2023 Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
@@ -57,8 +57,8 @@
 #include "src/mca/base/pmix_mca_base_vari.h"
 #include "src/mca/bfrops/base/base.h"
 #include "src/mca/gds/base/base.h"
-#include "src/mca/pgpu/base/base.h"
 #include "src/mca/pinstalldirs/base/base.h"
+#include "src/mca/pgpu/base/base.h"
 #include "src/mca/pmdl/base/base.h"
 #include "src/mca/pnet/base/base.h"
 #include "src/mca/preg/preg.h"
@@ -348,7 +348,8 @@ static void debugger_aggregator(size_t evhdlr_registration_id, pmix_status_t sta
         PMIX_LOAD_PROCID(&proc, source->nspace, PMIX_RANK_LOCAL_PEERS);
         /* pass an event to our host */
         rc = pmix_prm.notify(status, &proc, PMIX_RANGE_RM, info, ninfo, NULL, NULL);
-        if (PMIX_SUCCESS != rc && PMIX_OPERATION_SUCCEEDED != rc) {
+        if (PMIX_SUCCESS != rc && PMIX_OPERATION_SUCCEEDED != rc &&
+            PMIX_ERR_NOT_SUPPORTED != rc) {
             PMIX_ERROR_LOG(rc);
         }
     }
@@ -401,8 +402,6 @@ static pmix_status_t register_singleton(char *name)
 // local functions for connection support
 pmix_status_t pmix_server_initialize(void)
 {
-    pmix_status_t rc;
-
     /* setup the server-specific globals */
     PMIX_CONSTRUCT(&pmix_server_globals.clients, pmix_pointer_array_t);
     pmix_pointer_array_init(&pmix_server_globals.clients, 1, INT_MAX, 1);
@@ -483,46 +482,8 @@ pmix_status_t pmix_server_initialize(void)
     /* get available gds modules */
     gds_mode = pmix_gds_base_get_available_modules();
 
-    /* open and initialize */
-    rc = pmix_mca_base_framework_open(&pmix_prm_base_framework, PMIX_MCA_BASE_OPEN_DEFAULT);
-    if (PMIX_SUCCESS != rc) {
-        return rc;
-    }
-
-    rc = pmix_prm_base_select();
-    return rc;
+    return PMIX_SUCCESS;
 }
-
-static pmix_server_module_t myhostserver = {
-    .client_connected = NULL,
-    .client_finalized = NULL,
-    .abort = NULL,
-    .fence_nb = NULL,
-    .direct_modex = NULL,
-    .publish = NULL,
-    .lookup = NULL,
-    .unpublish = NULL,
-    .spawn = NULL,
-    .connect = NULL,
-    .disconnect = NULL,
-    .register_events = NULL,
-    .deregister_events = NULL,
-    .listener = NULL,
-    .notify_event = NULL,
-    .query = NULL,
-    .tool_connected = NULL,
-    .log = NULL,
-    .allocate = NULL,
-    .job_control = NULL,
-    .monitor = NULL,
-    .get_credential = NULL,
-    .validate_credential = NULL,
-    .iof_pull = NULL,
-    .push_stdin = NULL,
-    .group = NULL,
-    .fabric = NULL,
-    .client_connected2 = NULL
-};
 
 PMIX_EXPORT pmix_status_t PMIx_server_init(pmix_server_module_t *module, pmix_info_t info[],
                                            size_t ninfo)
@@ -585,9 +546,7 @@ PMIX_EXPORT pmix_status_t PMIx_server_init(pmix_server_module_t *module, pmix_in
 
     PMIX_SET_PROC_TYPE(&ptype, PMIX_PROC_SERVER);
     /* setup the function pointers */
-    if (NULL == module) {
-        pmix_host_server = myhostserver;
-    } else {
+    if (NULL != module) {
         pmix_host_server = *module;
     }
 
@@ -1028,9 +987,8 @@ PMIX_EXPORT pmix_status_t PMIx_server_finalize(void)
          * at zero refcount */
         pmix_execute_epilog(&ns->epilog);
     }
-
     if (NULL != pmix_server_globals.failedgrps) {
-        PMIx_Argv_free(pmix_server_globals.failedgrps);
+        PMIX_ARGV_FREE(pmix_server_globals.failedgrps);
     }
     PMIX_LIST_DESTRUCT(&pmix_server_globals.iof);
     PMIX_LIST_DESTRUCT(&pmix_server_globals.iof_residuals);
@@ -1047,9 +1005,7 @@ PMIX_EXPORT pmix_status_t PMIx_server_finalize(void)
     if (NULL != gds_mode) {
         free(gds_mode);
     }
-    if (NULL != pmix_server_globals.tmpdir) {
-        free(pmix_server_globals.tmpdir);
-    }
+
     /* close the psensor framework */
     (void) pmix_mca_base_framework_close(&pmix_psensor_base_framework);
     /* close the pnet framework */
@@ -1065,7 +1021,12 @@ PMIX_EXPORT pmix_status_t PMIx_server_finalize(void)
         PMIX_RELEASE(pmix_globals.mypeer);
     }
 
-    pmix_output_verbose(2, pmix_server_globals.base_output, "pmix:server finalize complete");
+    if (NULL != pmix_server_globals.tmpdir) {
+        free(pmix_server_globals.tmpdir);
+    }
+
+    pmix_output_verbose(2, pmix_server_globals.base_output,
+                        "pmix:server finalize complete");
 
     /* finalize the class/object system */
     pmix_class_finalize();
@@ -1422,10 +1383,76 @@ void pmix_server_purge_events(pmix_peer_t *peer, pmix_proc_t *proc)
     }
 }
 
+static void remove_client(pmix_namespace_t *nptr, pmix_proc_t *p)
+{
+    pmix_rank_info_t *info, *inext;
+    pmix_peer_t *peer;
+    pmix_proc_t proc;
+
+    PMIX_LIST_FOREACH_SAFE(info, inext, &nptr->ranks, pmix_rank_info_t) {
+        if (NULL == p || info->pname.rank == p->rank) {
+            if (NULL == p) {
+                PMIX_LOAD_PROCID(&proc, info->pname.nspace, info->pname.rank);
+            } else {
+                memcpy(&proc, p, sizeof(pmix_proc_t));
+            }
+            /* if this client failed to call finalize, we still need
+             * to restore any allocations that were given to it */
+            peer = (pmix_peer_t *) pmix_pointer_array_get_item(&pmix_server_globals.clients, info->peerid);
+            if (NULL == peer) {
+                /* this peer never connected, and hence it won't finalize,
+                 * so account for it here */
+                nptr->nfinalized++;
+                /* even if they never connected, resources were allocated
+                 * to them, so we need to ensure they are properly released */
+                pmix_pnet.child_finalized(&proc);
+            } else {
+                if (!peer->finalized) {
+                    /* this peer connected to us, but is being deregistered
+                     * without having finalized. This usually means an
+                     * abnormal termination that was picked up by
+                     * our host prior to our seeing the connection drop.
+                     * It is also possible that we missed the dropped
+                     * connection, so mark the peer as finalized so
+                     * we don't duplicate account for it and take care
+                     * of it here */
+                    peer->finalized = true;
+                    nptr->nfinalized++;
+                }
+                /* resources may have been allocated to them, so
+                 * ensure they get cleaned up - this isn't true
+                 * for tools, so don't clean them up */
+                if (!PMIX_PEER_IS_TOOL(peer)) {
+                    pmix_pnet.child_finalized(&proc);
+                    pmix_psensor.stop(peer, NULL);
+                }
+                /* honor any registered epilogs */
+                pmix_execute_epilog(&peer->epilog);
+                /* ensure we close the socket to this peer so we don't
+                 * generate "connection lost" events should it be
+                 * subsequently "killed" by the host */
+                CLOSE_THE_SOCKET(peer->sd);
+                // remove it from our client array
+                pmix_pointer_array_set_item(&pmix_server_globals.clients, info->peerid, NULL);
+                PMIX_RELEASE(peer);
+            }
+            if (nptr->nlocalprocs == nptr->nfinalized) {
+                pmix_pnet.local_app_finalized(nptr);
+            }
+            pmix_list_remove_item(&nptr->ranks, &info->super);
+            PMIX_RELEASE(info);
+            if (NULL != p) {
+                break;
+            }
+        }
+    }
+    return;
+}
+
 static void _deregister_nspace(int sd, short args, void *cbdata)
 {
     pmix_setup_caddy_t *cd = (pmix_setup_caddy_t *) cbdata;
-    pmix_namespace_t *tmp;
+    pmix_namespace_t *tmp, *nptr;
     pmix_status_t rc;
 
     PMIX_ACQUIRE_OBJECT(cd);
@@ -1453,18 +1480,30 @@ static void _deregister_nspace(int sd, short args, void *cbdata)
      * cached notifications targeting procs from this nspace */
     pmix_server_purge_events(NULL, &cd->proc);
 
-    /* release this nspace */
+    // find the nspace object
+    nptr = NULL;
     PMIX_LIST_FOREACH (tmp, &pmix_globals.nspaces, pmix_namespace_t) {
         if (PMIX_CHECK_NSPACE(tmp->nspace, cd->proc.nspace)) {
-            /* perform any nspace-level epilog */
-            pmix_execute_epilog(&tmp->epilog);
-            /* remove and release it */
-            pmix_list_remove_item(&pmix_globals.nspaces, &tmp->super);
-            PMIX_RELEASE(tmp);
+            nptr = tmp;
             break;
         }
     }
+    if (NULL == nptr) {
+        /* nothing to do */
+        goto cleanup;
+    }
 
+    // ensure all local clients have been deregistered
+    remove_client(nptr, NULL);
+
+    /* perform any epilog */
+    pmix_execute_epilog(&nptr->epilog);
+
+    /* remove and release it */
+    pmix_list_remove_item(&pmix_globals.nspaces, &nptr->super);
+    PMIX_RELEASE(nptr);
+
+cleanup:
     /* release the caller */
     cd->opcbfunc(rc, cd->cbdata);
     PMIX_RELEASE(cd);
@@ -1648,6 +1687,76 @@ pmix_status_t PMIx_server_deregister_resources(pmix_info_t info[], size_t ninfo,
     /* we have to push this into our event library to avoid
      * potential threading issues */
     PMIX_THREADSHIFT(cd, _deregister_resources);
+    return PMIX_SUCCESS;
+}
+
+static void myinfocbfunc(pmix_status_t status,
+                         pmix_info_t *info, size_t ninfo,
+                         void *cbdata,
+                         pmix_release_cbfunc_t release_fn,
+                         void *release_cbdata)
+{
+    pmix_lock_t *lock = (pmix_lock_t *) cbdata;
+    PMIX_HIDE_UNUSED_PARAMS(info, ninfo, release_fn, release_cbdata);
+
+    lock->status = status;
+    PMIX_WAKEUP_THREAD(lock);
+}
+
+static void _session_control(int sd, short args, void *cbdata)
+{
+    pmix_shift_caddy_t *cd = (pmix_shift_caddy_t *) cbdata;
+
+    PMIX_HIDE_UNUSED_PARAMS(sd, args);
+
+    cd->cbfunc.infocbfunc(PMIX_ERR_NOT_SUPPORTED, NULL, 0, cd->cbdata, NULL, NULL);
+    PMIX_RELEASE(cd);
+}
+
+pmix_status_t PMIx_Session_control(uint32_t sessionID,
+                                   const pmix_info_t directives[], size_t ndirs,
+                                   pmix_info_cbfunc_t cbfunc, void *cbdata)
+{
+    pmix_shift_caddy_t *cd;
+    pmix_lock_t mylock;
+    pmix_status_t rc;
+
+    pmix_output_verbose(2, pmix_server_globals.base_output,
+                        "pmix:server session control");
+
+    PMIX_ACQUIRE_THREAD(&pmix_global_lock);
+    if (pmix_globals.init_cntr <= 0) {
+        PMIX_RELEASE_THREAD(&pmix_global_lock);
+        return PMIX_ERR_INIT;
+    }
+    PMIX_RELEASE_THREAD(&pmix_global_lock);
+
+    cd = PMIX_NEW(pmix_shift_caddy_t);
+    cd->sessionid = sessionID;
+    cd->directives = (pmix_info_t*)directives;
+    cd->ndirs = ndirs;
+    cd->cbfunc.infocbfunc = cbfunc;
+    cd->cbdata = cbdata;
+
+    /* if the provided callback is NULL, then substitute
+     * our own internal cbfunc and block here */
+    if (NULL == cbfunc) {
+        PMIX_CONSTRUCT_LOCK(&mylock);
+        cd->cbfunc.infocbfunc = myinfocbfunc;
+        cd->cbdata = &mylock;
+        PMIX_THREADSHIFT(cd, _session_control);
+        PMIX_WAIT_THREAD(&mylock);
+        rc = mylock.status;
+        if (PMIX_SUCCESS == rc) {
+            rc = PMIX_OPERATION_SUCCEEDED;
+        }
+        PMIX_DESTRUCT_LOCK(&mylock);
+        return rc;
+    }
+
+    /* we have to push this into our event library to avoid
+     * potential threading issues */
+    PMIX_THREADSHIFT(cd, _session_control);
     return PMIX_SUCCESS;
 }
 
@@ -1993,9 +2102,7 @@ PMIX_EXPORT pmix_status_t PMIx_server_register_client(const pmix_proc_t *proc, u
 static void _deregister_client(int sd, short args, void *cbdata)
 {
     pmix_setup_caddy_t *cd = (pmix_setup_caddy_t *) cbdata;
-    pmix_rank_info_t *info;
     pmix_namespace_t *nptr, *tmp;
-    pmix_peer_t *peer;
 
     PMIX_ACQUIRE_OBJECT(cd);
     PMIX_HIDE_UNUSED_PARAMS(sd, args);
@@ -2016,54 +2123,9 @@ static void _deregister_client(int sd, short args, void *cbdata)
         /* nothing to do */
         goto cleanup;
     }
+
     /* find and remove this client */
-    PMIX_LIST_FOREACH (info, &nptr->ranks, pmix_rank_info_t) {
-        if (info->pname.rank == cd->proc.rank) {
-            /* if this client failed to call finalize, we still need
-             * to restore any allocations that were given to it */
-            peer = (pmix_peer_t *) pmix_pointer_array_get_item(&pmix_server_globals.clients, info->peerid);
-            if (NULL == peer) {
-                /* this peer never connected, and hence it won't finalize,
-                 * so account for it here */
-                nptr->nfinalized++;
-                /* even if they never connected, resources were allocated
-                 * to them, so we need to ensure they are properly released */
-                pmix_pnet.child_finalized(&cd->proc);
-            } else {
-                if (!peer->finalized) {
-                    /* this peer connected to us, but is being deregistered
-                     * without having finalized. This usually means an
-                     * abnormal termination that was picked up by
-                     * our host prior to our seeing the connection drop.
-                     * It is also possible that we missed the dropped
-                     * connection, so mark the peer as finalized so
-                     * we don't duplicate account for it and take care
-                     * of it here */
-                    peer->finalized = true;
-                    nptr->nfinalized++;
-                }
-                /* resources may have been allocated to them, so
-                 * ensure they get cleaned up - this isn't true
-                 * for tools, so don't clean them up */
-                if (!PMIX_PEER_IS_TOOL(peer)) {
-                    pmix_pnet.child_finalized(&cd->proc);
-                    pmix_psensor.stop(peer, NULL);
-                }
-                /* honor any registered epilogs */
-                pmix_execute_epilog(&peer->epilog);
-                /* ensure we close the socket to this peer so we don't
-                 * generate "connection lost" events should it be
-                 * subsequently "killed" by the host */
-                CLOSE_THE_SOCKET(peer->sd);
-            }
-            if (nptr->nlocalprocs == nptr->nfinalized) {
-                pmix_pnet.local_app_finalized(nptr);
-            }
-            pmix_list_remove_item(&nptr->ranks, &info->super);
-            PMIX_RELEASE(info);
-            break;
-        }
-    }
+    remove_client(nptr, &cd->proc);
 
 cleanup:
     cd->opcbfunc(PMIX_SUCCESS, cd->cbdata);
@@ -2226,8 +2288,7 @@ static void _dmodex_req(int sd, short args, void *cbdata)
     PMIX_ACQUIRE_OBJECT(cd);
     PMIX_HIDE_UNUSED_PARAMS(sd, args);
 
-    pmix_output_verbose(2, pmix_server_globals.base_output,
-                        "DMODX LOOKING FOR %s",
+    pmix_output_verbose(2, pmix_server_globals.base_output, "DMODX LOOKING FOR %s",
                         PMIX_NAME_PRINT(&cd->proc));
 
     /* this should be one of my clients, but a race condition
@@ -2413,13 +2474,8 @@ PMIX_EXPORT pmix_status_t PMIx_Store_internal(const pmix_proc_t *proc, const cha
     if (NULL == cd) {
         return PMIX_ERR_NOMEM;
     }
-    if (NULL == proc) {
-        cd->pname.nspace = strdup(pmix_globals.myid.nspace);
-        cd->pname.rank = pmix_globals.myid.rank;
-    } else {
-        cd->pname.nspace = strdup(proc->nspace);
-        cd->pname.rank = proc->rank;
-    }
+    cd->pname.nspace = strdup(proc->nspace);
+    cd->pname.rank = proc->rank;
 
     cd->kv = PMIX_NEW(pmix_kval_t);
     if (NULL == cd->kv) {
@@ -4478,8 +4534,11 @@ static pmix_status_t server_switchyard(pmix_peer_t *peer, uint32_t tag, pmix_buf
         PMIX_ERROR_LOG(rc);
         return rc;
     }
-    pmix_output_verbose(2, pmix_server_globals.base_output, "recvd pmix cmd %s from %s:%u bytes %u",
-                        pmix_command_string(cmd), peer->info->pname.nspace, peer->info->pname.rank,
+    pmix_output_verbose(2, pmix_server_globals.base_output,
+                        "%s recvd pmix cmd %s from %s bytes %u",
+                        PMIX_NAME_PRINT(&pmix_globals.myid),
+                        pmix_command_string(cmd),
+                        PMIX_PEER_PRINT(peer),
                         (unsigned int) buf->bytes_used);
 
     /* if I am a tool, all I can do is relay this to my primary server
@@ -4507,17 +4566,6 @@ static pmix_status_t server_switchyard(pmix_peer_t *peer, uint32_t tag, pmix_buf
             PMIX_ERROR_LOG(rc);
             PMIX_RELEASE(reply);
             return rc;
-        }
-        /* if the peer is using the "dstore" component, then
-         * we also have to send back any session/node/app-level
-         * info so it can be stored locally in their hash */
-        if (0 != strcmp("hash", peer->nptr->compat.gds->name)) {
-            PMIX_GDS_FETCH_INFO_ARRAYS(rc, pmix_globals.mypeer, reply);
-            if (PMIX_SUCCESS != rc) {
-                PMIX_ERROR_LOG(rc);
-                PMIX_RELEASE(reply);
-                return rc;
-            }
         }
         PMIX_SERVER_QUEUE_REPLY(rc, peer, tag, reply);
         if (PMIX_SUCCESS != rc) {
@@ -4804,6 +4852,14 @@ static pmix_status_t server_switchyard(pmix_peer_t *peer, uint32_t tag, pmix_buf
     if (PMIX_COMPUTE_DEVICE_DISTANCES_CMD == cmd) {
         PMIX_GDS_CADDY(cd, peer, tag);
         if (PMIX_SUCCESS != (rc = pmix_server_device_dists(cd, buf, dist_cbfunc))) {
+            PMIX_RELEASE(cd);
+        }
+        return rc;
+    }
+
+    if (PMIX_REFRESH_CACHE == cmd) {
+        PMIX_GDS_CADDY(cd, peer, tag);
+        if (PMIX_SUCCESS != (rc = pmix_server_refresh_cache(cd, buf, op_cbfunc))) {
             PMIX_RELEASE(cd);
         }
         return rc;

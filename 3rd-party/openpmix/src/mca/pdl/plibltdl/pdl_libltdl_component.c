@@ -12,7 +12,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "pmix_common.h"
 #include "pmix/mca/base/pmix_mca_base_var.h"
@@ -40,7 +40,7 @@ static int plibltpdl_component_query(mca_base_module_t **module, int *priority);
  * and pointers to our public functions in it
  */
 
-pmix_pdl_plibltpdl_component_t pmix_mca_pdl_plibltpdl_component = {
+pmix_pdl_plibltpdl_component_t mca_pdl_plibltpdl_component = {
 
     /* Fill in the mca_pdl_base_component_t */
     .base = {
@@ -62,29 +62,24 @@ pmix_pdl_plibltpdl_component_t pmix_mca_pdl_plibltpdl_component = {
             .mca_query_component = plibltpdl_component_query,
         },
 
-        .base_data = {
-            /* The component is checkpoint ready */
-            MCA_BASE_METADATA_PARAM_CHECKPOINT
-        },
-
         /* The dl framework members */
         .priority = 50
     }
 
     /* Now fill in the plibltdl component-specific members */
 };
-bool supported = PMIX_INT_TO_BOOL(PMIX_DL_LIBLTDL_HAVE_LT_DLADVISE);
 
 static int plibltpdl_component_register(void)
 {
     /* Register an info param indicating whether we have lt_dladvise
        support or not */
-    mca_base_component_var_register(&pmix_mca_pdl_plibltpdl_component.base.base_version,
+    bool supported = PMIX_INT_TO_BOOL(PMIX_DL_LIBLTDL_HAVE_LT_DLADVISE);
+    mca_base_component_var_register(&mca_pdl_plibltpdl_component.base.base_version,
                                     "have_lt_dladvise",
                                     "Whether the version of plibltdl that this component is built "
                                     "against supports lt_dladvise functionality or not",
-                                    MCA_BASE_VAR_TYPE_BOOL,
-                                    &supported);
+                                    MCA_BASE_VAR_TYPE_BOOL, NULL, 0, MCA_BASE_VAR_FLAG_DEFAULT_ONLY,
+                                    PMIX_INFO_LVL_7, MCA_BASE_VAR_SCOPE_CONSTANT, &supported);
 
     return PMIX_SUCCESS;
 }
@@ -140,7 +135,7 @@ static int plibltpdl_component_query(mca_base_module_t **module, int *priority)
     /* The priority value is somewhat meaningless here; by
        pmix/mca/dl/configure.m4, there's at most one component
        available. */
-    *priority = pmix_mca_pdl_plibltpdl_component.base.priority;
+    *priority = mca_pdl_plibltpdl_component.base.priority;
     *module = &pmix_pdl_plibltpdl_module.super;
 
     return PMIX_SUCCESS;

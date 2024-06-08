@@ -28,7 +28,6 @@
 #define PMIX_PMDL_H
 
 #include "src/include/pmix_config.h"
-#include "pmix.h"
 
 #include "src/class/pmix_list.h"
 #include "src/mca/base/pmix_mca_base_framework.h"
@@ -141,11 +140,7 @@ PMIX_EXPORT extern pmix_pmdl_API_module_t pmix_pmdl;
 /*
  * the standard component data structure
  */
-struct pmix_pmdl_base_component_t {
-    pmix_mca_base_component_t base;
-    pmix_mca_base_component_data_t data;
-};
-typedef struct pmix_pmdl_base_component_t pmix_pmdl_base_component_t;
+typedef pmix_mca_base_component_t pmix_pmdl_base_component_t;
 
 /*
  * Macro for use in components that are of type pmdl

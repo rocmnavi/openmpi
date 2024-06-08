@@ -10,7 +10,7 @@
  * Copyright (c) 2004-2005 The Regents of the University of California.
  *                         All rights reserved.
  * Copyright (c) 2015-2020 Intel, Inc.  All rights reserved.
- * Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -52,6 +52,8 @@
 
 /****    SUPPORTING FUNCTIONS    ****/
 static void timeout(int sd, short args, void *cbdata);
+static pmix_status_t construct_message(pmix_peer_t *peer, char **msgout, size_t *sz,
+                                       pmix_info_t *iptr, size_t niptr);
 
 pmix_status_t pmix_ptl_base_set_peer(pmix_peer_t *peer, char *evar)
 {
@@ -65,10 +67,11 @@ pmix_status_t pmix_ptl_base_set_peer(pmix_peer_t *peer, char *evar)
         PMIX_SET_PEER_TYPE(peer, PMIX_PROC_SERVER);
         PMIX_SET_PEER_VERSION(peer, vrs, 4, 1);
 
-        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output, "V41 SERVER DETECTED");
+        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                            "V41 SERVER DETECTED");
 
-        /* must use the latest bfrops module */
-        PMIX_BFROPS_SET_MODULE(rc, pmix_globals.mypeer, peer, NULL);
+        /* must use the v41 bfrops module */
+        PMIX_BFROPS_SET_MODULE(rc, pmix_globals.mypeer, peer, "v41");
         return rc;
     }
 
@@ -77,7 +80,8 @@ pmix_status_t pmix_ptl_base_set_peer(pmix_peer_t *peer, char *evar)
         PMIX_SET_PEER_TYPE(peer, PMIX_PROC_SERVER);
         PMIX_SET_PEER_VERSION(peer, vrs, 4, 0);
 
-        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output, "V4.0 SERVER DETECTED");
+        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                            "V4.0 SERVER DETECTED");
 
         /* must use the V4 bfrops module */
         PMIX_BFROPS_SET_MODULE(rc, pmix_globals.mypeer, peer, "v4");
@@ -89,7 +93,8 @@ pmix_status_t pmix_ptl_base_set_peer(pmix_peer_t *peer, char *evar)
         PMIX_SET_PEER_TYPE(peer, PMIX_PROC_SERVER);
         PMIX_SET_PEER_VERSION(peer, vrs, 3, 0);
 
-        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output, "V3 SERVER DETECTED");
+        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                            "V3 SERVER DETECTED");
 
         /* must use the v3 bfrops module */
         PMIX_BFROPS_SET_MODULE(rc, pmix_globals.mypeer, peer, "v3");
@@ -101,7 +106,8 @@ pmix_status_t pmix_ptl_base_set_peer(pmix_peer_t *peer, char *evar)
         PMIX_SET_PEER_TYPE(peer, PMIX_PROC_SERVER);
         PMIX_SET_PEER_VERSION(peer, vrs, 2, 1);
 
-        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output, "V21 SERVER DETECTED");
+        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                            "V21 SERVER DETECTED");
 
         /* must use the v21 bfrops module */
         PMIX_BFROPS_SET_MODULE(rc, pmix_globals.mypeer, peer, "v21");
@@ -261,7 +267,9 @@ pmix_status_t pmix_ptl_base_parse_uri(const char *evar, char **nspace, pmix_rank
     return PMIX_SUCCESS;
 }
 
-pmix_status_t pmix_ptl_base_parse_uri_file(char *filename, pmix_list_t *connections)
+pmix_status_t pmix_ptl_base_parse_uri_file(char *filename,
+                                           bool optional,
+                                           pmix_list_t *connections)
 {
     FILE *fp;
     char *srvr, *p = NULL;
@@ -281,7 +289,7 @@ pmix_status_t pmix_ptl_base_parse_uri_file(char *filename, pmix_list_t *connecti
      * not exist yet! Check for existence */
     /* coverity[TOCTOU] */
     if (0 != access(filename, R_OK)) {
-        if (ENOENT == errno) {
+        if (ENOENT == errno && !optional) {
             /* the file does not exist, so give it
              * a little time to see if the server
              * is still starting up */
@@ -378,11 +386,10 @@ process:
 }
 
 pmix_status_t pmix_ptl_base_df_search(char *dirname, char *prefix, pmix_info_t info[], size_t ninfo,
-                                      pmix_list_t *connections)
+                                      bool optional, pmix_list_t *connections)
 {
     char *newdir;
-    struct stat buf;
-    DIR *cur_dirp;
+    DIR *cur_dirp, *tst;
     struct dirent *dir_entry;
     pmix_status_t rc;
 
@@ -400,14 +407,11 @@ pmix_status_t pmix_ptl_base_df_search(char *dirname, char *prefix, pmix_info_t i
             continue;
         }
         newdir = pmix_os_path(false, dirname, dir_entry->d_name, NULL);
-        /* coverity[TOCTOU] */
-        if (-1 == stat(newdir, &buf)) {
-            free(newdir);
-            continue;
-        }
         /* if it is a directory, down search */
-        if (S_ISDIR(buf.st_mode)) {
-            pmix_ptl_base_df_search(newdir, prefix, info, ninfo, connections);
+        tst = opendir(newdir);
+        if (NULL != tst) {
+            closedir(tst);
+            pmix_ptl_base_df_search(newdir, prefix, info, ninfo, optional, connections);
             free(newdir);
             continue;
         }
@@ -418,7 +422,7 @@ pmix_status_t pmix_ptl_base_df_search(char *dirname, char *prefix, pmix_info_t i
             /* try to read this file */
             pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                 "pmix:tool: reading file %s", newdir);
-            rc = pmix_ptl_base_parse_uri_file(newdir, connections);
+            rc = pmix_ptl_base_parse_uri_file(newdir, optional, connections);
             if (PMIX_SUCCESS != rc) {
                 free(newdir);
                 closedir(cur_dirp);
@@ -530,7 +534,7 @@ static pmix_status_t send_connect_ack(pmix_peer_t *peer,
     peer->proc_type.flag = pmix_ptl_base_set_flag(&sdsize);
 
     /* construct the contact message */
-    rc = pmix_ptl_base_construct_message(peer, &msg, &sdsize, iptr, niptr);
+    rc = construct_message(peer, &msg, &sdsize, iptr, niptr);
     if (PMIX_SUCCESS != rc) {
         PMIX_ERROR_LOG(rc);
         return rc;
@@ -766,8 +770,8 @@ pmix_rnd_flag_t pmix_ptl_base_set_flag(size_t *sz)
     return flag;
 }
 
-pmix_status_t pmix_ptl_base_construct_message(pmix_peer_t *peer, char **msgout, size_t *sz,
-                                              pmix_info_t *iptr, size_t niptr)
+static pmix_status_t construct_message(pmix_peer_t *peer, char **msgout, size_t *sz,
+                                       pmix_info_t *iptr, size_t niptr)
 {
     char *msg;
     char *sec, *bfrops, *gds;
@@ -1281,8 +1285,7 @@ complete:
 static void query_servers(char *dirname, pmix_list_t *servers)
 {
     char *newdir, *dname;
-    struct stat buf;
-    DIR *cur_dirp;
+    DIR *cur_dirp, *tst;
     struct dirent *dir_entry;
 
     /* search the system tmpdir directory tree for files
@@ -1312,18 +1315,16 @@ static void query_servers(char *dirname, pmix_list_t *servers)
             continue;
         }
         newdir = pmix_os_path(false, dname, dir_entry->d_name, NULL);
-        /* coverity[TOCTOU] */
-        if (-1 == stat(newdir, &buf)) {
-            free(newdir);
-            continue;
-        }
         /* if it is a directory, down search */
-        if (S_ISDIR(buf.st_mode)) {
+        tst = opendir(newdir);
+        if (NULL != tst) {
+            closedir(tst);
             query_servers(newdir, servers);
             free(newdir);
             continue;
         }
-        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output, "pmix:tcp: checking %s",
+        pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                            "pmix:tcp: checking %s",
                             dir_entry->d_name);
         /* see if it starts with our prefix */
         if (0 == strncmp(dir_entry->d_name, "pmix.", strlen("pmix."))) {

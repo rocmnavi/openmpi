@@ -31,6 +31,7 @@ libmca_pgpu_la_SOURCES =
 headers = pgpu.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

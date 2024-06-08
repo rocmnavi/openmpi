@@ -31,7 +31,7 @@
 #ifndef pmix_pstat_LINUX_EXPORT_H
 #define pmix_pstat_LINUX_EXPORT_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/mca/mca.h"
 #include "src/mca/pstat/pstat.h"

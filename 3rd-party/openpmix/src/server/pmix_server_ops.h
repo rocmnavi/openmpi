@@ -8,7 +8,7 @@
  * Copyright (c) 2016-2020 IBM Corporation.  All rights reserved.
  * Copyright (c) 2016-2018 Research Organization for Information Science
  *                         and Technology (RIST).  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  */
 
@@ -122,6 +122,7 @@ typedef struct {
     pmix_event_t ev;
     bool event_active;
     pmix_dmdx_local_t *lcd;
+    char *key;
     pmix_modex_cbfunc_t cbfunc; // cbfunc to be executed when data is available
     void *cbdata;
 } pmix_dmdx_request_t;
@@ -143,6 +144,14 @@ typedef struct {
     int code;
 } pmix_regevents_info_t;
 PMIX_CLASS_DECLARATION(pmix_regevents_info_t);
+
+typedef struct {
+    pmix_list_item_t super;
+    pmix_group_t *grp;
+    pmix_rank_t rank;
+    size_t idx;
+} pmix_group_caddy_t;
+PMIX_CLASS_DECLARATION(pmix_group_caddy_t);
 
 typedef struct {
     pmix_list_item_t super;

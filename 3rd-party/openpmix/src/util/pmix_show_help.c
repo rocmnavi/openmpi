@@ -33,7 +33,6 @@
 #include "src/include/pmix_globals.h"
 #include "src/mca/pinstalldirs/pinstalldirs.h"
 #include "src/util/pmix_argv.h"
-#include "src/util/pmix_error.h"
 #include "src/util/pmix_os_path.h"
 #include "src/util/pmix_output.h"
 #include "src/util/pmix_printf.h"

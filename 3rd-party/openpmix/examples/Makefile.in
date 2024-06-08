@@ -96,7 +96,7 @@ noinst_PROGRAMS = client$(EXEEXT) client2$(EXEEXT) dmodex$(EXEEXT) \
 	group_dmodex$(EXEEXT) asyncgroup$(EXEEXT) hello$(EXEEXT) \
 	nodeinfo$(EXEEXT) abi_no_init$(EXEEXT) abi_with_init$(EXEEXT) \
 	group_lcl_cid$(EXEEXT) pset$(EXEEXT) log$(EXEEXT) \
-	$(am__EXEEXT_1)
+	client3$(EXEEXT) $(am__EXEEXT_1)
 
 # these examples use internal symbols
 # use --disable-visibility
@@ -104,6 +104,7 @@ noinst_PROGRAMS = client$(EXEEXT) client2$(EXEEXT) dmodex$(EXEEXT) \
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
+	$(top_srcdir)/config/oac/oac_check_os_flavors.m4 \
 	$(top_srcdir)/config/oac/oac_check_package.m4 \
 	$(top_srcdir)/config/oac/oac_check_vendor.m4 \
 	$(top_srcdir)/config/oac/oac_init.m4 \
@@ -125,8 +126,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/config/pmix_check_compiler_version.m4 \
 	$(top_srcdir)/config/pmix_check_curl.m4 \
 	$(top_srcdir)/config/pmix_check_jansson.m4 \
-	$(top_srcdir)/config/pmix_check_lock.m4 \
-	$(top_srcdir)/config/pmix_check_os_flavors.m4 \
+	$(top_srcdir)/config/pmix_check_lustre.m4 \
 	$(top_srcdir)/config/pmix_check_pthread_pids.m4 \
 	$(top_srcdir)/config/pmix_check_slurm.m4 \
 	$(top_srcdir)/config/pmix_check_visibility.m4 \
@@ -151,13 +151,15 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pdl/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/configure.m4 \
-	$(top_srcdir)/src/mca/common/dstore/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds12/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds21/configure.m4 \
+	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
+	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
 	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv4/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv6/configure.m4 \
 	$(top_srcdir)/src/mca/pif/linux_ipv6/configure.m4 \
@@ -166,12 +168,20 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/config/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/env/configure.m4 \
 	$(top_srcdir)/src/mca/plog/syslog/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/opa/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/simptest/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/sshot/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/tcp/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/usnic/configure.m4 \
+	$(top_srcdir)/src/mca/prm/alps/configure.m4 \
+	$(top_srcdir)/src/mca/prm/hpesmf/configure.m4 \
+	$(top_srcdir)/src/mca/prm/pbs/configure.m4 \
 	$(top_srcdir)/src/mca/prm/slurm/configure.m4 \
 	$(top_srcdir)/src/mca/psec/munge/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/test/configure.m4 \
+	$(top_srcdir)/src/mca/pstrg/lustre/configure.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -223,6 +233,12 @@ client2_DEPENDENCIES = $(top_builddir)/src/libpmix.la
 client2_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(client2_LDFLAGS) $(LDFLAGS) -o $@
+am_client3_OBJECTS = client3.$(OBJEXT)
+client3_OBJECTS = $(am_client3_OBJECTS)
+client3_DEPENDENCIES = $(top_builddir)/src/libpmix.la
+client3_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(client3_LDFLAGS) $(LDFLAGS) -o $@
 am_debugger_OBJECTS = debugger.$(OBJEXT)
 debugger_OBJECTS = $(am_debugger_OBJECTS)
 debugger_DEPENDENCIES = $(top_builddir)/src/libpmix.la
@@ -345,12 +361,12 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/abi_no_init.Po \
 	./$(DEPDIR)/abi_with_init.Po ./$(DEPDIR)/alloc.Po \
 	./$(DEPDIR)/asyncgroup.Po ./$(DEPDIR)/client.Po \
-	./$(DEPDIR)/client2.Po ./$(DEPDIR)/debugger.Po \
-	./$(DEPDIR)/debuggerd.Po ./$(DEPDIR)/dmodex.Po \
-	./$(DEPDIR)/dynamic.Po ./$(DEPDIR)/fault.Po \
-	./$(DEPDIR)/group.Po ./$(DEPDIR)/group_dmodex.Po \
-	./$(DEPDIR)/group_lcl_cid.Po ./$(DEPDIR)/hello.Po \
-	./$(DEPDIR)/jctrl.Po ./$(DEPDIR)/log.Po \
+	./$(DEPDIR)/client2.Po ./$(DEPDIR)/client3.Po \
+	./$(DEPDIR)/debugger.Po ./$(DEPDIR)/debuggerd.Po \
+	./$(DEPDIR)/dmodex.Po ./$(DEPDIR)/dynamic.Po \
+	./$(DEPDIR)/fault.Po ./$(DEPDIR)/group.Po \
+	./$(DEPDIR)/group_dmodex.Po ./$(DEPDIR)/group_lcl_cid.Po \
+	./$(DEPDIR)/hello.Po ./$(DEPDIR)/jctrl.Po ./$(DEPDIR)/log.Po \
 	./$(DEPDIR)/nodeinfo.Po ./$(DEPDIR)/pset.Po ./$(DEPDIR)/pub.Po \
 	./$(DEPDIR)/pubi.Po ./$(DEPDIR)/server.Po ./$(DEPDIR)/tool.Po
 am__mv = mv -f
@@ -374,18 +390,18 @@ am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(abi_no_init_SOURCES) $(abi_with_init_SOURCES) \
 	$(alloc_SOURCES) $(asyncgroup_SOURCES) $(client_SOURCES) \
-	$(client2_SOURCES) $(debugger_SOURCES) $(debuggerd_SOURCES) \
-	$(dmodex_SOURCES) $(dynamic_SOURCES) $(fault_SOURCES) \
-	$(group_SOURCES) $(group_dmodex_SOURCES) \
+	$(client2_SOURCES) $(client3_SOURCES) $(debugger_SOURCES) \
+	$(debuggerd_SOURCES) $(dmodex_SOURCES) $(dynamic_SOURCES) \
+	$(fault_SOURCES) $(group_SOURCES) $(group_dmodex_SOURCES) \
 	$(group_lcl_cid_SOURCES) $(hello_SOURCES) $(jctrl_SOURCES) \
 	$(log_SOURCES) $(nodeinfo_SOURCES) $(pset_SOURCES) \
 	$(pub_SOURCES) $(pubi_SOURCES) $(server_SOURCES) \
 	$(tool_SOURCES)
 DIST_SOURCES = $(abi_no_init_SOURCES) $(abi_with_init_SOURCES) \
 	$(alloc_SOURCES) $(asyncgroup_SOURCES) $(client_SOURCES) \
-	$(client2_SOURCES) $(debugger_SOURCES) $(debuggerd_SOURCES) \
-	$(dmodex_SOURCES) $(dynamic_SOURCES) $(fault_SOURCES) \
-	$(group_SOURCES) $(group_dmodex_SOURCES) \
+	$(client2_SOURCES) $(client3_SOURCES) $(debugger_SOURCES) \
+	$(debuggerd_SOURCES) $(dmodex_SOURCES) $(dynamic_SOURCES) \
+	$(fault_SOURCES) $(group_SOURCES) $(group_dmodex_SOURCES) \
 	$(group_lcl_cid_SOURCES) $(hello_SOURCES) $(jctrl_SOURCES) \
 	$(log_SOURCES) $(nodeinfo_SOURCES) $(pset_SOURCES) \
 	$(pub_SOURCES) $(pubi_SOURCES) $(am__server_SOURCES_DIST) \
@@ -491,13 +507,6 @@ MCA_pmix_bfrops_DSO_SUBDIRS = @MCA_pmix_bfrops_DSO_SUBDIRS@
 MCA_pmix_bfrops_STATIC_COMPONENTS = @MCA_pmix_bfrops_STATIC_COMPONENTS@
 MCA_pmix_bfrops_STATIC_LTLIBS = @MCA_pmix_bfrops_STATIC_LTLIBS@
 MCA_pmix_bfrops_STATIC_SUBDIRS = @MCA_pmix_bfrops_STATIC_SUBDIRS@
-MCA_pmix_common_ALL_COMPONENTS = @MCA_pmix_common_ALL_COMPONENTS@
-MCA_pmix_common_ALL_SUBDIRS = @MCA_pmix_common_ALL_SUBDIRS@
-MCA_pmix_common_DSO_COMPONENTS = @MCA_pmix_common_DSO_COMPONENTS@
-MCA_pmix_common_DSO_SUBDIRS = @MCA_pmix_common_DSO_SUBDIRS@
-MCA_pmix_common_STATIC_COMPONENTS = @MCA_pmix_common_STATIC_COMPONENTS@
-MCA_pmix_common_STATIC_LTLIBS = @MCA_pmix_common_STATIC_LTLIBS@
-MCA_pmix_common_STATIC_SUBDIRS = @MCA_pmix_common_STATIC_SUBDIRS@
 MCA_pmix_gds_ALL_COMPONENTS = @MCA_pmix_gds_ALL_COMPONENTS@
 MCA_pmix_gds_ALL_SUBDIRS = @MCA_pmix_gds_ALL_SUBDIRS@
 MCA_pmix_gds_DSO_COMPONENTS = @MCA_pmix_gds_DSO_COMPONENTS@
@@ -596,13 +605,6 @@ MCA_pmix_psensor_DSO_SUBDIRS = @MCA_pmix_psensor_DSO_SUBDIRS@
 MCA_pmix_psensor_STATIC_COMPONENTS = @MCA_pmix_psensor_STATIC_COMPONENTS@
 MCA_pmix_psensor_STATIC_LTLIBS = @MCA_pmix_psensor_STATIC_LTLIBS@
 MCA_pmix_psensor_STATIC_SUBDIRS = @MCA_pmix_psensor_STATIC_SUBDIRS@
-MCA_pmix_pshmem_ALL_COMPONENTS = @MCA_pmix_pshmem_ALL_COMPONENTS@
-MCA_pmix_pshmem_ALL_SUBDIRS = @MCA_pmix_pshmem_ALL_SUBDIRS@
-MCA_pmix_pshmem_DSO_COMPONENTS = @MCA_pmix_pshmem_DSO_COMPONENTS@
-MCA_pmix_pshmem_DSO_SUBDIRS = @MCA_pmix_pshmem_DSO_SUBDIRS@
-MCA_pmix_pshmem_STATIC_COMPONENTS = @MCA_pmix_pshmem_STATIC_COMPONENTS@
-MCA_pmix_pshmem_STATIC_LTLIBS = @MCA_pmix_pshmem_STATIC_LTLIBS@
-MCA_pmix_pshmem_STATIC_SUBDIRS = @MCA_pmix_pshmem_STATIC_SUBDIRS@
 MCA_pmix_psquash_ALL_COMPONENTS = @MCA_pmix_psquash_ALL_COMPONENTS@
 MCA_pmix_psquash_ALL_SUBDIRS = @MCA_pmix_psquash_ALL_SUBDIRS@
 MCA_pmix_psquash_DSO_COMPONENTS = @MCA_pmix_psquash_DSO_COMPONENTS@
@@ -741,7 +743,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 libpmi2_so_version = @libpmi2_so_version@
 libpmi_so_version = @libpmi_so_version@
-libpmix_mca_common_dstore_so_version = @libpmix_mca_common_dstore_so_version@
 libpmix_so_version = @libpmix_so_version@
 localedir = @localedir@
 localstatedir = @localstatedir@
@@ -767,6 +768,9 @@ pmixminor = @pmixminor@
 pmixnumeric = @pmixnumeric@
 pmixrelease = @pmixrelease@
 prefix = @prefix@
+prm_alps_CPPFLAGS = @prm_alps_CPPFLAGS@
+prm_alps_LDFLAGS = @prm_alps_LDFLAGS@
+prm_alps_LIBS = @prm_alps_LIBS@
 prm_slurm_CPPFLAGS = @prm_slurm_CPPFLAGS@
 prm_slurm_LDFLAGS = @prm_slurm_LDFLAGS@
 prm_slurm_LIBS = @prm_slurm_LIBS@
@@ -775,6 +779,9 @@ psdir = @psdir@
 psec_munge_CPPFLAGS = @psec_munge_CPPFLAGS@
 psec_munge_LDFLAGS = @psec_munge_LDFLAGS@
 psec_munge_LIBS = @psec_munge_LIBS@
+pstrg_lustre_CPPFLAGS = @pstrg_lustre_CPPFLAGS@
+pstrg_lustre_LDFLAGS = @pstrg_lustre_LDFLAGS@
+pstrg_lustre_LIBS = @pstrg_lustre_LIBS@
 pyexecdir = @pyexecdir@
 pythondir = @pythondir@
 runstatedir = @runstatedir@
@@ -821,6 +828,9 @@ client_LDADD = $(top_builddir)/src/libpmix.la
 client2_SOURCES = client2.c examples.h
 client2_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 client2_LDADD = $(top_builddir)/src/libpmix.la
+client3_SOURCES = client3.c examples.h
+client3_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+client3_LDADD = $(top_builddir)/src/libpmix.la
 debugger_SOURCES = debugger.c examples.h
 debugger_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 debugger_LDADD = $(top_builddir)/src/libpmix.la
@@ -866,18 +876,18 @@ asyncgroup_LDADD = $(top_builddir)/src/libpmix.la
 hello_SOURCES = hello.c examples.h
 hello_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 hello_LDADD = $(top_builddir)/src/libpmix.la
-nodeinfo_SOURCES = nodeinfo.c examples.h
-nodeinfo_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
-nodeinfo_LDADD = $(top_builddir)/src/libpmix.la
 abi_no_init_SOURCES = abi_no_init.c
 abi_no_init_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 abi_no_init_LDADD = $(top_builddir)/src/libpmix.la
 abi_with_init_SOURCES = abi_with_init.c
 abi_with_init_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 abi_with_init_LDADD = $(top_builddir)/src/libpmix.la
-group_lcl_cid_SOURCES = group_lcl_cid.c
+group_lcl_cid_SOURCES = group_lcl_cid.c examples.h
 group_lcl_cid_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 group_lcl_cid_LDADD = $(top_builddir)/src/libpmix.la
+nodeinfo_SOURCES = nodeinfo.c examples.h
+nodeinfo_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+nodeinfo_LDADD = $(top_builddir)/src/libpmix.la
 pset_SOURCES = pset.c examples.h
 pset_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 pset_LDADD = $(top_builddir)/src/libpmix.la
@@ -950,6 +960,10 @@ client$(EXEEXT): $(client_OBJECTS) $(client_DEPENDENCIES) $(EXTRA_client_DEPENDE
 client2$(EXEEXT): $(client2_OBJECTS) $(client2_DEPENDENCIES) $(EXTRA_client2_DEPENDENCIES) 
 	@rm -f client2$(EXEEXT)
 	$(AM_V_CCLD)$(client2_LINK) $(client2_OBJECTS) $(client2_LDADD) $(LIBS)
+
+client3$(EXEEXT): $(client3_OBJECTS) $(client3_DEPENDENCIES) $(EXTRA_client3_DEPENDENCIES) 
+	@rm -f client3$(EXEEXT)
+	$(AM_V_CCLD)$(client3_LINK) $(client3_OBJECTS) $(client3_LDADD) $(LIBS)
 
 debugger$(EXEEXT): $(debugger_OBJECTS) $(debugger_DEPENDENCIES) $(EXTRA_debugger_DEPENDENCIES) 
 	@rm -f debugger$(EXEEXT)
@@ -1031,6 +1045,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asyncgroup.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client2.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client3.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debugger.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debuggerd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dmodex.Po@am__quote@ # am--include-marker
@@ -1216,6 +1231,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/asyncgroup.Po
 	-rm -f ./$(DEPDIR)/client.Po
 	-rm -f ./$(DEPDIR)/client2.Po
+	-rm -f ./$(DEPDIR)/client3.Po
 	-rm -f ./$(DEPDIR)/debugger.Po
 	-rm -f ./$(DEPDIR)/debuggerd.Po
 	-rm -f ./$(DEPDIR)/dmodex.Po
@@ -1284,6 +1300,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/asyncgroup.Po
 	-rm -f ./$(DEPDIR)/client.Po
 	-rm -f ./$(DEPDIR)/client2.Po
+	-rm -f ./$(DEPDIR)/client3.Po
 	-rm -f ./$(DEPDIR)/debugger.Po
 	-rm -f ./$(DEPDIR)/debuggerd.Po
 	-rm -f ./$(DEPDIR)/dmodex.Po
@@ -1342,7 +1359,8 @@ distclean-local:
 	rm -f *.o alloc asyncgroup bad_exit client client2 \
         debugger debuggerd dmodex dynamic fault group \
         hello jctrl launcher log pub pubi server tool \
-        abi_no_init abi_with_init nodeinfo group_lcl_cid
+        abi_no_init abi_with_init group_lcl_cid pset \
+        async_group group_dmodex client3
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -99,6 +99,7 @@ static int pmix_exchange(bool flag)
         /* Rank wildcard */
         rc = PMIx_Fence(&allproc, 1, &info, 1);
     }
+
     if (PMIX_SUCCESS != rc) {
         fprintf(stderr, "Client ns %s rank %d: PMIx_Fence_nb failed: %d\n", myproc.nspace,
                 myproc.rank, rc);

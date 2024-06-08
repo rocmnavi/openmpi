@@ -9,6 +9,7 @@
  *                         All rights reserved.
  * Copyright (c) 2016      IBM Corporation.  All rights reserved.
  * Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2022      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -20,7 +21,7 @@
 
 #include "src/include/pmix_stdint.h"
 
-#include "pmix.h"
+#include "include/pmix.h"
 
 #include "src/include/pmix_globals.h"
 
@@ -50,7 +51,6 @@
 #include "src/mca/ptl/ptl.h"
 #include "src/util/pmix_argv.h"
 #include "src/util/pmix_error.h"
-#include "src/util/pmix_hash.h"
 #include "src/util/pmix_output.h"
 
 #include "pmix_client_ops.h"
@@ -186,7 +186,8 @@ static pmix_status_t unpack_return(pmix_buffer_t *data)
     pmix_status_t ret;
     int32_t cnt;
 
-    pmix_output_verbose(2, pmix_client_globals.fence_output, "client:unpack fence called");
+    pmix_output_verbose(2, pmix_client_globals.fence_output,
+                        "client:unpack fence called");
 
     /* unpack the status code */
     cnt = 1;
@@ -201,6 +202,10 @@ static pmix_status_t unpack_return(pmix_buffer_t *data)
     /* provide an opportunity to store any data (or at least how to access
      * any data) that was included in the fence */
     PMIX_GDS_RECV_MODEX_COMPLETE(rc, pmix_client_globals.myserver, data);
+    if (PMIX_SUCCESS != rc) {
+        PMIX_ERROR_LOG(rc);
+        return rc;
+    }
 
     return ret;
 }
@@ -252,9 +257,10 @@ static void wait_cbfunc(struct pmix_peer_t *pr, pmix_ptl_hdr_t *hdr, pmix_buffer
 {
     pmix_cb_t *cb = (pmix_cb_t *) cbdata;
     pmix_status_t rc;
-
-    pmix_output_verbose(2, pmix_client_globals.fence_output, "pmix: fence_nb callback recvd");
     PMIX_HIDE_UNUSED_PARAMS(pr, hdr);
+
+    pmix_output_verbose(2, pmix_client_globals.fence_output,
+                        "pmix: fence_nb callback recvd");
 
     if (NULL == cb) {
         PMIX_ERROR_LOG(PMIX_ERR_BAD_PARAM);

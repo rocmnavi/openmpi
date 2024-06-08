@@ -27,11 +27,6 @@ const pmix_pinstalldirs_base_component_t pmix_mca_pinstalldirs_config_component 
         /* Component open and close functions */
         NULL, NULL
     },
-    .component_data = {
-        /* This component is Checkpointable */
-        PMIX_MCA_BASE_METADATA_PARAM_CHECKPOINT,
-        .reserved = {0}
-    },
 
     .install_dirs_data = {
         .prefix = PMIX_INSTALL_PREFIX,

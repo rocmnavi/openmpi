@@ -12,7 +12,7 @@
  *                         All rights reserved.
  * Copyright (c) 2009      Cisco Systems, Inc.  All rights reserved.
  * Copyright (c) 2014-2018 Intel, Inc. All rights reserved.
- * Copyright (c) 2022-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2022      Nanook Consulting.  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -23,7 +23,7 @@
 #ifndef PLOG_DEFAULT_H
 #define PLOG_DEFAULT_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/mca/plog/plog.h"
 

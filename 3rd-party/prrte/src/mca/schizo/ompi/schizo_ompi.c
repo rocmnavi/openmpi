@@ -48,6 +48,7 @@
 #include "src/util/pmix_os_path.h"
 #include "src/util/pmix_path.h"
 #include "src/util/pmix_environ.h"
+#include "src/util/proc_info.h"
 #include "src/util/prte_cmd_line.h"
 #include "src/runtime/pmix_init_util.h"
 #include "src/util/session_dir.h"
@@ -657,7 +658,7 @@ static int convert_deprecated_cli(pmix_cli_result_t *results,
                                                 warn);
             PMIX_CLI_REMOVE_DEPRECATED(results, opt);
         }
-        /* --use-hwthread-cpus -> --bind-to hwthread */
+        /* --use-hwthread-cpus -> --map-by hwtcpus */
         else if (0 == strcmp(option, "use-hwthread-cpus")) {
             rc = prte_schizo_base_add_qualifier(results, option,
                                                 PRTE_CLI_MAPBY, PRTE_CLI_HWTCPUS,
@@ -1794,6 +1795,17 @@ static int parse_env(char **srcenv, char ***dstenv,
         PMIX_ARGV_FREE_COMPAT(xparams);
         PMIX_ARGV_FREE_COMPAT(xvals);
     }
+
+#if PMIX_NUMERIC_VERSION != 0x00040208
+    /* add a flag indicating that we did indeed check the tmpdir
+     * for a shared file system */
+    if (prte_process_info.shared_fs) {
+        p1 = "TRUE";
+    } else {
+        p1 = "FALSE";
+    }
+    PMIX_SETENV_COMPAT("PRTE_SHARED_FS", p1, true, dstenv);
+#endif
 
     return PRTE_SUCCESS;
 }

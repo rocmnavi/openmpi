@@ -38,25 +38,18 @@ static pmix_status_t component_query(pmix_mca_base_module_t **module, int *prior
  */
 pmix_pmdl_ompi_component_t pmix_mca_pmdl_ompi_component = {
     .super = {
-        .base = {
-            PMIX_PMDL_BASE_VERSION_1_0_0,
+        PMIX_PMDL_BASE_VERSION_1_0_0,
 
-            /* Component name and version */
-            .pmix_mca_component_name = "ompi",
-            PMIX_MCA_BASE_MAKE_VERSION(component,
-                                       PMIX_MAJOR_VERSION,
-                                       PMIX_MINOR_VERSION,
-                                       PMIX_RELEASE_VERSION),
+        /* Component name and version */
+        .pmix_mca_component_name = "ompi",
+        PMIX_MCA_BASE_MAKE_VERSION(component,
+                                   PMIX_MAJOR_VERSION,
+                                   PMIX_MINOR_VERSION,
+                                   PMIX_RELEASE_VERSION),
 
-            /* Component open and close functions */
-            .pmix_mca_register_component_params = component_register,
-            .pmix_mca_query_component = component_query,
-        },
-        .data = {
-            /* The component is checkpoint ready */
-            PMIX_MCA_BASE_METADATA_PARAM_CHECKPOINT,
-            .reserved = {0}
-        }
+        /* Component open and close functions */
+        .pmix_mca_register_component_params = component_register,
+        .pmix_mca_query_component = component_query,
     },
     .include = NULL,
     .exclude = NULL
@@ -64,24 +57,24 @@ pmix_pmdl_ompi_component_t pmix_mca_pmdl_ompi_component = {
 
 static pmix_status_t component_register(void)
 {
-    pmix_mca_base_component_t *component = &pmix_mca_pmdl_ompi_component.super.base;
+    pmix_mca_base_component_t *component = &pmix_mca_pmdl_ompi_component.super;
 
     pmix_mca_pmdl_ompi_component.incparms = "OMPI_*";
-    (void) pmix_mca_base_component_var_register(component,
-                                                "include_envars",
-                                                "Comma-delimited list of envars to harvest (\'*\' and \'?\' supported)",
-                                                PMIX_MCA_BASE_VAR_TYPE_STRING,
-                                                &pmix_mca_pmdl_ompi_component.incparms);
+    (void) pmix_mca_base_component_var_register(
+        component, "include_envars",
+        "Comma-delimited list of envars to harvest (\'*\' and \'?\' supported)",
+        PMIX_MCA_BASE_VAR_TYPE_STRING,
+        &pmix_mca_pmdl_ompi_component.incparms);
     if (NULL != pmix_mca_pmdl_ompi_component.incparms) {
         pmix_mca_pmdl_ompi_component.include = PMIx_Argv_split(pmix_mca_pmdl_ompi_component.incparms, ',');
     }
 
     pmix_mca_pmdl_ompi_component.excparms = NULL;
-    (void) pmix_mca_base_component_var_register(component,
-                                                "exclude_envars",
-                                                "Comma-delimited list of envars to exclude (\'*\' and \'?\' supported)",
-                                                PMIX_MCA_BASE_VAR_TYPE_STRING,
-                                                &pmix_mca_pmdl_ompi_component.excparms);
+    (void) pmix_mca_base_component_var_register(
+        component, "exclude_envars",
+        "Comma-delimited list of envars to exclude (\'*\' and \'?\' supported)",
+        PMIX_MCA_BASE_VAR_TYPE_STRING,
+         &pmix_mca_pmdl_ompi_component.excparms);
     if (NULL != pmix_mca_pmdl_ompi_component.excparms) {
         pmix_mca_pmdl_ompi_component.exclude = PMIx_Argv_split(pmix_mca_pmdl_ompi_component.excparms, ',');
     }

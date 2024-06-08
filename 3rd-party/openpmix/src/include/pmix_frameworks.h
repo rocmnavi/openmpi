@@ -21,7 +21,6 @@ extern pmix_mca_base_framework_t pmix_preg_base_framework;
 extern pmix_mca_base_framework_t pmix_prm_base_framework;
 extern pmix_mca_base_framework_t pmix_psec_base_framework;
 extern pmix_mca_base_framework_t pmix_psensor_base_framework;
-extern pmix_mca_base_framework_t pmix_pshmem_base_framework;
 extern pmix_mca_base_framework_t pmix_psquash_base_framework;
 extern pmix_mca_base_framework_t pmix_pstat_base_framework;
 extern pmix_mca_base_framework_t pmix_pstrg_base_framework;

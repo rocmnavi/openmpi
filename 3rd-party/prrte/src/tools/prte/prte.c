@@ -19,7 +19,7 @@
  *                         and Technology (RIST).  All rights reserved.
  * Copyright (c) 2020      Geoffroy Vallee. All rights reserved.
  * Copyright (c) 2020      IBM Corporation.  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting.  All rights reserved.
  * Copyright (c) 2021      Amazon.com, Inc. or its affiliates.  All Rights
  *                         reserved.
  * Copyright (c) 2022-2023 Triad National Security, LLC. All rights
@@ -86,6 +86,7 @@
 #include "src/util/pmix_environ.h"
 #include "src/util/pmix_getcwd.h"
 #include "src/util/pmix_show_help.h"
+#include "src/util/pmix_string_copy.h"
 
 #include "src/class/pmix_pointer_array.h"
 #include "src/runtime/prte_progress_threads.h"
@@ -99,6 +100,7 @@
 #include "src/mca/schizo/base/base.h"
 #include "src/mca/state/base/base.h"
 #include "src/runtime/prte_globals.h"
+#include "src/runtime/prte_wait.h"
 #include "src/runtime/runtime.h"
 
 #include "include/prte.h"
@@ -228,6 +230,49 @@ static void setup_sighandler(int signal, prte_event_t *ev, prte_event_cbfunc_t c
     prte_event_signal_add(ev, NULL);
 }
 
+static void shutdown_callback(int fd, short flags, void *arg)
+{
+    prte_timer_t *tm = (prte_timer_t *) arg;
+    prte_job_t *jdata;
+    PRTE_HIDE_UNUSED_PARAMS(fd, flags);
+
+    if (NULL != tm) {
+        /* release the timer */
+        PMIX_RELEASE(tm);
+    }
+
+    /* if we were ordered to abort, do so */
+    pmix_output(0, "%s is executing clean abnormal termination",
+                PRTE_NAME_PRINT(PRTE_PROC_MY_NAME));
+    /* do -not- call finalize as this will send a message to the HNP
+     * indicating clean termination! Instead, just forcibly cleanup
+     * the local session_dir tree and exit
+     */
+    prte_odls.kill_local_procs(NULL);
+    // mark that we are finalizing so the session directory will cleanup
+    prte_finalizing = true;
+    jdata = prte_get_job_data_object(PRTE_PROC_MY_NAME->nspace);
+    PMIX_RELEASE(jdata);
+    exit(PRTE_ERROR_DEFAULT_EXIT_CODE);
+}
+
+#if PMIX_NUMERIC_VERSION < 0x00040208
+static char *pmix_getline(FILE *fp)
+{
+    char *ret, *buff;
+    char input[1024];
+
+    ret = fgets(input, 1024, fp);
+    if (NULL != ret) {
+        input[strlen(input) - 1] = '\0'; /* remove newline */
+        buff = strdup(input);
+        return buff;
+    }
+
+    return NULL;
+}
+#endif
+
 int main(int argc, char *argv[])
 {
     int rc = 1, i;
@@ -243,11 +288,11 @@ int main(int argc, char *argv[])
     size_t napps;
     mylock_t mylock;
     uint32_t ui32;
-    char **pargv;
+    char **pargv, **split;
     int pargc;
     prte_job_t *jdata;
     prte_app_context_t *dapp;
-    bool proxyrun = false;
+    bool proxyrun = false, first;
     void *jinfo;
     pmix_proc_t pname;
     pmix_value_t *val;
@@ -260,6 +305,7 @@ int main(int argc, char *argv[])
     char *personality;
     pmix_cli_result_t results;
     pmix_cli_item_t *opt;
+    FILE *fp;
 
     /* init the globals */
     PMIX_CONSTRUCT(&apps, pmix_list_t);
@@ -434,6 +480,34 @@ int main(int argc, char *argv[])
         schizo->allow_run_as_root(&results); // will exit us if not allowed
     }
 
+    // check for an appfile
+    opt = pmix_cmd_line_get_param(&results, PRTE_CLI_APPFILE);
+    if (NULL != opt) {
+        // parse the file and add its context to the argv array
+        fp = fopen(opt->values[0], "r");
+        if (NULL == fp) {
+            pmix_show_help("help-prun", "appfile-failure", true, opt->values[0]);
+            return 1;
+        }
+        first = true;
+        while (NULL != (param = pmix_getline(fp))) {
+            if (!first) {
+                // add a colon delimiter
+                PMIX_ARGV_APPEND_NOSIZE_COMPAT(&pargv, ":");
+                ++pargc;
+            }
+            // break the line down into parts
+            split = PMIX_ARGV_SPLIT_COMPAT(param, ' ');
+            for (n=0; NULL != split[n]; n++) {
+                PMIX_ARGV_APPEND_NOSIZE_COMPAT(&pargv, split[n]);
+                ++pargc;
+            }
+            PMIX_ARGV_FREE_COMPAT(split);
+            first = false;
+        }
+        fclose(fp);
+    }
+
     /* decide if we are to use a persistent DVM, or act alone */
     opt = pmix_cmd_line_get_param(&results, PRTE_CLI_DVM);
     if (proxyrun && (NULL != opt || NULL != getenv("PRTEPROXY_USE_DVM"))) {
@@ -506,6 +580,9 @@ int main(int argc, char *argv[])
     }
     if (pmix_cmd_line_is_taken(&results, PRTE_CLI_DEBUG_DAEMONS)) {
         prte_debug_daemons_flag = true;
+    }
+    if (pmix_cmd_line_is_taken(&results, PRTE_CLI_DEBUG_DAEMONS_FILE)) {
+        prte_debug_daemons_file_flag = true;
     }
     if (pmix_cmd_line_is_taken(&results, PRTE_CLI_LEAVE_SESSION_ATTACHED)) {
         prte_leave_session_attached = true;
@@ -846,6 +923,35 @@ int main(int argc, char *argv[])
     if (!prte_dvm_ready) {
         PRTE_UPDATE_EXIT_STATUS(PRTE_ERR_FATAL);
         goto DONE;
+    }
+
+    // see if we are to suicide
+    if (PMIX_RANK_INVALID != prted_debug_failure) {
+        /* are we the specified vpid? */
+        if (PRTE_PROC_MY_NAME->rank == prted_debug_failure ||
+            prted_debug_failure == PMIX_RANK_WILDCARD) {
+            /* if the user specified we delay, then setup a timer
+             * and have it kill us
+             */
+            if (0 < prted_debug_failure_delay) {
+                PRTE_TIMER_EVENT(prted_debug_failure_delay, 0, shutdown_callback);
+
+            } else {
+                pmix_output(0, "%s is executing clean abnormal termination",
+                            PRTE_NAME_PRINT(PRTE_PROC_MY_NAME));
+
+                /* do -not- call finalize as this will send a message to the HNP
+                 * indicating clean termination! Instead, just forcibly cleanup
+                 * the local session_dir tree and exit
+                 */
+                jdata = prte_get_job_data_object(PRTE_PROC_MY_NAME->nspace);
+                PMIX_RELEASE(jdata);
+
+                /* return with non-zero status */
+                ret = PRTE_ERROR_DEFAULT_EXIT_CODE;
+                goto DONE;
+            }
+        }
     }
 
     opt = pmix_cmd_line_get_param(&results, PRTE_CLI_REPORT_PID);
@@ -1317,7 +1423,7 @@ static void abort_signal_callback(int fd)
         second = false;
     } else {
         surekill();  // ensure we attempt to kill everything
-        pmix_os_dirpath_destroy(prte_process_info.jobfam_session_dir, true, NULL);
+        pmix_os_dirpath_destroy(prte_process_info.top_session_dir, true, NULL);
         exit(1);
     }
 }
@@ -1369,16 +1475,12 @@ static int prep_singleton(const char *name)
     /* create a proc for the singleton */
     proc = PMIX_NEW(prte_proc_t);
     PMIX_LOAD_PROCID(&proc->name, jdata->nspace, rank);
-    proc->rank = proc->name.rank;
     proc->parent = PRTE_PROC_MY_NAME->rank;
     proc->app_idx = 0;
     proc->app_rank = rank;
     proc->local_rank = 0;
     proc->node_rank = 0;
     proc->state = PRTE_PROC_STATE_RUNNING;
-    /* link it to the job */
-    PMIX_RETAIN(jdata);
-    proc->job = jdata;
     /* link it to the app */
     PMIX_RETAIN(proc);
     pmix_pointer_array_set_item(&app->procs, rank, proc);

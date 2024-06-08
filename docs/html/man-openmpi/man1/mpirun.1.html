@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>18.1.2. mpirun / mpiexec &mdash; Open MPI 5.0.1 documentation</title>
+  <title>17.1.2. mpirun / mpiexec &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="18.1.3. mpisync" href="mpisync.1.html" />
-    <link rel="prev" title="18.1.1. Open MPI Wrapper Compilers" href="ompi-wrapper-compiler.1.html" /> 
+    <link rel="next" title="17.1.3. mpisync" href="mpisync.1.html" />
+    <link rel="prev" title="17.1.1. Open MPI Wrapper Compilers" href="ompi-wrapper-compiler.1.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,31 +59,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../news/index.html">17. News</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">18. Open MPI manual pages</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">18.1. Commands (section 1)</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="ompi-wrapper-compiler.1.html">18.1.1. Open MPI Wrapper Compilers</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">18.1.2. mpirun / mpiexec</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#synopsis">18.1.2.1. SYNOPSIS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#quick-summary">18.1.2.2. QUICK SUMMARY</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-s-use-of-prrte">18.1.2.3. OPEN MPI’S USE OF PRRTE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#command-line-options">18.1.2.4. COMMAND LINE OPTIONS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#options-old-hard-coded-content-mdash-to-be-audited">18.1.2.5. OPTIONS (OLD / HARD-CODED CONTENT — TO BE AUDITED</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#description">18.1.2.6. DESCRIPTION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#examples">18.1.2.7. EXAMPLES</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#return-value">18.1.2.8. RETURN VALUE</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">17. Open MPI manual pages</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">17.1. Commands (section 1)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ompi-wrapper-compiler.1.html">17.1.1. Open MPI Wrapper Compilers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">17.1.2. mpirun / mpiexec</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#synopsis">17.1.2.1. SYNOPSIS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quick-summary">17.1.2.2. QUICK SUMMARY</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-s-use-of-prrte">17.1.2.3. OPEN MPI’S USE OF PRRTE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#command-line-options">17.1.2.4. COMMAND LINE OPTIONS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#options-old-hard-coded-content-mdash-to-be-audited">17.1.2.5. OPTIONS (OLD / HARD-CODED CONTENT — TO BE AUDITED</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#description">17.1.2.6. DESCRIPTION</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">17.1.2.7. EXAMPLES</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#return-value">17.1.2.8. RETURN VALUE</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="mpisync.1.html">18.1.3. mpisync</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ompi_info.1.html">18.1.4. ompi_info</a></li>
-<li class="toctree-l3"><a class="reference internal" href="opal_wrapper.1.html">18.1.5. opal_wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mpisync.1.html">17.1.3. mpisync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ompi_info.1.html">17.1.4. ompi_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="opal_wrapper.1.html">17.1.5. opal_wrapper</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../man3/index.html">18.2. MPI API manual pages (section 3)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../man7/index.html">18.3. General information manual pages (section 7)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../man3/index.html">17.2. MPI API manual pages (section 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../man7/index.html">17.3. General information manual pages (section 7)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -100,9 +99,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">18. </span>Open MPI manual pages</a></li>
-          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">18.1. </span>Commands (section 1)</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">18.1.2. </span>mpirun / mpiexec</li>
+          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">17. </span>Open MPI manual pages</a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">17.1. </span>Commands (section 1)</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">17.1.2. </span>mpirun / mpiexec</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/man-openmpi/man1/mpirun.1.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -115,7 +114,7 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="mpirun-mpiexec">
-<span id="man1-mpiexec"></span><span id="man1-mpirun"></span><h1><span class="section-number">18.1.2. </span>mpirun / mpiexec<a class="headerlink" href="#mpirun-mpiexec" title="Permalink to this heading"></a></h1>
+<span id="man1-mpiexec"></span><span id="man1-mpirun"></span><h1><span class="section-number">17.1.2. </span>mpirun / mpiexec<a class="headerlink" href="#mpirun-mpiexec" title="Permalink to this heading"></a></h1>
 <p>mpirun, mpiexec — Execute serial and parallel jobs in Open MPI.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -125,7 +124,7 @@ Using either of the names will produce the exact same
 behavior.</p>
 </div>
 <div class="section" id="synopsis">
-<h2><span class="section-number">18.1.2.1. </span>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.1. </span>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this heading"></a></h2>
 <p>Single Process Multiple Data (SPMD) Model:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mpirun [ options ] &lt;program&gt; [ &lt;args&gt; ]
 </pre></div>
@@ -151,7 +150,7 @@ minus its last subdirectory.  For example:</p>
 </div>
 </div>
 <div class="section" id="quick-summary">
-<h2><span class="section-number">18.1.2.2. </span>QUICK SUMMARY<a class="headerlink" href="#quick-summary" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.2. </span>QUICK SUMMARY<a class="headerlink" href="#quick-summary" title="Permalink to this heading"></a></h2>
 <p>If you are simply looking for how to run an MPI application, you
 probably want to use a command line of the following form:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>shell$<span class="w"> </span>mpirun<span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span>X<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>--hostfile<span class="w"> </span>&lt;filename&gt;<span class="w"> </span><span class="o">]</span><span class="w">  </span>&lt;program&gt;
@@ -179,7 +178,7 @@ or bound to multiple cores using an appropriate binding level or
 specific number of processing elements per application process.</p>
 </div>
 <div class="section" id="open-mpi-s-use-of-prrte">
-<h2><span class="section-number">18.1.2.3. </span>OPEN MPI’S USE OF PRRTE<a class="headerlink" href="#open-mpi-s-use-of-prrte" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.3. </span>OPEN MPI’S USE OF PRRTE<a class="headerlink" href="#open-mpi-s-use-of-prrte" title="Permalink to this heading"></a></h2>
 <p>Open MPI uses the PMIx Reference Runtime Environment (PRRTE) as the
 main engine for launching, monitoring, and terminating MPI processes.</p>
 <p>Much of the documentation below is directly imported from PRRTE.  As
@@ -191,1072 +190,29 @@ behaviors in a few cases.  These will be specifically described in the
 docuemtnation below.</p>
 </div>
 <div class="section" id="command-line-options">
-<h2><span class="section-number">18.1.2.4. </span>COMMAND LINE OPTIONS<a class="headerlink" href="#command-line-options" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.4. </span>COMMAND LINE OPTIONS<a class="headerlink" href="#command-line-options" title="Permalink to this heading"></a></h2>
 <p>The core of Open MPI’s <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> processing is performed via the
 <a class="reference external" href="https://docs.prrte.org/">PRRTE</a>.  Specifically: <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> is
 effectively a wrapper around <code class="docutils literal notranslate"><span class="pre">prterun</span></code>, but <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>’s CLI options
 are slightly different than PRRTE’s CLI commands.</p>
-<div class="section" id="general-command-line-options">
-<h3><span class="section-number">18.1.2.4.1. </span>General command line options<a class="headerlink" href="#general-command-line-options" title="Permalink to this heading"></a></h3>
-<p>The following general command line options are available.</p>
+<div class="section" id="no-content">
+<h3><span class="section-number">17.1.2.4.1. </span>No content<a class="headerlink" href="#no-content" title="Permalink to this heading"></a></h3>
+<p>There is no meaningful content in this file because Open MPI was either:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-h</span></code> | <code class="docutils literal notranslate"><span class="pre">--help</span></code>: This help message</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code> | <code class="docutils literal notranslate"><span class="pre">--verbose</span></code>: Enable extra verbose output</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-V</span></code> | <code class="docutils literal notranslate"><span class="pre">--version</span></code>: Print version and exit</p></li>
+<li><p>Built without PRRTE support.</p></li>
+<li><p>Built with a PRRTE that was too old to include machine-readable
+documentation that could be incorporated into Open MPI’s
+documentation.</p></li>
 </ul>
-</div>
-<div class="section" id="launch-options">
-<h3><span class="section-number">18.1.2.4.2. </span>Launch options<a class="headerlink" href="#launch-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--default-hostfile</span> <span class="pre">&lt;filename&gt;</span></code>: Provide a default hostfile.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-H</span></code> | <code class="docutils literal notranslate"><span class="pre">--host</span> <span class="pre">&lt;list&gt;</span></code>: Comma-delimited list of hosts on which to
-to invoke processes.
-<a class="reference internal" href="#label-schizo-ompi-host"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--hostfile</span> <span class="pre">&lt;filename&gt;</span></code>: Provide a hostfile.
-<a class="reference internal" href="#label-schizo-ompi-hostfile"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--machinefile</span> <span class="pre">&lt;filename&gt;</span></code>: Synonym for <code class="docutils literal notranslate"><span class="pre">--hostfile</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--mca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Pass context-specific MCA parameters; they
-are considered global if <code class="docutils literal notranslate"><span class="pre">--gmca</span></code> is not used and only one context
-is specified (<code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> is the parameter name; <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> is the
-parameter value).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--path</span> <span class="pre">&lt;path&gt;</span></code>: Path to be used to look for executables to start
-processes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--pmixmca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Pass context-specific PMIx MCA
-parameters; they are considered global if only one context is
-specified (<code class="docutils literal notranslate"><span class="pre">&lt;key&gt;&gt;</span></code> is the parameter name; <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> is the
-parameter value).
-<a class="reference internal" href="#label-schizo-ompi-pmixmca"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--preload-files</span> <span class="pre">&lt;list&gt;</span></code>: Preload the comma-separated list of
-files to the remote machines current working directory before
-starting the remote process.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--prtemca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Pass context-specific PRTE MCA
-parameters to the DVM.
-<a class="reference internal" href="#label-schizo-ompi-prtemca"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--pset</span> <span class="pre">&lt;name&gt;</span></code>: User-specified name assigned to the processes in
-their given application.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--rankfile</span> <span class="pre">&lt;filename&gt;</span></code>: Name of file to specify explicit task
-mapping.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--runtime-options</span> <span class="pre">&lt;list&gt;</span></code>: List of options to pass to the launcher.
-<a class="reference internal" href="#label-schizo-ompi-runtime-options"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code> | <code class="docutils literal notranslate"><span class="pre">--preload-binary</span></code>: Preload the binary on the remote
-machine before starting the remote process.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--set-cwd-to-session-dir</span></code>: Set the working directory of the
-started processes to their session directory.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--show-progress</span></code>: Output a brief periodic report on launch
-progress.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--wd</span> <span class="pre">&lt;dir&gt;</span></code>: Synonym for <code class="docutils literal notranslate"><span class="pre">--wdir</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--wdir</span> <span class="pre">&lt;dir&gt;</span></code>: Set the working directory of the started processes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">&lt;var&gt;</span></code>: Export a environment variable, optionally specifying a value.
-<a class="reference internal" href="#label-schizo-ompi-x"><span class="std std-ref">See below for details</span></a>.</p></li>
-</ul>
-</div>
-<div class="section" id="mapping-ranking-and-binding-options">
-<h3><span class="section-number">18.1.2.4.3. </span>Mapping, ranking, and binding options<a class="headerlink" href="#mapping-ranking-and-binding-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--map-by</span> <span class="pre">&lt;value&gt;</span></code>: Controls how processes are distributed within
-a host.  <a class="reference internal" href="#label-schizo-ompi-map-by"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--rank-by</span> <span class="pre">&lt;value&gt;</span></code>: Controls how processes are ordered in
-<code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>.  <a class="reference internal" href="#label-schizo-ompi-rank-by"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--bind-to</span> <span class="pre">&lt;value&gt;</span></code>: Controls the resources to which processes are
-bound within a host.  <a class="reference internal" href="#label-schizo-ompi-bind-to"><span class="std std-ref">See below for details</span></a>.</p></li>
-</ul>
-</div>
-<div class="section" id="output-options">
-<h3><span class="section-number">18.1.2.4.4. </span>Output options<a class="headerlink" href="#output-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--output</span> <span class="pre">&lt;list&gt;</span></code>: Comma-delimited list of options that control
-how output is generated.  <a class="reference internal" href="#label-schizo-ompi-output"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--report-child-jobs-separately</span></code>: Return the exit status of the
-primary job only.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--stream-buffering</span> <span class="pre">&lt;value&gt;</span></code>: Control how output is buffered.
-<a class="reference internal" href="#label-schizo-ompi-stream-buffering"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--xterm</span> <span class="pre">&lt;list&gt;</span></code>: Create a new xterm window and display output
-from the specified ranks there.</p></li>
-</ul>
-</div>
-<div class="section" id="input-options">
-<h3><span class="section-number">18.1.2.4.5. </span>Input options<a class="headerlink" href="#input-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--stdin</span> <span class="pre">&lt;list&gt;</span></code>: Specify procs to receive stdin; alloable values
-in <code class="docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code> are: comma-delimited list of integer ranks, <code class="docutils literal notranslate"><span class="pre">all</span></code>,
-<code class="docutils literal notranslate"><span class="pre">none</span></code>.  Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>, indicating rank 0.</p></li>
-</ul>
-</div>
-<div class="section" id="specific-options">
-<h3><span class="section-number">18.1.2.4.6. </span>Specific options<a class="headerlink" href="#specific-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--allow-run-as-root</span></code>: Allow execution as root <strong>(STRONGLY
-DISCOURAGED)</strong>.  <a class="reference internal" href="#label-schizo-ompi-allow-run-as-root"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--daemonize</span></code>: Daemonize the DVM daemons into the background.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--forward-signals</span> <span class="pre">&lt;list&gt;</span></code>: Comma-delimited list of additional
-signals (names or integers) to forward to application
-processes.
-<a class="reference internal" href="#label-schizo-ompi-forward-signals"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--launch-agent</span> <span class="pre">&lt;agent&gt;</span></code>: Name of daemon executable used to start
-processes on remote nodes (default: <code class="docutils literal notranslate"><span class="pre">prted</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--max-vm-size</span> <span class="pre">&lt;size&gt;</span></code>: Number of daemons to start.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--noprefix</span></code>: Disable automatic <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> behavior.
-<a class="reference internal" href="#label-schizo-ompi-noprefix"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--prefix</span> <span class="pre">&lt;prefix&gt;</span></code>: Prefix to be used to look for RTE executables.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--set-sid</span></code>: Direct the DVM daemons to separate from the current
-session.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--singleton</span> <span class="pre">&lt;id&gt;</span></code>: ID of the singleton process that started us.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--tmpdir</span> <span class="pre">&lt;dir&gt;</span></code>: Set the root for the session directory tree.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--tune</span> <span class="pre">&lt;filename&gt;</span></code>: File(s) containing MCA params for tuning DVM
-operations.
-<a class="reference internal" href="#label-schizo-ompi-tune"><span class="std std-ref">See below for details</span></a>.</p></li>
-</ul>
-</div>
-<div class="section" id="mpi-options">
-<h3><span class="section-number">18.1.2.4.7. </span>MPI Options<a class="headerlink" href="#mpi-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--initial-errhandler</span></code>: Specify the initial error handler that is
-attached to predefined communicators during the first MPI call.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--display-comm</span></code>: Display table of communication methods between
-MPI_COMM_WORLD ranks during MPI_Init</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--display-comm-finalize</span></code>: Display table of communication methods
-between ranks during MPI_Finalize</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--soft</span></code>: This option does nothing, but is mandated by the MPI
-standard</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--arch</span> <span class="pre">&lt;filename&gt;</span></code>: This option does nothing, but is mandated by
-the MPI standard</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--file</span> <span class="pre">&lt;filename&gt;</span></code>: This option does nothing, but is mandated by
-the MPI standard</p></li>
-</ul>
-</div>
-<div class="section" id="debugger-tool-options">
-<h3><span class="section-number">18.1.2.4.8. </span>Debugger / tool options<a class="headerlink" href="#debugger-tool-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--keepalive</span> <span class="pre">&lt;filename&gt;</span></code>: Named pipe filename to monitor —
-DVM will terminate upon closure</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--report-pid</span> <span class="pre">&lt;value&gt;</span></code>: Print out PID on stdout (<code class="docutils literal notranslate"><span class="pre">-</span></code>), stderr
-(<code class="docutils literal notranslate"><span class="pre">+</span></code>), or a filename (anything else)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--report-uri</span> <span class="pre">&lt;value&gt;</span></code>: Print out URI on stdout (<code class="docutils literal notranslate"><span class="pre">-</span></code>), stderr
-(<code class="docutils literal notranslate"><span class="pre">+</span></code>), or a filename (anything else)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--stop-on-exec</span> <span class="pre">&lt;value&gt;</span></code>: If supported, stop each specified
-process at start of execution</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--stop-in-init</span> <span class="pre">&lt;value&gt;</span></code>: Direct the specified processes to stop
-in the MPI initialization function</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--stop-in-app</span> <span class="pre">&lt;value&gt;</span></code>: Direct the specified processes to stop at
-an application-controlled location</p></li>
-</ul>
-</div>
-<div class="section" id="debug-options">
-<h3><span class="section-number">18.1.2.4.9. </span>Debug options<a class="headerlink" href="#debug-options" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--debug-daemons</span></code>: Debug daemons — if not set, the “verbose”
-setting will be limited to the DVM controller to reduce clutter.
-<a class="reference internal" href="#label-schizo-ompi-debug-daemons"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--debug-daemons-file</span></code>: Enable debugging of any PRTE daemons used
-by this application, storing their verbose output in files.
-<a class="reference internal" href="#label-schizo-ompi-debug-daemons-file"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">&lt;value&gt;</span></code>: Comma-delimited list of options for
-displaying information about the allocation and job. Allowed values
-for <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code>: <code class="docutils literal notranslate"><span class="pre">allocation</span></code>, <code class="docutils literal notranslate"><span class="pre">bind</span></code>, <code class="docutils literal notranslate"><span class="pre">map</span></code>, <code class="docutils literal notranslate"><span class="pre">map-devel</span></code>,
-<code class="docutils literal notranslate"><span class="pre">topo</span></code>.
-<a class="reference internal" href="#label-schizo-ompi-display"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--get-stack-traces</span></code>: If a timeout occurs, get stack traces of all
-application processes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--leave-session-attached</span></code>: Do not discard stdout/stderr of remote
-PRTE daemons.
-<a class="reference internal" href="#label-schizo-ompi-leave-session-attached"><span class="std std-ref">See below for details</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--report-state-on-timeout</span></code>: Report all job and process states
-upon timeout.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--spawn-timeout</span> <span class="pre">&lt;seconds&gt;</span></code>: Timeout the job if spawn takes more
-than the specified number of seconds.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--test-suicide</span> <span class="pre">&lt;seconds&gt;</span></code>: Suicide instead of clean abort after
-delay.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--timeout</span> <span class="pre">&lt;seconds&gt;</span></code>: Timeout the job after the specified number
-of seconds.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--output-proctable</span> <span class="pre">&lt;value&gt;</span></code>: Print the complete proctable to
-stdout after launch; allowed <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> values are <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, or
-a filename.</p></li>
-</ul>
-</div>
-<div class="section" id="fault-tolerance-options">
-<h3><span class="section-number">18.1.2.4.10. </span>Fault Tolerance Options<a class="headerlink" href="#fault-tolerance-options" title="Permalink to this heading"></a></h3>
-<p>These options are only available is Open MPI / PRRTE were compiled
-with Fault Tolerance functionality enabled.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--enable-recovery</span></code>: Enable recovery from process failure (Default
-= disabled)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--max-restarts</span></code>: Max number of times to restart a failed process</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--disable-recovery</span></code>: Disable recovery (resets all recovery
-options to off)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--continuous</span></code>: Job is to run until explicitly terminated</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--with-ft</span></code>: Specify the type(s) of error handling that the
-application will use.</p></li>
-</ul>
-</div>
-<div class="section" id="details-of-individual-command-line-options">
-<h3><span class="section-number">18.1.2.4.11. </span>Details of individual command line options<a class="headerlink" href="#details-of-individual-command-line-options" title="Permalink to this heading"></a></h3>
-<p>The sections below offer more detail than the abbreviated lists,
-above.</p>
-<div class="section" id="the-allow-run-as-root-option">
-<span id="label-schizo-ompi-allow-run-as-root"></span><h4><span class="section-number">18.1.2.4.11.1. </span>The <code class="docutils literal notranslate"><span class="pre">--allow-run-as-root</span></code> option<a class="headerlink" href="#the-allow-run-as-root-option" title="Permalink to this heading"></a></h4>
-<p>Allow execution as root <strong>(STRONGLY DISCOURAGED)</strong>.</p>
-<p>Running as root exposes the user to potentially catastrophic file
-system corruption and damage — e.g., if the user accidentally
-points the root of the session directory to a system required point,
-this directory and all underlying elements will be deleted upon job
-completion, thereby rendering the system inoperable.</p>
-<p>It is recognized that some environments (e.g., containers) may require
-operation as root, and that the user accepts the risks in those
-scenarios. Accordingly, one can override PRRTE’s run-as-root
-protection by providing one of the following:</p>
-<ul>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">--allow-run-as-root</span></code> command line directive</p></li>
-<li><p>Adding <strong>BOTH</strong> of the following environmental parameters:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">PRTE_ALLOW_RUN_AS_ROOT=1</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PRTE_ALLOW_RUN_AS_ROOT_CONFIRM=1</span></code></p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p>Again, we recommend this only be done if absolutely necessary.</p>
-</div>
-<div class="section" id="the-bind-to-option">
-<span id="label-schizo-ompi-bind-to"></span><h4><span class="section-number">18.1.2.4.11.2. </span>The <code class="docutils literal notranslate"><span class="pre">--bind-to</span></code> option<a class="headerlink" href="#the-bind-to-option" title="Permalink to this heading"></a></h4>
-<p>By default, processes are bound to individual CPUs (either COREs or
-HWTHREADs, as defined by default or by user specification for the
-job). On nodes that are OVERSUBSCRIBEd (i.e., where the number of
-procs exceeds the number of assigned slots), the default is to not
-bind the processes.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Processes from prior jobs that are already executing on a
-node are not “unbound” when a new job mapping results in the
-node becoming oversubscribed.</p>
-</div>
-<p>Binding is performed to the first available specified object type
-within the object where the process was mapped. In other words,
-binding can only be done to the mapped object or to a resource
-located beneath that object.</p>
-<p>An object is considered completely consumed when the number of
-processes bound to it equals the number of CPUs within it. Unbound
-processes are not considered in this computation. Additional
-processes cannot be mapped to consumed objects unless the
-<code class="docutils literal notranslate"><span class="pre">OVERLOAD</span></code> qualifier is provided via the <code class="docutils literal notranslate"><span class="pre">--bind-to</span></code> command
-line option.</p>
-<p>Note that directives and qualifiers are case-insensitive
-and can be shortened to the minimum number of characters
-to uniquely identify them. Thus, <code class="docutils literal notranslate"><span class="pre">L1CACHE</span></code> can be given
-as <code class="docutils literal notranslate"><span class="pre">l1cache</span></code> or simply as <code class="docutils literal notranslate"><span class="pre">L1</span></code>.</p>
-<p>Supported binding directives include:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NONE</span></code> does not bind the processes</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HWTHREAD</span></code> binds each process to a single hardware
-thread/ This requires that hwthreads be treated
-as independent CPUs (i.e., that either the <code class="docutils literal notranslate"><span class="pre">HWTCPUS</span></code>
-qualifier be provided to the <code class="docutils literal notranslate"><span class="pre">map-by</span></code> option or
-that <code class="docutils literal notranslate"><span class="pre">hwthreads</span></code> be designated as CPUs by default).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CORE</span></code> binds each process to a single core. This
-can be done whether <code class="docutils literal notranslate"><span class="pre">hwthreads</span></code> or <code class="docutils literal notranslate"><span class="pre">cores</span></code> are being
-treated as independent CPUs provided that mapping
-is performed at the core or higher level.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L1CACHE</span></code> binds each process to all the CPUs in
-an <code class="docutils literal notranslate"><span class="pre">L1</span></code> cache.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L2CACHE</span></code> binds each process to all the CPUs in
-an <code class="docutils literal notranslate"><span class="pre">L2</span></code> cache</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L3CACHE</span></code> binds each process to all the CPUs in
-an <code class="docutils literal notranslate"><span class="pre">L3</span></code> cache</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NUMA</span></code> binds each process to all the CPUs in a <code class="docutils literal notranslate"><span class="pre">NUMA</span></code>
-region</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PACKAGE</span></code> binds each process to all the CPUs in a <code class="docutils literal notranslate"><span class="pre">PACKAGE</span></code></p></li>
-</ul>
-<p>Any directive can include qualifiers by adding a colon (:) and any
-combination of one or more of the following to the <code class="docutils literal notranslate"><span class="pre">--bind-to</span></code>
-option:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">OVERLOAD</span></code> indicates that objects can have more
-processes bound to them than CPUs within them</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">IF-SUPPORTED</span></code> indicates that the job should continue to
-be launched and executed even if binding cannot be
-performed as requested.</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Directives and qualifiers are case-insensitive.
-<code class="docutils literal notranslate"><span class="pre">OVERLOAD</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">overload</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-debug-daemons-option">
-<span id="label-schizo-ompi-debug-daemons"></span><h4><span class="section-number">18.1.2.4.11.3. </span>The <code class="docutils literal notranslate"><span class="pre">--debug-daemons</span></code> option<a class="headerlink" href="#the-debug-daemons-option" title="Permalink to this heading"></a></h4>
-<p>Debug daemon output enabled. This is a somewhat limited stream of
-information normally used to simply confirm that the daemons
-started. Includes leaving the output streams open.</p>
-</div>
-<div class="section" id="the-debug-daemons-file-option">
-<span id="label-schizo-ompi-debug-daemons-file"></span><h4><span class="section-number">18.1.2.4.11.4. </span>The <code class="docutils literal notranslate"><span class="pre">--debug-daemons-file</span></code> option<a class="headerlink" href="#the-debug-daemons-file-option" title="Permalink to this heading"></a></h4>
-<p>Debug daemon output is enabled and all output from the daemons is
-redirected into files with names of the form:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>output-prted-&lt;daemon-nspace&gt;-&lt;nodename&gt;.log
-</pre></div>
-</div>
-<p>These names avoid conflict on shared file systems. The files are
-located in the top-level session directory assigned to the DVM.</p>
-</div>
-<div class="section" id="the-display-option">
-<span id="label-schizo-ompi-display"></span><h4><span class="section-number">18.1.2.4.11.5. </span>The <code class="docutils literal notranslate"><span class="pre">--display</span></code> option<a class="headerlink" href="#the-display-option" title="Permalink to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">display</span></code> command line directive must be accompanied by a
-comma-delimited list of case-insensitive options indicating what
-information about the job and/or allocation is to be displayed. The
-full directive need not be provided — only enough characters are
-required to uniquely identify the directive. For example, <code class="docutils literal notranslate"><span class="pre">ALL</span></code> is
-sufficient to represent the <code class="docutils literal notranslate"><span class="pre">ALLOCATION</span></code> directive — while <code class="docutils literal notranslate"><span class="pre">MAP</span></code>
-can not be used to represent <code class="docutils literal notranslate"><span class="pre">MAP-DEVEL</span></code> (though <code class="docutils literal notranslate"><span class="pre">MAP-D</span></code> would
-suffice).</p>
-<p>Supported values include:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ALLOCATION</span></code> displays the detected hosts and slot assignments for
-this job</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BINDINGS</span></code> displays the resulting bindings applied to processes in
-this job</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">MAP</span></code> displays the resulting locations assigned to processes in
-this job</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">MAP-DEVEL</span></code> displays a more detailed report on the locations
-assigned to processes in this job that includes local and node
-ranks, assigned bindings, and other data</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TOPO=LIST</span></code> displays the topology of each node in the
-semicolon-delimited list that is allocated to the job</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CPUS[=LIST]</span></code> displays the available CPUs on the provided
-semicolon-delimited list of nodes (defaults to all nodes)</p></li>
-</ul>
-<p>The display command line directive can include qualifiers by adding a
-colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>) and any combination of one or more of the following
-(delimited by colons):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">PARSEABLE</span></code> directs that the output be provided in a format that
-is easily parsed by machines. Note that <code class="docutils literal notranslate"><span class="pre">PARSABLE</span></code> is also accepted as
-a typical spelling for the qualifier.</p></li>
-</ul>
-<p>Provided qualifiers will apply to <em>all</em> of the display directives.</p>
-</div>
-<div class="section" id="the-forward-signals-option">
-<span id="label-schizo-ompi-forward-signals"></span><h4><span class="section-number">18.1.2.4.11.6. </span>The <code class="docutils literal notranslate"><span class="pre">--forward-signals</span></code> option<a class="headerlink" href="#the-forward-signals-option" title="Permalink to this heading"></a></h4>
-<p>Comma-delimited list of additional signals (names or integers) to
-forward to application processes (<code class="docutils literal notranslate"><span class="pre">none</span></code> = forward
-nothing). Signals provided by default include SIGTSTP, SIGUSR1,
-SIGUSR2, SIGABRT, SIGALRM, and SIGCONT.</p>
-</div>
-<div class="section" id="the-host-option">
-<span id="label-schizo-ompi-host"></span><h4><span class="section-number">18.1.2.4.11.7. </span>The <code class="docutils literal notranslate"><span class="pre">--host</span></code> option<a class="headerlink" href="#the-host-option" title="Permalink to this heading"></a></h4>
-<p>Host syntax consists of a comma-delimited list of node names, each
-entry optionally containing a <code class="docutils literal notranslate"><span class="pre">:N</span></code> extension indicating the number
-of slots to assign to that entry:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--host node01:5,node02
-</pre></div>
-</div>
-<p>In the absence of the slot extension, one slot will be assigned to the
-node. Duplicate entries are aggregated and the number of slots
-assigned to that node are summed together.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A “slot” is the PRRTE term for an allocatable unit where we
-can launch a process. Thus, the number of slots equates to the
-maximum number of processes PRRTE may start on that node without
-oversubscribing it.</p>
-</div>
-</div>
-<div class="section" id="the-hostfile-option">
-<span id="label-schizo-ompi-hostfile"></span><h4><span class="section-number">18.1.2.4.11.8. </span>The <code class="docutils literal notranslate"><span class="pre">--hostfile</span></code> option<a class="headerlink" href="#the-hostfile-option" title="Permalink to this heading"></a></h4>
-<p>PRRTE supports several levels of user-specified host lists based on an
-established precedence order. Users can specify a default hostfile
-that contains a list of nodes to be used by the DVM. Only one default
-hostfile can be provided for a given DVM. In addition, users can
-specify a hostfile that contains a list of nodes to be used for a DVM,
-or can provide a comma-delimited list of nodes to be used for that DVM
-via the <code class="docutils literal notranslate"><span class="pre">--host</span></code> command line option.</p>
-<p>The precedence order applied to these various options depends to some
-extent on the local environment. The following table illustrates how
-host and hostfile directives work together to define the set of hosts
-upon which a DVM will execute in the absence of a resource manager
-(RM):</p>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 12%" />
-<col style="width: 17%" />
-<col style="width: 54%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Default hostfile</p></th>
-<th class="head"><p>host</p></th>
-<th class="head"><p>hostfile</p></th>
-<th class="head"><p>Result</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>unset</p></td>
-<td><p>unset</p></td>
-<td><p>unset</p></td>
-<td><div class="line-block">
-<div class="line">The DVN will consist solely of the</div>
-<div class="line">local host where the DVM</div>
-<div class="line">was started.</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><p>unset</p></td>
-<td><p>set</p></td>
-<td><p>unset</p></td>
-<td><div class="line-block">
-<div class="line">Host option defines resource list for the DVM.</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><p>unset</p></td>
-<td><p>unset</p></td>
-<td><p>set</p></td>
-<td><div class="line-block">
-<div class="line">Hostfile option defines resource list for the DVM.</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><p>unset</p></td>
-<td><p>set</p></td>
-<td><p>set</p></td>
-<td><div class="line-block">
-<div class="line">Hostfile option defines resource list for the DVM,</div>
-<div class="line">then host filters the list to define the final</div>
-<div class="line">set of nodes to be used by the DVM</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><p>set</p></td>
-<td><p>unset</p></td>
-<td><p>unset</p></td>
-<td><div class="line-block">
-<div class="line">Default hostfile defines resource list for the DVM</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><p>set</p></td>
-<td><p>set</p></td>
-<td><p>unset</p></td>
-<td><div class="line-block">
-<div class="line">Default hostfile defines resource list for the DVM,</div>
-<div class="line">then host filters the list to define the final</div>
-<div class="line">set of nodes to be used by the DVM</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><p>set</p></td>
-<td><p>set</p></td>
-<td><p>set</p></td>
-<td><div class="line-block">
-<div class="line">Default hostfile defines resource list for the DVM,</div>
-<div class="line">then hostfile filters the list, and then host filters</div>
-<div class="line">the list to define the final set of nodes to be</div>
-<div class="line">used by the DVM</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<p>This changes somewhat in the presence of an RM as that entity
-specifies the initial allocation of nodes. In this case, the default
-hostfile, hostfile and host directives are all used to filter the RM’s
-specification so that a user can utilize different portions of the
-allocation for different DVMs. This is done according to the same
-precedence order as in the prior table, with the RM providing the
-initial pool of nodes.</p>
-<p>Hostfiles (sometimes called “machine files”) are a combination of two
-things:</p>
-<ol class="arabic simple">
-<li><p>A listing of hosts on which to launch processes.</p></li>
-<li><p>Optionally, limit the number of processes which can be launched on
-each host.</p></li>
-</ol>
-<p>Hostfile syntax consists of one node name on each line, optionally
-including a designated number of “slots”:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment line, and will be ignored</span>
-node01<span class="w">  </span><span class="nv">slots</span><span class="o">=</span><span class="m">10</span>
-node13<span class="w">  </span><span class="nv">slots</span><span class="o">=</span><span class="m">5</span>
-
-node15
-node16
-node17<span class="w">  </span><span class="nv">slots</span><span class="o">=</span><span class="m">3</span>
-...
-</pre></div>
-</div>
-<p>Blank lines and lines beginning with a <code class="docutils literal notranslate"><span class="pre">#</span></code> are ignored.</p>
-<p>A “slot” is the PRRTE term for an allocatable unit where we can launch
-a process.  See the section on definition of the term <code class="docutils literal notranslate"><span class="pre">slot</span></code> for a
-longer description of slots.</p>
-<p>In the absence of the <code class="docutils literal notranslate"><span class="pre">slot</span></code> parameter, PRRTE will assign either the
-number of slots to be the number of CPUs detected on the node or the
-resource manager-assigned value if operating in the presence of an
-RM.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>If using a resource manager, the user-specified number
-of slots is capped by the RM-assigned value.</p>
-</div>
-</div>
-<div class="section" id="the-leave-session-attached-option">
-<span id="label-schizo-ompi-leave-session-attached"></span><h4><span class="section-number">18.1.2.4.11.9. </span>The <code class="docutils literal notranslate"><span class="pre">--leave-session-attached</span></code> option<a class="headerlink" href="#the-leave-session-attached-option" title="Permalink to this heading"></a></h4>
-<p>Do not discard stdout/stderr of remote PRRTE daemons. The primary use
-for this option is to ensure that the daemon output streams (i.e.,
-stdout and stderr) remain open after launch, thus allowing the user to
-see any daemon-generated error messages. Otherwise, the daemon will
-“daemonize” itself upon launch, thereby closing its output streams.</p>
-</div>
-<div class="section" id="the-map-by-option">
-<span id="label-schizo-ompi-map-by"></span><h4><span class="section-number">18.1.2.4.11.10. </span>The <code class="docutils literal notranslate"><span class="pre">--map-by</span></code> option<a class="headerlink" href="#the-map-by-option" title="Permalink to this heading"></a></h4>
-<p>Processes are mapped based on one of the following directives as
-applied at the job level:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">SLOT</span></code> assigns procs to each node up to the number of available
-slots on that node before moving to the next node in the
-allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HWTHREAD</span></code> assigns a proc to each hardware thread on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CORE</span></code> (default) assigns a proc to each core on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L1CACHE</span></code> assigns a proc to each L1 cache on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L2CACHE</span></code> assigns a proc to each L2 cache on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">L3CACHE</span></code> assigns a proc to each L3 cache on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NUMA</span></code> assigns a proc to each NUMA region on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PACKAGE</span></code> assigns a proc to each package on a node in a
-round-robin manner up to the number of available slots on that
-node before moving to the next node in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NODE</span></code> assigns processes in a round-robin fashion to all nodes
-in the allocation, with the number assigned to each node capped
-by the number of available slots on that node</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SEQ</span></code> (often accompanied by the file=&lt;path&gt; qualifier) assigns
-one process to each node specified in the file. The sequential
-file is to contain an entry for each desired process, one per
-line of the file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PPR:N</span></code>:resource maps N procs to each instance of the specified
-resource type in the allocation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RANKFILE</span></code> (often accompanied by the file=&lt;path&gt; qualifier) assigns
-one process to the node/resource specified in each entry of the
-file, one per line of the file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PE-LIST=a,b</span></code> assigns procs to each node in the allocation based on
-the ORDERED qualifier. The list is comprised of comma-delimited
-ranges of CPUs to use for this job. If the ORDERED qualifier is not
-provided, then each node will be assigned procs up to the number of
-available slots, capped by the availability of the specified CPUs.
-If ORDERED is given, then one proc will be assigned to each of the
-specified CPUs, if available, capped by the number of slots on each
-node and the total number of specified processes. Providing the
-OVERLOAD qualifier to the “bind-to” option removes the check on
-availability of the CPU in both cases.</p></li>
-</ul>
-<p>Any directive can include qualifiers by adding a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>) and any
-combination of one or more of the following (delimited by colons) to
-the <code class="docutils literal notranslate"><span class="pre">--map-by</span></code> option (except where noted):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">PE=n</span></code> bind n CPUs to each process (can not be used in combination
-with rankfile or pe-list directives)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SPAN</span></code> load balance the processes across the allocation by treating
-the allocation as a single “super-node” (can not be used in
-combination with <code class="docutils literal notranslate"><span class="pre">slot</span></code>, <code class="docutils literal notranslate"><span class="pre">node</span></code>, <code class="docutils literal notranslate"><span class="pre">seq</span></code>, <code class="docutils literal notranslate"><span class="pre">ppr</span></code>, <code class="docutils literal notranslate"><span class="pre">rankfile</span></code>, or
-<code class="docutils literal notranslate"><span class="pre">pe-list</span></code> directives)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">OVERSUBSCRIBE</span></code> allow more processes on a node than processing elements</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NOOVERSUBSCRIBE</span></code> means <code class="docutils literal notranslate"><span class="pre">!OVERSUBSCRIBE</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NOLOCAL</span></code> do not launch processes on the same node as <code class="docutils literal notranslate"><span class="pre">prun</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HWTCPUS</span></code> use hardware threads as CPU slots</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CORECPUS</span></code> use cores as CPU slots (default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">INHERIT</span></code> indicates that a child job (i.e., one spawned from within
-an application) shall inherit the placement policies of the parent job
-that spawned it.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NOINHERIT</span></code> means <code class="docutils literal notranslate"><span class="pre">`!INHERIT</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FILE=&lt;path&gt;</span></code> (path to file containing sequential or rankfile entries).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ORDERED</span></code> only applies to the <code class="docutils literal notranslate"><span class="pre">PE-LIST</span></code> option to indicate that
-procs are to be bound to each of the specified CPUs in the order in
-which they are assigned (i.e., the first proc on a node shall be
-bound to the first CPU in the list, the second proc shall be bound
-to the second CPU, etc.)</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Directives and qualifiers are case-insensitive and can be
-shortened to the minimum number of characters to uniquely
-identify them. Thus, <code class="docutils literal notranslate"><span class="pre">L1CACHE</span></code> can be given as <code class="docutils literal notranslate"><span class="pre">l1cache</span></code> or
-simply as <code class="docutils literal notranslate"><span class="pre">L1</span></code>.</p>
-</div>
-<p>The type of CPU (core vs hwthread) used in the mapping algorithm
-is determined as follows:</p>
-<ul class="simple">
-<li><p>by user directive on the command line via the HWTCPUS qualifier to
-the <code class="docutils literal notranslate"><span class="pre">--map-by</span></code> directive</p></li>
-<li><p>by setting the <code class="docutils literal notranslate"><span class="pre">rmaps_default_mapping_policy</span></code> MCA parameter to
-include the <code class="docutils literal notranslate"><span class="pre">HWTCPUS</span></code> qualifier. This parameter sets the default
-value for a PRRTE DVM — qualifiers are carried across to DVM jobs
-started via <code class="docutils literal notranslate"><span class="pre">prun</span></code> unless overridden by the user’s command line</p></li>
-<li><p>defaults to CORE in topologies where core CPUs are defined, and to
-hwthreads otherwise.</p></li>
-</ul>
-<p>If your application uses threads, then you probably want to ensure that
-you are either not bound at all (by specifying <code class="docutils literal notranslate"><span class="pre">--bind-to</span> <span class="pre">none</span></code>), or
-bound to multiple cores using an appropriate binding level or specific
-number of processing elements per application process via the <code class="docutils literal notranslate"><span class="pre">PE=#</span></code>
-qualifier to the <code class="docutils literal notranslate"><span class="pre">--map-by</span></code> command line directive.</p>
-<p>A more detailed description of the mapping, ranking, and binding
-procedure can be obtained via the <code class="docutils literal notranslate"><span class="pre">--help</span> <span class="pre">placement</span></code> option.</p>
-</div>
-<div class="section" id="the-output-option">
-<span id="label-schizo-ompi-output"></span><h4><span class="section-number">18.1.2.4.11.11. </span>The <code class="docutils literal notranslate"><span class="pre">--output</span></code> option<a class="headerlink" href="#the-output-option" title="Permalink to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">output</span></code> command line directive must be accompanied by a
-comma-delimited list of case-insensitive options that control how
-output is generated. The full directive need not be provided — only
-enough characters are required to uniquely identify the directive. For
-example, <code class="docutils literal notranslate"><span class="pre">MERGE</span></code> is sufficient to represent the
-<code class="docutils literal notranslate"><span class="pre">MERGE-STDERR-TO-STDOUT</span></code> directive — while <code class="docutils literal notranslate"><span class="pre">TAG</span></code> can not be
-used to represent <code class="docutils literal notranslate"><span class="pre">TAG-DETAILED</span></code> (though <code class="docutils literal notranslate"><span class="pre">TAG-D</span></code> would suffice).</p>
-<p>Supported values include:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">TAG</span></code> marks each output line with the <code class="docutils literal notranslate"><span class="pre">[job,rank]&lt;stream&gt;:</span></code> of
-the process that generated it</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TAG-DETAILED</span></code> marks each output line with a detailed annotation
-containing <code class="docutils literal notranslate"><span class="pre">[namespace,rank][hostname:pid]&lt;stream&gt;:</span></code> of the
-process that generated it</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TAG-FULLNAME</span></code> marks each output line with the
-<code class="docutils literal notranslate"><span class="pre">[namespace,rank]&lt;stream&gt;:</span></code> of the process that generated it</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TAG-FULLNAME</span></code> marks each output line with the
-<code class="docutils literal notranslate"><span class="pre">[namespace,rank]&lt;stream&gt;:</span></code> of the process that generated it</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TIMESTAMP</span></code> prefixes each output line with a <code class="docutils literal notranslate"><span class="pre">[datetime]&lt;stream&gt;:</span></code>
-stamp. Note that the timestamp will be the time when the line is
-output by the DVM and not the time when the source output it</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">XML</span></code> provides all output in a pseudo-XML format
-<code class="docutils literal notranslate"><span class="pre">MERGE-STDERR-TO-STDOUT</span></code> merges stderr into stdout</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DIR=DIRNAME</span></code> redirects output from application processes into
-<code class="docutils literal notranslate"><span class="pre">DIRNAME/job/rank/std[out,err,diag]</span></code>. The provided name will be
-converted to an absolute path</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FILE=FILENAME</span></code> redirects output from application processes into
-<code class="docutils literal notranslate"><span class="pre">filename.rank.</span></code> The provided name will be converted to an absolute
-path</p></li>
-</ul>
-<p>Supported qualifiers include <code class="docutils literal notranslate"><span class="pre">NOCOPY</span></code> (do not copy the output to the
-stdout/err streams), and <code class="docutils literal notranslate"><span class="pre">RAW</span></code> (do not buffer the output into complete
-lines, but instead output it as it is received).</p>
-</div>
-<div class="section" id="the-pmixmca-option">
-<span id="label-schizo-ompi-pmixmca"></span><h4><span class="section-number">18.1.2.4.11.12. </span>The <code class="docutils literal notranslate"><span class="pre">--pmixmca</span></code> option<a class="headerlink" href="#the-pmixmca-option" title="Permalink to this heading"></a></h4>
-<p>Pass a PMIx MCA parameter</p>
-<p>Syntax: <code class="docutils literal notranslate"><span class="pre">--pmixmca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the parameter
-name and <code class="docutils literal notranslate"><span class="pre">value</span></code> is the parameter value.</p>
-</div>
-<div class="section" id="the-prefix-option">
-<span id="label-schizo-ompi-prefix"></span><h4><span class="section-number">18.1.2.4.11.13. </span>The <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option<a class="headerlink" href="#the-prefix-option" title="Permalink to this heading"></a></h4>
-<p>Prefix to be used to look for PRRTE executables. PRRTE automatically
-sets the prefix for remote daemons if it was either configured with
-the <code class="docutils literal notranslate"><span class="pre">--enable-prte-prefix-by-default</span></code> option OR prte itself was
-executed with an absolute path to the prte command. This option
-overrides those settings, if present, and forces use of the provided
-path.</p>
-</div>
-<div class="section" id="the-prtemca-option">
-<span id="label-schizo-ompi-prtemca"></span><h4><span class="section-number">18.1.2.4.11.14. </span>The <code class="docutils literal notranslate"><span class="pre">--prtemca</span></code> option<a class="headerlink" href="#the-prtemca-option" title="Permalink to this heading"></a></h4>
-<p>Pass a PRRTE MCA parameter.</p>
-<p>Syntax: <code class="docutils literal notranslate"><span class="pre">--prtemca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the parameter
-name and <code class="docutils literal notranslate"><span class="pre">value</span></code> is the parameter value.</p>
-</div>
-<div class="section" id="the-noprefix-option">
-<span id="label-schizo-ompi-noprefix"></span><h4><span class="section-number">18.1.2.4.11.15. </span>The <code class="docutils literal notranslate"><span class="pre">--noprefix</span></code> option<a class="headerlink" href="#the-noprefix-option" title="Permalink to this heading"></a></h4>
-<p>Disable automatic <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> behavior. PRRTE automatically sets the
-prefix for remote daemons if it was either configured with the
-<code class="docutils literal notranslate"><span class="pre">--enable-prte-prefix-by-default</span></code> option OR prte itself was executed
-with an absolute path to the <code class="docutils literal notranslate"><span class="pre">prte</span></code> command. This option disables
-that behavior.</p>
-</div>
-<div class="section" id="the-rank-by-option">
-<span id="label-schizo-ompi-rank-by"></span><h4><span class="section-number">18.1.2.4.11.16. </span>The <code class="docutils literal notranslate"><span class="pre">--rank-by</span></code> option<a class="headerlink" href="#the-rank-by-option" title="Permalink to this heading"></a></h4>
-<p>PRRTE automatically ranks processes for each job starting from zero.
-Regardless of the algorithm used, rank assignments span applications
-in the same job — i.e., a command line of</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-n 3 app1 : -n 2 app2
-</pre></div>
-</div>
-<p>will result in <code class="docutils literal notranslate"><span class="pre">app1</span></code> having three processes ranked 0-2 and <code class="docutils literal notranslate"><span class="pre">app2</span></code>
-having two processes ranked 3-4.</p>
-<p>By default, process ranks are assigned in accordance with the mapping
-directive — e.g., jobs that are mapped by-node will have the process
-ranks assigned round-robin on a per-node basis. However, users can override
-the default by specifying any of the following directives using the
-<code class="docutils literal notranslate"><span class="pre">--rank-by</span></code> command line option:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">SLOT</span></code> assigns ranks to each process on a node in the order in
-which the mapper assigned them. This is the default behavior,
-but is provided as an explicit option to allow users to override
-any alternative default specified in the environment. When mapping
-to a specific resource type, procs assigned to a given instance
-of that resource on a node will be ranked on a per-resource basis
-on that node before moving to the next node.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NODE</span></code> assigns ranks round-robin on a per-node basis</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FILL</span></code> assigns ranks to procs mapped to a particular resource type
-on each node, filling all ranks on that resource before moving to
-the next resource on that node. For example, procs mapped by
-<code class="docutils literal notranslate"><span class="pre">L1cache</span></code> would have all procs on the first <code class="docutils literal notranslate"><span class="pre">L1cache</span></code> ranked
-sequentially before moving to the second <code class="docutils literal notranslate"><span class="pre">L1cache</span></code> on the
-node. Once all procs on the node have been ranked, ranking would
-continue on the next node.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SPAN</span></code> assigns ranks round-robin to procs mapped to a particular
-resource type, treating the collection of resource instances
-spanning the entire allocation as a single “super node” before
-looping around for the next pass. Thus, ranking would begin with the
-first proc on the first <code class="docutils literal notranslate"><span class="pre">L1cache</span></code> on the first node, then the next
-rank would be assigned to the first proc on the second <code class="docutils literal notranslate"><span class="pre">L1cache</span></code>
-on that node, proceeding across until the first proc had been ranked
-on all <code class="docutils literal notranslate"><span class="pre">L1cache</span></code> used by the job before circling around to rank
-the second proc on each object.</p></li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">rank-by</span></code> command line option has no qualifiers.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Directives are case-insensitive.  <code class="docutils literal notranslate"><span class="pre">SPAN</span></code> is the same as
-<code class="docutils literal notranslate"><span class="pre">span</span></code>.</p>
-</div>
-<p>A more detailed description of the mapping, ranking, and binding
-procedure can be obtained via the <code class="docutils literal notranslate"><span class="pre">--help</span> <span class="pre">placement</span></code> option.</p>
-</div>
-<div class="section" id="the-runtime-options-option">
-<span id="label-schizo-ompi-runtime-options"></span><h4><span class="section-number">18.1.2.4.11.17. </span>The <code class="docutils literal notranslate"><span class="pre">--runtime-options</span></code> option<a class="headerlink" href="#the-runtime-options-option" title="Permalink to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">--runtime-options</span></code> command line directive must be accompanied
-by a comma-delimited list of case-insensitive options that control the
-runtime behavior of the job. The full directive need not be provided
-— only enough characters are required to uniquely identify the
-directive.</p>
-<p>Runtime options are typically <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>, though this is
-not a requirement on developers. Since the value of each option may
-need to be set (e.g., to override a default set by MCA parameter), the
-syntax of the command line directive includes the use of an <code class="docutils literal notranslate"><span class="pre">=</span></code>
-character to allow inclusion of a value for the option. For example,
-one can set the <code class="docutils literal notranslate"><span class="pre">ABORT-NONZERO-STATUS</span></code> option to <code class="docutils literal notranslate"><span class="pre">true</span></code> by
-specifying it as <code class="docutils literal notranslate"><span class="pre">ABORT-NONZERO-STATUS=1</span></code>. Note that boolean options
-can be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> using a non-zero integer or a case-insensitive
-string of the word <code class="docutils literal notranslate"><span class="pre">true</span></code>.  For the latter representation, the user
-need only provide at least the <code class="docutils literal notranslate"><span class="pre">T</span></code> character. The same policy
-applies to setting a boolean option to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
-<p>Note that a boolean option will default to <code class="docutils literal notranslate"><span class="pre">true</span></code> if provided
-without a value. Thus, <code class="docutils literal notranslate"><span class="pre">--runtime-options</span> <span class="pre">abort-nonzero</span></code> is
-sufficient to set the <code class="docutils literal notranslate"><span class="pre">ABORT-NONZERO-STATUS</span></code> option to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
-<p>Supported values include:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ERROR-NONZERO-STATUS[=(bool)]</span></code>: if set to false, this directs the
-runtime to treat a process that exits with non-zero status as a
-normal termination.  If set to true, the runtime will consider such
-an occurrence as an error termination and take appropriate action
-— i.e., the job will be terminated unless a runtime option
-directs otherwise. This option defaults to a true value if the
-option is given without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DONOTLAUNCH</span></code>: directs the runtime to map but not launch the
-specified job. This is provided to help explore possible process
-placement patterns before actually starting execution. No value need
-be passed as this is not an option that can be set by default in
-PRRTE.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SHOW-PROGRESS[=(bool)]</span></code>: requests that the runtime provide
-progress reports on its startup procedure — i.e., the launch
-of its daemons in support of a job. This is typically used to debug
-DVM startup on large systems.  This option defaults to a true value
-if the option is given without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NOTIFYERRORS[=(bool)]</span></code>: if set to true, requests that the runtime
-provide a PMIx event whenever a job encounters an error —
-e.g., a process fails.  The event is to be delivered to each
-remaining process in the job. This option defaults to a true value
-if the option is given without a value.  See <code class="docutils literal notranslate"><span class="pre">--help</span>
-<span class="pre">notifications</span></code> for more detail as to the PMIx event codes available
-for capturing failure events.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RECOVERABLE[=(bool)]</span></code>: if set to true, this indicates that the
-application wishes to consider the job as recoverable — i.e.,
-the application is assuming responsibility for recovering from any
-process failure. This could include application-driven spawn of a
-substitute process or internal compensation for the missing
-process. This option defaults to a true value if the option is given
-without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">AUTORESTART[=(bool)]</span></code>: if set to true, this requests that the
-runtime automatically restart failed processes up to “max restarts”
-number of times. This option defaults to a true value if the option
-is given without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CONTINUOUS[=(bool)]</span></code>: if set to true, this informs the runtime
-that the processes in this job are to run until explicitly
-terminated. Processes that fail are to be automatically restarted up
-to “max restarts” number of times. Notification of process failure
-is to be delivered to all processes in the application. This is the
-equivalent of specifying <code class="docutils literal notranslate"><span class="pre">RECOVERABLE</span></code>, <code class="docutils literal notranslate"><span class="pre">NOTIFYERRORS</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">AUTORESTART</span></code> options except that the runtime, not the
-application, assumes responsibility for process recovery. This
-option defaults to a true value if the option is given without a
-value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">MAX-RESTARTS=&lt;int&gt;</span></code>: indicates the maximum number of times a
-given process is to be restarted. This can be set at the application
-or job level (which will then apply to all applications in that
-job).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">EXEC-AGENT=&lt;path&gt;</span></code> indicates the executable that shall be used to
-start an application process. The resulting command for starting an
-application process will be <code class="docutils literal notranslate"><span class="pre">&lt;path&gt;</span> <span class="pre">app</span> <span class="pre">&lt;app-argv&gt;</span></code>. The path may
-contain its own command line arguments.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DEFAULT-EXEC-AGENT</span></code>: directs the runtime to use the system
-default exec agent to start an application process. No value need be
-passed as this is not an option that can be set by default in PRRTE.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">OUTPUT-PROCTABLE[(=channel)]</span></code>: directs the runtime to report the
-convential debugger process table (includes PID and host location of
-each process in the application). Output is directed to stdout if
-the channel is <code class="docutils literal notranslate"><span class="pre">-</span></code>, stderr if <code class="docutils literal notranslate"><span class="pre">+</span></code>, or into the specified file
-otherwise. If no channel is specified, output will be directed to
-stdout.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STOP-ON-EXEC</span></code>: directs the runtime to stop the application
-process(es) immediately upon exec’ing them. The directive will apply
-to all processes in the job.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STOP-IN-INIT</span></code>: indicates that the runtime should direct the
-application process(es) to stop in <code class="docutils literal notranslate"><span class="pre">PMIx_Init()</span></code>. The directive
-will apply to all processes in the job.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STOP-IN-APP</span></code>: indicates that the runtime should direct
-application processes to stop at some application-defined place and
-notify they are ready-to-debug. The directive will apply to all
-processes in the job.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TIMEOUT=&lt;string&gt;</span></code>: directs the runtime to terminate the job after
-it has executed for the specified time. Time is specified in
-colon-delimited format — e.g., <code class="docutils literal notranslate"><span class="pre">01:20:13:05</span></code> to indicate 1
-day, 20 hours, 13 minutes and 5 seconds. Time specified without
-colons will be assumed to have been given in seconds.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SPAWN-TIMEOUT=&lt;string&gt;</span></code>: directs the runtime to terminate the job
-if job launch is not completed within the specified time. Time is
-specified in colon-delimited format — e.g., <code class="docutils literal notranslate"><span class="pre">01:20:13:05</span></code> to
-indicate 1 day, 20 hours, 13 minutes and 5 seconds.  Time specified
-without colons will be assumed to have been given in seconds.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">REPORT-STATE-ON-TIMEOUT[(=bool)]</span></code>: directs the runtime to provide
-a detailed report on job and application process state upon job
-timeout. This option defaults to a true value if the option is given
-without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GET-STACK-TRACES[(=bool)]</span></code>: requests that the runtime provide
-stack traces on all application processes still executing upon
-timeout. This option defaults to a true value if the option is given
-without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">REPORT-CHILD-JOBS-SEPARATELY[(=bool)]</span></code>: directs the runtime to
-report the exit status of any child jobs spawned by the primary job
-separately. If false, then the final exit status reported will be
-zero if the primary job and all spawned jobs exit normally, or the
-first non-zero status returned by either primary or child jobs.
-This option defaults to a true value if the option is given without
-a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">AGGREGATE-HELP-MESSAGES[(=bool)]</span></code>: directs the runtime to
-aggregate help messages, reporting each unique help message once
-accompanied by the number of processes that reported it. This option
-defaults to a true value if the option is given without a value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FWD-ENVIRONMENT[(=bool)]</span></code>: directs the runtime to forward the
-entire local environment in support of the application. This option
-defaults to a true value if the option is given without a value.</p></li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">--runtime-options</span></code> command line option has no qualifiers.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Directives are case-insensitive.  <code class="docutils literal notranslate"><span class="pre">FWD-ENVIRONMENT</span></code> is the
-same as <code class="docutils literal notranslate"><span class="pre">fwd-environment</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-stream-buffering-option">
-<span id="label-schizo-ompi-stream-buffering"></span><h4><span class="section-number">18.1.2.4.11.18. </span>The <code class="docutils literal notranslate"><span class="pre">--stream-buffering</span></code> option<a class="headerlink" href="#the-stream-buffering-option" title="Permalink to this heading"></a></h4>
-<p>Adjust buffering for stdout/stderr.  Allowable values:</p>
-<ul class="simple">
-<li><p>0: unbuffered</p></li>
-<li><p>1: line buffered</p></li>
-<li><p>2: fully buffered</p></li>
-</ul>
-</div>
-<div class="section" id="the-tune-option">
-<span id="label-schizo-ompi-tune"></span><h4><span class="section-number">18.1.2.4.11.19. </span>The <code class="docutils literal notranslate"><span class="pre">--tune</span></code> option<a class="headerlink" href="#the-tune-option" title="Permalink to this heading"></a></h4>
-<p>Comma-delimited list of one or more files containing PRRTE and PMIx
-MCA params for tuning DVM and/or application operations. Parameters in
-the file will be treated as <em>generic</em> parameters and subject to the
-translation rules/uncertainties.  See <code class="docutils literal notranslate"><span class="pre">--help</span> <span class="pre">mca</span></code> for more
-information.</p>
-<p>Syntax in the file is:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>param = value
-</pre></div>
-</div>
-<p>with one parameter and its associated value per line. Empty lines and
-lines beginning with the <code class="docutils literal notranslate"><span class="pre">#</span></code> character are ignored.</p>
-</div>
-<div class="section" id="the-x-option">
-<span id="label-schizo-ompi-x"></span><h4><span class="section-number">18.1.2.4.11.20. </span>The <code class="docutils literal notranslate"><span class="pre">-x</span></code> option<a class="headerlink" href="#the-x-option" title="Permalink to this heading"></a></h4>
-<p>Export an environment variable, optionally specifying a value. For
-example:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">foo</span></code> exports the environment variable <code class="docutils literal notranslate"><span class="pre">foo</span></code> and takes its
-value from the current environment.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">foo=bar</span></code> exports the environment variable name <code class="docutils literal notranslate"><span class="pre">foo</span></code> and
-sets its value to <code class="docutils literal notranslate"><span class="pre">bar</span></code> in the started processes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">foo*</span></code> exports all current environmental variables starting
-with <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="deprecated-command-line-options">
-<h3><span class="section-number">18.1.2.4.12. </span>Deprecated command line options<a class="headerlink" href="#deprecated-command-line-options" title="Permalink to this heading"></a></h3>
-<p>The following command line options are deprecated, and should
-generally not be used.  They may be removed in a future release of
-Open MPI.</p>
-<div class="section" id="the-bind-to-core-option">
-<h4><span class="section-number">18.1.2.4.12.1. </span>The <code class="docutils literal notranslate"><span class="pre">--bind-to-core</span></code> option<a class="headerlink" href="#the-bind-to-core-option" title="Permalink to this heading"></a></h4>
-<p>Bind each process to its own core.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--bind-to</span> <span class="pre">core</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-display-allocation-option">
-<h4><span class="section-number">18.1.2.4.12.2. </span>The <code class="docutils literal notranslate"><span class="pre">--display-allocation</span></code> option<a class="headerlink" href="#the-display-allocation-option" title="Permalink to this heading"></a></h4>
-<p>Display the allocation being used by this job.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">alloc</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-display-devel-allocation-option">
-<h4><span class="section-number">18.1.2.4.12.3. </span>The <code class="docutils literal notranslate"><span class="pre">--display-devel-allocation</span></code> option<a class="headerlink" href="#the-display-devel-allocation-option" title="Permalink to this heading"></a></h4>
-<p>Display a detailed list (mostly intended for developers) of the
-allocation being used by this job.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">alloc-devel</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-display-devel-map-option">
-<h4><span class="section-number">18.1.2.4.12.4. </span>The <code class="docutils literal notranslate"><span class="pre">--display-devel-map</span></code> option<a class="headerlink" href="#the-display-devel-map-option" title="Permalink to this heading"></a></h4>
-<p>Display a detailed process map (mostly intended for developers)
-just before launch.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">map-devel</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-display-map-option">
-<h4><span class="section-number">18.1.2.4.12.5. </span>The <code class="docutils literal notranslate"><span class="pre">--display-map</span></code> option<a class="headerlink" href="#the-display-map-option" title="Permalink to this heading"></a></h4>
-<p>Display the process map just before launch.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">map</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-display-topo-option">
-<h4><span class="section-number">18.1.2.4.12.6. </span>The <code class="docutils literal notranslate"><span class="pre">--display-topo</span></code> option<a class="headerlink" href="#the-display-topo-option" title="Permalink to this heading"></a></h4>
-<p>Display the topology as part of the process map (mostly intended
-for developers) just before launch.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">topo</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-gmca-option">
-<h4><span class="section-number">18.1.2.4.12.7. </span>The <code class="docutils literal notranslate"><span class="pre">--gmca</span></code> option<a class="headerlink" href="#the-gmca-option" title="Permalink to this heading"></a></h4>
-<p>Syntax: <code class="docutils literal notranslate"><span class="pre">--gmca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the parameter name
-and <code class="docutils literal notranslate"><span class="pre">value</span></code> is the parameter value. The <code class="docutils literal notranslate"><span class="pre">g</span></code> prefix indicates that
-this parameter is “global”, and to be applied to <em>all</em> application
-contexts — not just the one in which the directive appears.</p>
-<p>Pass generic MCA parameters — i.e., parameters whose project
-affiliation must be determined by PRRTE based on matching the name of
-the parameter with defined values from various projects that PRRTE
-knows about.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This translation can be incomplete (e.g., if known project adds or
-changes parameters) — thus, it is strongly recommended that
-users use project-specific parameters such as <code class="docutils literal notranslate"><span class="pre">--gprtemca</span></code> or
-<code class="docutils literal notranslate"><span class="pre">--gpmixmca</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-mca-option">
-<h4><span class="section-number">18.1.2.4.12.8. </span>The <code class="docutils literal notranslate"><span class="pre">--mca</span></code> option<a class="headerlink" href="#the-mca-option" title="Permalink to this heading"></a></h4>
-<p>Syntax: <code class="docutils literal notranslate"><span class="pre">--mca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the parameter name
-and <code class="docutils literal notranslate"><span class="pre">value</span></code> is the parameter value.</p>
-<p>Pass generic MCA parameters — i.e., parameters whose project
-affiliation must be determined by PRRTE based on matching the name of
-the parameter with defined values from various projects that PRRTE
-knows about.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This translation can be incomplete (e.g., if a project adds or
-changes parameters) — thus, it is strongly recommended that
-users use project-specific parameters such as <code class="docutils literal notranslate"><span class="pre">--prtemca</span></code> or
-<code class="docutils literal notranslate"><span class="pre">--pmixmca</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-merge-stderr-to-stdout-option">
-<h4><span class="section-number">18.1.2.4.12.9. </span>The <code class="docutils literal notranslate"><span class="pre">--merge-stderr-to-stdout</span></code> option<a class="headerlink" href="#the-merge-stderr-to-stdout-option" title="Permalink to this heading"></a></h4>
-<p>Merge stderr to stdout for each process.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span> <span class="pre">merge</span></code></p>
-</div>
-</div>
-<div class="section" id="the-output-directory-option">
-<h4><span class="section-number">18.1.2.4.12.10. </span>The <code class="docutils literal notranslate"><span class="pre">--output-directory</span></code> option<a class="headerlink" href="#the-output-directory-option" title="Permalink to this heading"></a></h4>
-<p>Redirect output from application processes into
-<code class="docutils literal notranslate"><span class="pre">filename/job/rank/std[out,err,diag]</span></code>. A relative path value will be
-converted to an absolute path. The directory name may include a colon
-followed by a comma-delimited list of optional case-insensitive
-directives. Supported directives currently include <code class="docutils literal notranslate"><span class="pre">NOJOBID</span></code> (do not
-include a job-id directory level) and <code class="docutils literal notranslate"><span class="pre">NOCOPY</span></code> (do not copy the
-output to the stdout/err streams).</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span> <span class="pre">dir=&lt;path&gt;</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-output-filename-option">
-<h4><span class="section-number">18.1.2.4.12.11. </span>The <code class="docutils literal notranslate"><span class="pre">--output-filename</span></code> option<a class="headerlink" href="#the-output-filename-option" title="Permalink to this heading"></a></h4>
-<p>Redirect output from application processes into <code class="docutils literal notranslate"><span class="pre">filename.rank</span></code>. A
-relative path value will be converted to an absolute path. The
-directory name may include a colon followed by a comma-delimited list
-of optional case-insensitive directives. Supported directives
-currently include <code class="docutils literal notranslate"><span class="pre">NOCOPY</span></code> (do not copy the output to the stdout/err
-streams).</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span> <span class="pre">file=&lt;path&gt;</span></code></p>
-</div>
-</div>
-<div class="section" id="the-report-bindings-option">
-<h4><span class="section-number">18.1.2.4.12.12. </span>The <code class="docutils literal notranslate"><span class="pre">--report-bindings</span></code> option<a class="headerlink" href="#the-report-bindings-option" title="Permalink to this heading"></a></h4>
-<p>Display process bindings to stderr.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--display</span> <span class="pre">bindings</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-tag-output-option">
-<h4><span class="section-number">18.1.2.4.12.13. </span>The <code class="docutils literal notranslate"><span class="pre">--tag-output</span></code> option<a class="headerlink" href="#the-tag-output-option" title="Permalink to this heading"></a></h4>
-<p>Tag all output with <code class="docutils literal notranslate"><span class="pre">[job,rank]</span></code>.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-timestamp-output-option">
-<h4><span class="section-number">18.1.2.4.12.14. </span>The <code class="docutils literal notranslate"><span class="pre">--timestamp-output</span></code> option<a class="headerlink" href="#the-timestamp-output-option" title="Permalink to this heading"></a></h4>
-<p>Timestamp all application process output.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span> <span class="pre">timestamp</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-xml-option">
-<h4><span class="section-number">18.1.2.4.12.15. </span>The <code class="docutils literal notranslate"><span class="pre">--xml</span></code> option<a class="headerlink" href="#the-xml-option" title="Permalink to this heading"></a></h4>
-<p>Provide all output in XML format.</p>
-<div class="warning admonition">
-<p class="admonition-title">Deprecated</p>
-<p>This option is deprecated.  Please use <code class="docutils literal notranslate"><span class="pre">--output</span></code>.</p>
-</div>
-</div>
+<p>If you build Open MPI with a newer version of PRRTE (and have the
+Sphinx tool available when you run Open MPI’s <code class="docutils literal notranslate"><span class="pre">configure</span></code> command),
+you should get more meaningful documentation here.</p>
+<p>Hence, there is no documentation for this section.</p>
+<p>Sorry!</p>
 </div>
 </div>
 <div class="section" id="options-old-hard-coded-content-mdash-to-be-audited">
-<h2><span class="section-number">18.1.2.5. </span>OPTIONS (OLD / HARD-CODED CONTENT — TO BE AUDITED<a class="headerlink" href="#options-old-hard-coded-content-mdash-to-be-audited" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.5. </span>OPTIONS (OLD / HARD-CODED CONTENT — TO BE AUDITED<a class="headerlink" href="#options-old-hard-coded-content-mdash-to-be-audited" title="Permalink to this heading"></a></h2>
 <div class="error admonition">
 <p class="admonition-title">This is old content</p>
 <p>This is the old section of manually hard-coded content.  It should
@@ -1627,7 +583,7 @@ process when the timeout expires.</p></li>
 </ul>
 <p>There may be other options listed with <code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">--help</span></code>.</p>
 <div class="section" id="environment-variables">
-<h3><span class="section-number">18.1.2.5.1. </span>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.5.1. </span>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -1639,7 +595,7 @@ retained, or removed?</p>
 </div>
 </div>
 <div class="section" id="description">
-<h2><span class="section-number">18.1.2.6. </span>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.6. </span>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -1663,7 +619,7 @@ separate the specification of programs and arguments. Some options are
 globally set across all specified programs (e.g., <code class="docutils literal notranslate"><span class="pre">--hostfile</span></code>),
 while others are specific to a single program (e.g., <code class="docutils literal notranslate"><span class="pre">-n</span></code>).</p>
 <div class="section" id="specifying-host-nodes">
-<h3><span class="section-number">18.1.2.6.1. </span>Specifying Host Nodes<a class="headerlink" href="#specifying-host-nodes" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.1. </span>Specifying Host Nodes<a class="headerlink" href="#specifying-host-nodes" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -1703,7 +659,7 @@ MPI will obtain both the hostnames and the number of slots directly
 from the resource manager.</p>
 </div>
 <div class="section" id="specifying-number-of-processes">
-<h3><span class="section-number">18.1.2.6.2. </span>Specifying Number of Processes<a class="headerlink" href="#specifying-number-of-processes" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.2. </span>Specifying Number of Processes<a class="headerlink" href="#specifying-number-of-processes" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -1747,7 +703,7 @@ cc<span class="w"> </span><span class="nv">slots</span><span class="o">=</span><
 the <code class="docutils literal notranslate"><span class="pre">-n</span></code> option indicated that only 6 processes should be launched.</p>
 </div>
 <div class="section" id="mapping-processes-to-nodes-using-policies">
-<h3><span class="section-number">18.1.2.6.3. </span>Mapping Processes to Nodes: Using Policies<a class="headerlink" href="#mapping-processes-to-nodes-using-policies" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.3. </span>Mapping Processes to Nodes: Using Policies<a class="headerlink" href="#mapping-processes-to-nodes-using-policies" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -1849,7 +805,7 @@ remaining processes oversubscribe the specified hosts.</p>
 and 2 each running uptime on nodes <code class="docutils literal notranslate"><span class="pre">bb</span></code> and <code class="docutils literal notranslate"><span class="pre">cc</span></code>, respectively.</p>
 </div>
 <div class="section" id="mapping-ranking-and-binding-oh-my">
-<span id="man1-mpirun-map-rank-bind"></span><h3><span class="section-number">18.1.2.6.4. </span>Mapping, Ranking, and Binding: Oh My!<a class="headerlink" href="#mapping-ranking-and-binding-oh-my" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-map-rank-bind"></span><h3><span class="section-number">17.1.2.6.4. </span>Mapping, Ranking, and Binding: Oh My!<a class="headerlink" href="#mapping-ranking-and-binding-oh-my" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2067,7 +1023,7 @@ value pair may be specific on the command line by prefixing the key with
 </table>
 </div>
 <div class="section" id="defaults-for-mapping-ranking-and-binding">
-<span id="man1-mpirun-map-rank-bind-defaults"></span><h3><span class="section-number">18.1.2.6.5. </span>Defaults for Mapping, Ranking, and Binding<a class="headerlink" href="#defaults-for-mapping-ranking-and-binding" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-map-rank-bind-defaults"></span><h3><span class="section-number">17.1.2.6.5. </span>Defaults for Mapping, Ranking, and Binding<a class="headerlink" href="#defaults-for-mapping-ranking-and-binding" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2173,7 +1129,7 @@ R3  hostA  [../../../../../../../..][../BB/../../../../../..]
 </div>
 </div>
 <div class="section" id="rankfiles">
-<span id="man1-mpirun-rankfiles"></span><h3><span class="section-number">18.1.2.6.6. </span>Rankfiles<a class="headerlink" href="#rankfiles" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-rankfiles"></span><h3><span class="section-number">17.1.2.6.6. </span>Rankfiles<a class="headerlink" href="#rankfiles" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2228,7 +1184,7 @@ shell$ mpirun -H aa,bb,cc,dd --map-by rankfile:file=myrankfile ./a.out
 indexes of package and cores.</p>
 </div>
 <div class="section" id="application-context-or-executable-program">
-<h3><span class="section-number">18.1.2.6.7. </span>Application Context or Executable Program?<a class="headerlink" href="#application-context-or-executable-program" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.7. </span>Application Context or Executable Program?<a class="headerlink" href="#application-context-or-executable-program" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2240,7 +1196,7 @@ the command line is assumed to be an application context.  If it is
 not specified, then the file is assumed to be an executable program.</p>
 </div>
 <div class="section" id="locating-files">
-<h3><span class="section-number">18.1.2.6.8. </span>Locating Files<a class="headerlink" href="#locating-files" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.8. </span>Locating Files<a class="headerlink" href="#locating-files" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2259,7 +1215,7 @@ by default.  Other starters may set the initial directory to the
 current working directory from the invocation of <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>.</p>
 </div>
 <div class="section" id="current-working-directory">
-<span id="man1-mpirun-current-working-directory"></span><h3><span class="section-number">18.1.2.6.9. </span>Current Working Directory<a class="headerlink" href="#current-working-directory" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-current-working-directory"></span><h3><span class="section-number">17.1.2.6.9. </span>Current Working Directory<a class="headerlink" href="#current-working-directory" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2286,7 +1242,7 @@ starter.</p>
 does not wait until <a class="reference internal" href="../man3/MPI_Init.3.html#mpi-init"><span class="std std-ref">MPI_INIT(3)</span></a> is called.</p>
 </div>
 <div class="section" id="standard-i-o">
-<h3><span class="section-number">18.1.2.6.10. </span>Standard I/O<a class="headerlink" href="#standard-i-o" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.10. </span>Standard I/O<a class="headerlink" href="#standard-i-o" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2318,7 +1274,7 @@ nodes will be tied to <code class="docutils literal notranslate"><span class="pr
 will be collected into the <code class="docutils literal notranslate"><span class="pre">my_output</span></code> file.</p>
 </div>
 <div class="section" id="signal-propagation">
-<h3><span class="section-number">18.1.2.6.11. </span>Signal Propagation<a class="headerlink" href="#signal-propagation" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.11. </span>Signal Propagation<a class="headerlink" href="#signal-propagation" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2336,7 +1292,7 @@ signal to <code class="docutils literal notranslate"><span class="pre">mpirun</s
 <p>Other signals are not currently propagated by <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>.</p>
 </div>
 <div class="section" id="process-termination-signal-handling">
-<h3><span class="section-number">18.1.2.6.12. </span>Process Termination / Signal Handling<a class="headerlink" href="#process-termination-signal-handling" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.12. </span>Process Termination / Signal Handling<a class="headerlink" href="#process-termination-signal-handling" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2358,7 +1314,7 @@ process died due to a signal, it is probably not necessary (and
 safest) for the user to only clean up non-MPI state.</p>
 </div>
 <div class="section" id="process-environment">
-<h3><span class="section-number">18.1.2.6.13. </span>Process Environment<a class="headerlink" href="#process-environment" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.13. </span>Process Environment<a class="headerlink" href="#process-environment" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2378,7 +1334,7 @@ taken to ensure that it is correctly set when booting Open MPI.</p>
 for more details.</p>
 </div>
 <div class="section" id="remote-execution">
-<span id="man1-mpirun-remote-execution"></span><h3><span class="section-number">18.1.2.6.14. </span>Remote Execution<a class="headerlink" href="#remote-execution" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-remote-execution"></span><h3><span class="section-number">17.1.2.6.14. </span>Remote Execution<a class="headerlink" href="#remote-execution" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2438,7 +1394,7 @@ absolute pathname to <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 <div class="section" id="exported-environment-variables">
-<h3><span class="section-number">18.1.2.6.15. </span>Exported Environment Variables<a class="headerlink" href="#exported-environment-variables" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.15. </span>Exported Environment Variables<a class="headerlink" href="#exported-environment-variables" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2457,7 +1413,7 @@ in the environment and use the option to export them; not to define
 them.</p>
 </div>
 <div class="section" id="setting-mca-parameters">
-<span id="man1-mpirun-setting-mca-parameters"></span><h3><span class="section-number">18.1.2.6.16. </span>Setting MCA Parameters<a class="headerlink" href="#setting-mca-parameters" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-setting-mca-parameters"></span><h3><span class="section-number">17.1.2.6.16. </span>Setting MCA Parameters<a class="headerlink" href="#setting-mca-parameters" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2508,7 +1464,7 @@ ompi_info command.  See the <a class="reference internal" href="ompi_info.1.html
 page for detailed information on this command.</p>
 </div>
 <div class="section" id="setting-mca-parameters-and-environment-variables-from-file">
-<span id="man1-mpirun-setting-mca-params-from-file"></span><h3><span class="section-number">18.1.2.6.17. </span>Setting MCA parameters and environment variables from file<a class="headerlink" href="#setting-mca-parameters-and-environment-variables-from-file" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-setting-mca-params-from-file"></span><h3><span class="section-number">17.1.2.6.17. </span>Setting MCA parameters and environment variables from file<a class="headerlink" href="#setting-mca-parameters-and-environment-variables-from-file" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2532,7 +1488,7 @@ used.</p>
 have higher precedence than variables specified in the file.</p>
 </div>
 <div class="section" id="running-as-root">
-<span id="man1-mpirun-running-as-root"></span><h3><span class="section-number">18.1.2.6.18. </span>Running as root<a class="headerlink" href="#running-as-root" title="Permalink to this heading"></a></h3>
+<span id="man1-mpirun-running-as-root"></span><h3><span class="section-number">17.1.2.6.18. </span>Running as root<a class="headerlink" href="#running-as-root" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2562,7 +1518,7 @@ control, but it conveys the Open MPI team’s strong recommendation
 against this behavior.</p>
 </div>
 <div class="section" id="exit-status">
-<h3><span class="section-number">18.1.2.6.19. </span>Exit status<a class="headerlink" href="#exit-status" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">17.1.2.6.19. </span>Exit status<a class="headerlink" href="#exit-status" title="Permalink to this heading"></a></h3>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2607,7 +1563,7 @@ bullet points above).</p>
 </div>
 </div>
 <div class="section" id="examples">
-<h2><span class="section-number">18.1.2.7. </span>EXAMPLES<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.7. </span>EXAMPLES<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2622,7 +1578,7 @@ and <code class="docutils literal notranslate"><span class="pre">self</span></co
 messages.</p>
 </div>
 <div class="section" id="return-value">
-<h2><span class="section-number">18.1.2.8. </span>RETURN VALUE<a class="headerlink" href="#return-value" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">17.1.2.8. </span>RETURN VALUE<a class="headerlink" href="#return-value" title="Permalink to this heading"></a></h2>
 <div class="error admonition">
 <p class="admonition-title">This is old, hard-coded content</p>
 <p>Is this content still current / accurate?  Should it be updated and
@@ -2657,14 +1613,14 @@ ETIMEDOUT (which is typically 110 on Linux and OS X systems).</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="ompi-wrapper-compiler.1.html" class="btn btn-neutral float-left" title="18.1.1. Open MPI Wrapper Compilers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="mpisync.1.html" class="btn btn-neutral float-right" title="18.1.3. mpisync" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ompi-wrapper-compiler.1.html" class="btn btn-neutral float-left" title="17.1.1. Open MPI Wrapper Compilers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mpisync.1.html" class="btn btn-neutral float-right" title="17.1.3. mpisync" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -122,6 +122,7 @@ target_triplet = @target@
 subdir = src/util
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
+	$(top_srcdir)/config/oac/oac_check_os_flavors.m4 \
 	$(top_srcdir)/config/oac/oac_check_package.m4 \
 	$(top_srcdir)/config/oac/oac_check_vendor.m4 \
 	$(top_srcdir)/config/oac/oac_init.m4 \
@@ -143,8 +144,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/config/pmix_check_compiler_version.m4 \
 	$(top_srcdir)/config/pmix_check_curl.m4 \
 	$(top_srcdir)/config/pmix_check_jansson.m4 \
-	$(top_srcdir)/config/pmix_check_lock.m4 \
-	$(top_srcdir)/config/pmix_check_os_flavors.m4 \
+	$(top_srcdir)/config/pmix_check_lustre.m4 \
 	$(top_srcdir)/config/pmix_check_pthread_pids.m4 \
 	$(top_srcdir)/config/pmix_check_slurm.m4 \
 	$(top_srcdir)/config/pmix_check_visibility.m4 \
@@ -169,13 +169,15 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pdl/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/configure.m4 \
-	$(top_srcdir)/src/mca/common/dstore/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds12/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds21/configure.m4 \
+	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
+	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
 	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv4/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv6/configure.m4 \
 	$(top_srcdir)/src/mca/pif/linux_ipv6/configure.m4 \
@@ -184,12 +186,20 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/config/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/env/configure.m4 \
 	$(top_srcdir)/src/mca/plog/syslog/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/opa/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/simptest/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/sshot/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/tcp/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/usnic/configure.m4 \
+	$(top_srcdir)/src/mca/prm/alps/configure.m4 \
+	$(top_srcdir)/src/mca/prm/hpesmf/configure.m4 \
+	$(top_srcdir)/src/mca/prm/pbs/configure.m4 \
 	$(top_srcdir)/src/mca/prm/slurm/configure.m4 \
 	$(top_srcdir)/src/mca/psec/munge/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/test/configure.m4 \
+	$(top_srcdir)/src/mca/pstrg/lustre/configure.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -206,10 +216,10 @@ am__objects_2 = pmix_alfg.lo pmix_argv.lo pmix_cmd_line.lo \
 	pmix_error.lo pmix_printf.lo pmix_output.lo pmix_environ.lo \
 	pmix_fd.lo pmix_timings.lo pmix_os_dirpath.lo pmix_os_path.lo \
 	pmix_basename.lo pmix_keyval_parse.lo pmix_show_help.lo \
-	pmix_path.lo pmix_getid.lo pmix_hash.lo pmix_name_fns.lo \
-	pmix_net.lo pmix_if.lo pmix_parse_options.lo \
-	pmix_context_fns.lo pmix_pty.lo pmix_few.lo \
-	pmix_string_copy.lo pmix_getcwd.lo pmix_vmem.lo
+	pmix_path.lo pmix_getid.lo pmix_shmem.lo pmix_vmem.lo \
+	pmix_hash.lo pmix_name_fns.lo pmix_net.lo pmix_if.lo \
+	pmix_parse_options.lo pmix_context_fns.lo pmix_pty.lo \
+	pmix_few.lo pmix_string_copy.lo pmix_getcwd.lo
 am_libpmix_util_la_OBJECTS = $(am__objects_1) $(am__objects_2)
 libpmix_util_la_OBJECTS = $(am_libpmix_util_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -243,7 +253,8 @@ am__depfiles_remade = ./$(DEPDIR)/pmix_alfg.Plo \
 	./$(DEPDIR)/pmix_os_dirpath.Plo ./$(DEPDIR)/pmix_os_path.Plo \
 	./$(DEPDIR)/pmix_output.Plo ./$(DEPDIR)/pmix_parse_options.Plo \
 	./$(DEPDIR)/pmix_path.Plo ./$(DEPDIR)/pmix_printf.Plo \
-	./$(DEPDIR)/pmix_pty.Plo ./$(DEPDIR)/pmix_show_help.Plo \
+	./$(DEPDIR)/pmix_pty.Plo ./$(DEPDIR)/pmix_shmem.Plo \
+	./$(DEPDIR)/pmix_show_help.Plo \
 	./$(DEPDIR)/pmix_string_copy.Plo ./$(DEPDIR)/pmix_timings.Plo \
 	./$(DEPDIR)/pmix_vmem.Plo
 am__mv = mv -f
@@ -398,13 +409,6 @@ MCA_pmix_bfrops_DSO_SUBDIRS = @MCA_pmix_bfrops_DSO_SUBDIRS@
 MCA_pmix_bfrops_STATIC_COMPONENTS = @MCA_pmix_bfrops_STATIC_COMPONENTS@
 MCA_pmix_bfrops_STATIC_LTLIBS = @MCA_pmix_bfrops_STATIC_LTLIBS@
 MCA_pmix_bfrops_STATIC_SUBDIRS = @MCA_pmix_bfrops_STATIC_SUBDIRS@
-MCA_pmix_common_ALL_COMPONENTS = @MCA_pmix_common_ALL_COMPONENTS@
-MCA_pmix_common_ALL_SUBDIRS = @MCA_pmix_common_ALL_SUBDIRS@
-MCA_pmix_common_DSO_COMPONENTS = @MCA_pmix_common_DSO_COMPONENTS@
-MCA_pmix_common_DSO_SUBDIRS = @MCA_pmix_common_DSO_SUBDIRS@
-MCA_pmix_common_STATIC_COMPONENTS = @MCA_pmix_common_STATIC_COMPONENTS@
-MCA_pmix_common_STATIC_LTLIBS = @MCA_pmix_common_STATIC_LTLIBS@
-MCA_pmix_common_STATIC_SUBDIRS = @MCA_pmix_common_STATIC_SUBDIRS@
 MCA_pmix_gds_ALL_COMPONENTS = @MCA_pmix_gds_ALL_COMPONENTS@
 MCA_pmix_gds_ALL_SUBDIRS = @MCA_pmix_gds_ALL_SUBDIRS@
 MCA_pmix_gds_DSO_COMPONENTS = @MCA_pmix_gds_DSO_COMPONENTS@
@@ -503,13 +507,6 @@ MCA_pmix_psensor_DSO_SUBDIRS = @MCA_pmix_psensor_DSO_SUBDIRS@
 MCA_pmix_psensor_STATIC_COMPONENTS = @MCA_pmix_psensor_STATIC_COMPONENTS@
 MCA_pmix_psensor_STATIC_LTLIBS = @MCA_pmix_psensor_STATIC_LTLIBS@
 MCA_pmix_psensor_STATIC_SUBDIRS = @MCA_pmix_psensor_STATIC_SUBDIRS@
-MCA_pmix_pshmem_ALL_COMPONENTS = @MCA_pmix_pshmem_ALL_COMPONENTS@
-MCA_pmix_pshmem_ALL_SUBDIRS = @MCA_pmix_pshmem_ALL_SUBDIRS@
-MCA_pmix_pshmem_DSO_COMPONENTS = @MCA_pmix_pshmem_DSO_COMPONENTS@
-MCA_pmix_pshmem_DSO_SUBDIRS = @MCA_pmix_pshmem_DSO_SUBDIRS@
-MCA_pmix_pshmem_STATIC_COMPONENTS = @MCA_pmix_pshmem_STATIC_COMPONENTS@
-MCA_pmix_pshmem_STATIC_LTLIBS = @MCA_pmix_pshmem_STATIC_LTLIBS@
-MCA_pmix_pshmem_STATIC_SUBDIRS = @MCA_pmix_pshmem_STATIC_SUBDIRS@
 MCA_pmix_psquash_ALL_COMPONENTS = @MCA_pmix_psquash_ALL_COMPONENTS@
 MCA_pmix_psquash_ALL_SUBDIRS = @MCA_pmix_psquash_ALL_SUBDIRS@
 MCA_pmix_psquash_DSO_COMPONENTS = @MCA_pmix_psquash_DSO_COMPONENTS@
@@ -648,7 +645,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 libpmi2_so_version = @libpmi2_so_version@
 libpmi_so_version = @libpmi_so_version@
-libpmix_mca_common_dstore_so_version = @libpmix_mca_common_dstore_so_version@
 libpmix_so_version = @libpmix_so_version@
 localedir = @localedir@
 localstatedir = @localstatedir@
@@ -674,6 +670,9 @@ pmixminor = @pmixminor@
 pmixnumeric = @pmixnumeric@
 pmixrelease = @pmixrelease@
 prefix = @prefix@
+prm_alps_CPPFLAGS = @prm_alps_CPPFLAGS@
+prm_alps_LDFLAGS = @prm_alps_LDFLAGS@
+prm_alps_LIBS = @prm_alps_LIBS@
 prm_slurm_CPPFLAGS = @prm_slurm_CPPFLAGS@
 prm_slurm_LDFLAGS = @prm_slurm_LDFLAGS@
 prm_slurm_LIBS = @prm_slurm_LIBS@
@@ -682,6 +681,9 @@ psdir = @psdir@
 psec_munge_CPPFLAGS = @psec_munge_CPPFLAGS@
 psec_munge_LDFLAGS = @psec_munge_LDFLAGS@
 psec_munge_LIBS = @psec_munge_LIBS@
+pstrg_lustre_CPPFLAGS = @pstrg_lustre_CPPFLAGS@
+pstrg_lustre_LDFLAGS = @pstrg_lustre_LDFLAGS@
+pstrg_lustre_LIBS = @pstrg_lustre_LIBS@
 pyexecdir = @pyexecdir@
 pythondir = @pythondir@
 runstatedir = @runstatedir@
@@ -723,6 +725,8 @@ headers = \
         pmix_path.h \
         pmix_getid.h \
         pmix_strnlen.h \
+        pmix_shmem.h \
+        pmix_vmem.h \
         pmix_hash.h \
         pmix_name_fns.h \
         pmix_net.h \
@@ -732,8 +736,7 @@ headers = \
         pmix_pty.h \
         pmix_few.h \
         pmix_string_copy.h \
-        pmix_getcwd.h \
-        pmix_vmem.h
+        pmix_getcwd.h
 
 sources = \
         pmix_alfg.c \
@@ -752,6 +755,8 @@ sources = \
         pmix_show_help.c \
         pmix_path.c \
         pmix_getid.c \
+        pmix_shmem.c \
+        pmix_vmem.c \
         pmix_hash.c \
         pmix_name_fns.c \
         pmix_net.c \
@@ -761,8 +766,7 @@ sources = \
         pmix_pty.c \
         pmix_few.c \
         pmix_string_copy.c \
-        pmix_getcwd.c \
-        pmix_vmem.c
+        pmix_getcwd.c
 
 libpmix_util_la_SOURCES = $(headers) $(sources)
 libpmix_util_la_LIBADD = \
@@ -852,6 +856,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_path.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_printf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_pty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_shmem.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_show_help.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_string_copy.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pmix_timings.Plo@am__quote@ # am--include-marker
@@ -1086,6 +1091,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/pmix_path.Plo
 	-rm -f ./$(DEPDIR)/pmix_printf.Plo
 	-rm -f ./$(DEPDIR)/pmix_pty.Plo
+	-rm -f ./$(DEPDIR)/pmix_shmem.Plo
 	-rm -f ./$(DEPDIR)/pmix_show_help.Plo
 	-rm -f ./$(DEPDIR)/pmix_string_copy.Plo
 	-rm -f ./$(DEPDIR)/pmix_timings.Plo
@@ -1158,6 +1164,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/pmix_path.Plo
 	-rm -f ./$(DEPDIR)/pmix_printf.Plo
 	-rm -f ./$(DEPDIR)/pmix_pty.Plo
+	-rm -f ./$(DEPDIR)/pmix_shmem.Plo
 	-rm -f ./$(DEPDIR)/pmix_show_help.Plo
 	-rm -f ./$(DEPDIR)/pmix_string_copy.Plo
 	-rm -f ./$(DEPDIR)/pmix_timings.Plo

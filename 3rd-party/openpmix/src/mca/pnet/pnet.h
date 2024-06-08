@@ -28,7 +28,7 @@
 #define PMIX_PNET_H
 
 #include "src/include/pmix_config.h"
-#include "pmix.h"
+#include "include/pmix.h"
 
 #include "src/class/pmix_list.h"
 #include "src/include/pmix_globals.h"
@@ -222,11 +222,7 @@ PMIX_EXPORT extern pmix_pnet_API_module_t pmix_pnet;
 /*
  * the standard component data structure
  */
-struct pmix_pnet_base_component_t {
-    pmix_mca_base_component_t base;
-    pmix_mca_base_component_data_t data;
-};
-typedef struct pmix_pnet_base_component_t pmix_pnet_base_component_t;
+typedef pmix_mca_base_component_t pmix_pnet_base_component_t;
 
 /*
  * Macro for use in components that are of type pnet

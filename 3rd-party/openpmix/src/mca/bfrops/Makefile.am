@@ -31,6 +31,7 @@ libmca_bfrops_la_SOURCES =
 headers = bfrops.h bfrops_types.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2. GitHub, Git, and related topics &mdash; OpenPMIx 4.2.8rc1 documentation</title>
+  <title>12.2. GitHub, Git, and related topics &mdash; OpenPMIx 5.0.2rc2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="11.3. Compiler Pickyness by Default" href="compiler-pickyness.html" />
-    <link rel="prev" title="11.1. Prerequisites" href="prerequisites.html" /> 
+    <link rel="next" title="12.3. Compiler Pickyness by Default" href="compiler-pickyness.html" />
+    <link rel="prev" title="12.1. Prerequisites" href="prerequisites.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,36 +48,37 @@
 <li class="toctree-l1"><a class="reference internal" href="../release-notes/index.html">3. Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exceptions.html">4. Exceptions to the PMIx Standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installing-pmix/index.html">5. Building and installing PMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">6. Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../history.html">7. History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../versions.html">8. Version Numbers and Binary Compatibility</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mca.html">9. The Modular Component Architecture (MCA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../building-apps/index.html">10. Building PMIx applications</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">11. Developer’s guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">11.1. Prerequisites</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11.2. GitHub, Git, and related topics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#github">11.2.1. GitHub</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#git-commits-open-source-contributor-s-declaration">11.2.2. Git commits: open source / contributor’s declaration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#git-branch-scheme">11.2.3. Git branch scheme</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ci-testing">11.2.4. CI (testing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how-things-work/index.html">6. How Things Work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">7. Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">8. History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versions.html">9. Version Numbers and Binary Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mca.html">10. The Modular Component Architecture (MCA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building-apps/index.html">11. Building PMIx applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">12. Developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">12.1. Prerequisites</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.2. GitHub, Git, and related topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#github">12.2.1. GitHub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#git-commits-open-source-contributor-s-declaration">12.2.2. Git commits: open source / contributor’s declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#git-branch-scheme">12.2.3. Git branch scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ci-testing">12.2.4. CI (testing)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="compiler-pickyness.html">11.3. Compiler Pickyness by Default</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autogen.html">11.4. Running <code class="docutils literal notranslate"><span class="pre">autogen.pl</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="building-pmix.html">11.5. Building PMIx</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terminology.html">11.6. OpenPMIx terminology</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source-code.html">11.7. Source code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="frameworks.html">11.8. Internal frameworks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gnu-autotools.html">11.9. Manually installing the GNU Autootools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sphinx.html">11.10. Installing and running Sphinx (building the OpenPMIx docs)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst-for-markdown-expats.html">11.11. ReStructured Text for those who know Markdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler-pickyness.html">12.3. Compiler Pickyness by Default</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autogen.html">12.4. Running <code class="docutils literal notranslate"><span class="pre">autogen.pl</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="building-pmix.html">12.5. Building PMIx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="terminology.html">12.6. OpenPMIx terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source-code.html">12.7. Source code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">12.8. Internal frameworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gnu-autotools.html">12.9. Manually installing the GNU Autootools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphinx.html">12.10. Installing and running Sphinx (building the OpenPMIx docs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst-for-markdown-expats.html">12.11. ReStructured Text for those who know Markdown</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">12. Contributing to OpenPMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">13. License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../security.html">14. OpenPMIx Security Policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">15. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man/index.html">16. OpenPMIx manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">13. Contributing to OpenPMIx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">14. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security.html">15. OpenPMIx Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news/index.html">16. News</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man/index.html">17. OpenPMIx manual pages</a></li>
 </ul>
 
         </div>
@@ -94,8 +95,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">11. </span>Developer’s guide</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">11.2. </span>GitHub, Git, and related topics</li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">12. </span>Developer’s guide</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">12.2. </span>GitHub, Git, and related topics</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/developers/git-github.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -108,9 +109,9 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="github-git-and-related-topics">
-<h1><span class="section-number">11.2. </span>GitHub, Git, and related topics<a class="headerlink" href="#github-git-and-related-topics" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">12.2. </span>GitHub, Git, and related topics<a class="headerlink" href="#github-git-and-related-topics" title="Permalink to this heading"></a></h1>
 <div class="section" id="github">
-<h2><span class="section-number">11.2.1. </span>GitHub<a class="headerlink" href="#github" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">12.2.1. </span>GitHub<a class="headerlink" href="#github" title="Permalink to this heading"></a></h2>
 <p>PMIx’s Git repository is <a class="reference external" href="https://github.com/openpmix/openpmix">hosted at GitHub</a>.</p>
 <ol class="arabic">
 <li><p>First, you will need a Git client. We recommend getting the latest
@@ -130,7 +131,7 @@ proxies. If your network setup requires the user of a web proxy,
 <a class="reference external" href="https://git-scm.com/">consult the Git documentation for more details</a>.</p>
 </div>
 <div class="section" id="git-commits-open-source-contributor-s-declaration">
-<h2><span class="section-number">11.2.2. </span>Git commits: open source / contributor’s declaration<a class="headerlink" href="#git-commits-open-source-contributor-s-declaration" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">12.2.2. </span>Git commits: open source / contributor’s declaration<a class="headerlink" href="#git-commits-open-source-contributor-s-declaration" title="Permalink to this heading"></a></h2>
 <p>In order to remain open source, all new commits to the PMIx
 repository must include a <code class="docutils literal notranslate"><span class="pre">Signed-off-by:</span></code> line, indicating the
 submitter’s agreement to the <a class="reference internal" href="../contributing.html#contributing-contributors-declaration-label"><span class="std std-ref">PMIx Contributor’s Declaration</span></a>.</p>
@@ -142,7 +143,7 @@ message.</p>
 </div>
 </div>
 <div class="section" id="git-branch-scheme">
-<span id="git-github-branch-scheme-label"></span><h2><span class="section-number">11.2.3. </span>Git branch scheme<a class="headerlink" href="#git-branch-scheme" title="Permalink to this heading"></a></h2>
+<span id="git-github-branch-scheme-label"></span><h2><span class="section-number">12.2.3. </span>Git branch scheme<a class="headerlink" href="#git-branch-scheme" title="Permalink to this heading"></a></h2>
 <p>Generally, PMIx has two types of branches in its Git repository:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">master</span></code>:</p>
@@ -268,7 +269,7 @@ the process of PR’ing to <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="ci-testing">
-<h2><span class="section-number">11.2.4. </span>CI (testing)<a class="headerlink" href="#ci-testing" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">12.2.4. </span>CI (testing)<a class="headerlink" href="#ci-testing" title="Permalink to this heading"></a></h2>
 <p>The PMIx community generally runs a bunch of tests on each PR
 (Continuous Integration / CI).  These tests are a mixture of
 GitHub Actions and other CI systems (e.g., Jenkins).  Examples
@@ -291,14 +292,14 @@ with that installation</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="prerequisites.html" class="btn btn-neutral float-left" title="11.1. Prerequisites" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="compiler-pickyness.html" class="btn btn-neutral float-right" title="11.3. Compiler Pickyness by Default" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="prerequisites.html" class="btn btn-neutral float-left" title="12.1. Prerequisites" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="compiler-pickyness.html" class="btn btn-neutral float-right" title="12.3. Compiler Pickyness by Default" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2014-2023, The OpenPMIx Community.</p>
+    <p>&#169; Copyright 2014-2024, The OpenPMIx Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

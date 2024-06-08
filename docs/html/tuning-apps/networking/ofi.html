@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2.1. OpenFabrics Interfaces (OFI) / Libfabric support &mdash; Open MPI 5.0.1 documentation</title>
+  <title>11.2.1. OpenFabrics Interfaces (OFI) / Libfabric support &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -87,9 +87,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -138,6 +137,7 @@ including (but not limited to):</p>
 <li><p>Cisco usNIC</p></li>
 <li><p>Cray uGNI</p></li>
 <li><p>Cornelius Networks Omni-Path</p></li>
+<li><p>HPE Slingshot 11</p></li>
 </ul>
 <p>In general, the OFI-based components in Open MPI will auto-select
 themselves as appropriate at run time.</p>
@@ -162,8 +162,9 @@ reliable datagrams with ordered tagged messaging (specifically:
 <code class="docutils literal notranslate"><span class="pre">FI_ORDER_SAS</span></code> ordering).</p>
 </div></blockquote>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ofi</span></code> BTL: Available since Open MPI v4.0.0, this component is
-used for one-sided MPI communications (e.g., <code class="docutils literal notranslate"><span class="pre">MPI_PUT</span></code>). The
+<li><p><code class="docutils literal notranslate"><span class="pre">ofi</span></code> BTL: Available since Open MPI v4.0.0, this component is primarily
+intended for one-sided MPI communications (e.g., <code class="docutils literal notranslate"><span class="pre">MPI_PUT</span></code>). It
+can also support BTL send/recv operations.
 <code class="docutils literal notranslate"><span class="pre">ofi</span></code> BTL requires that the Libfabric provider support reliable
 datagrams, RMA and atomic operations, and remote atomic completion
 notifications (specifically: <code class="docutils literal notranslate"><span class="pre">FI_EP_RDM</span></code> endpoints, <code class="docutils literal notranslate"><span class="pre">FI_RMA</span></code>
@@ -188,6 +189,14 @@ will be included/excluded in the selection process. For example:</p>
 list. For example:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ompi_info --param mtl ofi --level 9
 </pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using the HPE CXI provider and <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> as the job launcher,
+it is recommended that the PRTE <code class="docutils literal notranslate"><span class="pre">ras_base_launch_orted_on_hn</span></code> MCA parameter be set to 1.
+This can be done by adding <code class="docutils literal notranslate"><span class="pre">--prtemca</span> <span class="pre">ras_base_launch_orted_on_hn</span> <span class="pre">1</span></code> to the job launch
+command line.  This ensures that MPI processes launched on the first node of
+an allocation are able to use the CXI provider.</p>
 </div>
 <p>For more information refer to the <a class="reference external" href="https://libfabric.org/">Libfabric web site</a>.</p>
 </div>
@@ -247,7 +256,7 @@ for more details.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

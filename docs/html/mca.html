@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>8. The Modular Component Architecture (MCA) &mdash; Open MPI 5.0.1 documentation</title>
+  <title>8. The Modular Component Architecture (MCA) &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -89,9 +89,8 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -164,7 +163,7 @@ base.</p>
 latter: a major, top-level section of code within the Open
 MPI code base.</p>
 </div>
-<p>The following <em>projects</em> exist in Open MPI v5.0.1:</p>
+<p>The following <em>projects</em> exist in Open MPI v5.0.3:</p>
 <ul class="simple">
 <li><p><strong>Open Portability Access Layer (OPAL):</strong> Low-level, operating
 system and architecture portability code.</p></li>
@@ -205,7 +204,7 @@ used to implement MPI point-to-point messaging functionality.</p></li>
 <p>There are many frameworks within Open MPI; the exact set varies
 between different versions of Open MPI.  You can use the
 <a class="reference internal" href="man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> command to see the full list of
-frameworks that are included in Open MPI v5.0.1.</p>
+frameworks that are included in Open MPI v5.0.3.</p>
 </div>
 <div class="section" id="components">
 <span id="label-mca-components"></span><h3><span class="section-number">8.1.3. </span>Components<a class="headerlink" href="#components" title="Permalink to this heading"></a></h3>
@@ -222,7 +221,7 @@ at run-time and/or compile-time.</p>
 MPI.  Open MPI’s code base includes support for many components, but
 not all of them may be present or available on your system.  You can
 use the <a class="reference internal" href="man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> command to see what
-components are included in Open MPI v5.0.1 on your system.</p>
+components are included in Open MPI v5.0.3 on your system.</p>
 </div>
 <div class="section" id="modules">
 <span id="label-mca-modules"></span><h3><span class="section-number">8.1.4. </span>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h3>
@@ -615,10 +614,10 @@ these components”).  Hence, something like this:</p>
 says “use only the <code class="docutils literal notranslate"><span class="pre">self</span></code>, <code class="docutils literal notranslate"><span class="pre">sm</span></code>, and <code class="docutils literal notranslate"><span class="pre">usnic</span></code> components” but
 also “use all components except <code class="docutils literal notranslate"><span class="pre">tcp</span></code>”.  These two statements
 clearly contradict each other.</p>
-</div>
 <hr class="docutils" />
+</div>
 <div class="section" id="common-mca-parameters">
-<h2><span class="section-number">8.5. </span>Common MCA parameters<a class="headerlink" href="#common-mca-parameters" title="Permalink to this heading"></a></h2>
+<span id="label-mca-common-parameters"></span><h2><span class="section-number">8.5. </span>Common MCA parameters<a class="headerlink" href="#common-mca-parameters" title="Permalink to this heading"></a></h2>
 <p>Open MPI has a <em>large</em> number of MCA parameters available.  Users can
 use the <a class="reference internal" href="man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> command to see <em>all</em>
 available MCA parameters.</p>
@@ -696,7 +695,7 @@ parameter — they are mutually exclusive from each
 other.</p>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">opal_mca_base_component_show_load_errors</span></code>: By default, Open MPI
+<li><p><code class="docutils literal notranslate"><span class="pre">mca_base_component_show_load_errors</span></code>: By default, Open MPI
 emits a warning message if it fails to open a DSO component at run
 time.  This typically happens when a shared library that the DSO
 requires is not available.</p>
@@ -715,7 +714,7 @@ because it alerted users to the misconfiguration.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>By default, Open MPI v5.0.1 includes all components in
+<p>By default, Open MPI v5.0.3 includes all components in
 its base libraries (e.g., on Linux, <code class="docutils literal notranslate"><span class="pre">libmpi.so</span></code> includes
 all the components that were built with Open MPI, and
 therefore no component need to be opened dynamically), and
@@ -1238,7 +1237,7 @@ combined with parameters that have values:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

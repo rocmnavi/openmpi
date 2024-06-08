@@ -53,6 +53,8 @@ headers = \
         pmix_path.h \
         pmix_getid.h \
         pmix_strnlen.h \
+        pmix_shmem.h \
+        pmix_vmem.h \
         pmix_hash.h \
         pmix_name_fns.h \
         pmix_net.h \
@@ -62,8 +64,7 @@ headers = \
         pmix_pty.h \
         pmix_few.h \
         pmix_string_copy.h \
-        pmix_getcwd.h \
-        pmix_vmem.h
+        pmix_getcwd.h
 
 sources = \
         pmix_alfg.c \
@@ -82,6 +83,8 @@ sources = \
         pmix_show_help.c \
         pmix_path.c \
         pmix_getid.c \
+        pmix_shmem.c \
+        pmix_vmem.c \
         pmix_hash.c \
         pmix_name_fns.c \
         pmix_net.c \
@@ -91,8 +94,7 @@ sources = \
         pmix_pty.c \
         pmix_few.c \
         pmix_string_copy.c \
-        pmix_getcwd.c \
-        pmix_vmem.c
+        pmix_getcwd.c
 
 libpmix_util_la_SOURCES = $(headers) $(sources)
 

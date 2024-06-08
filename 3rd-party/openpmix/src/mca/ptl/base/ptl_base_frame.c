@@ -14,7 +14,7 @@
  * Copyright (c) 2014-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2015-2020 Research Organization for Information Science
  *                         and Technology (RIST).  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -47,6 +47,7 @@
 #include "src/server/pmix_server_ops.h"
 #include "src/util/pmix_error.h"
 #include "src/util/pmix_os_dirpath.h"
+#include "src/util/pmix_os_path.h"
 #include "src/util/pmix_environ.h"
 #include "src/util/pmix_show_help.h"
 
@@ -76,6 +77,7 @@ pmix_ptl_base_t pmix_ptl_base = {
     .report_uri = NULL,
     .uri = NULL,
     .urifile = NULL,
+    .sysctrlr_filename = NULL,
     .scheduler_filename = NULL,
     .system_filename = NULL,
     .session_filename = NULL,
@@ -85,6 +87,7 @@ pmix_ptl_base_t pmix_ptl_base = {
     .created_rendezvous_file = false,
     .created_session_tmpdir = false,
     .created_system_tmpdir = false,
+    .created_sysctrlr_filename = false,
     .created_scheduler_filename = false,
     .created_system_filename = false,
     .created_session_filename = false,
@@ -170,8 +173,7 @@ static int pmix_ptl_register(pmix_mca_base_register_flag_t flags)
                                               PMIX_MCA_BASE_VAR_SYN_FLAG_DEPRECATED);
 
     idx = pmix_mca_base_var_register("pmix", "ptl", "base", "disable_ipv4_family",
-                                     "Disable the IPv4 interfaces",
-                                     PMIX_MCA_BASE_VAR_TYPE_BOOL,
+                                     "Disable the IPv4 interfaces", PMIX_MCA_BASE_VAR_TYPE_BOOL,
                                      &pmix_ptl_base.disable_ipv4_family);
     (void) pmix_mca_base_var_register_synonym(idx, "pmix", "ptl", "tcp", "disable_ipv4_family",
                                               PMIX_MCA_BASE_VAR_SYN_FLAG_DEPRECATED);
@@ -222,6 +224,29 @@ static int pmix_ptl_register(pmix_mca_base_register_flag_t flags)
     return PMIX_SUCCESS;
 }
 
+static bool _check_file(const char *root, const char *path)
+{
+    struct stat st;
+    char *fullpath;
+
+    /*
+     * Keep:
+     *  - non-zero files starting with "output-"
+     */
+    if (0 == strncmp(path, "output-", strlen("output-"))) {
+        memset(&st, 0, sizeof(struct stat));
+        fullpath = pmix_os_path(false, root, path, NULL);
+        stat(fullpath, &st);
+        free(fullpath);
+        if (0 == st.st_size) {
+            return true;
+        }
+        return false;
+    }
+
+    return true;
+}
+
 static pmix_status_t pmix_ptl_close(void)
 {
     int rc;
@@ -260,6 +285,17 @@ static pmix_status_t pmix_ptl_close(void)
         }
         free(pmix_ptl_base.scheduler_filename);
     }
+    if (NULL != pmix_ptl_base.sysctrlr_filename) {
+        if (pmix_ptl_base.created_sysctrlr_filename) {
+            rc = remove(pmix_ptl_base.sysctrlr_filename);
+            if (0 != rc) {
+                pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
+                                    "Remove of %s failed: %s",
+                                    pmix_ptl_base.sysctrlr_filename, strerror(errno));
+            }
+        }
+        free(pmix_ptl_base.sysctrlr_filename);
+    }
     if (NULL != pmix_ptl_base.system_filename) {
         if (pmix_ptl_base.created_system_filename) {
             rc = remove(pmix_ptl_base.system_filename);
@@ -277,7 +313,7 @@ static pmix_status_t pmix_ptl_close(void)
             if (0 != rc) {
                 pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                     "Remove of %s failed: %s",
-                                    pmix_ptl_base.system_filename, strerror(errno));
+                                    pmix_ptl_base.session_filename, strerror(errno));
             }
         }
         free(pmix_ptl_base.session_filename);
@@ -288,7 +324,7 @@ static pmix_status_t pmix_ptl_close(void)
             if (0 != rc) {
                 pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                     "Remove of %s failed: %s",
-                                    pmix_ptl_base.system_filename, strerror(errno));
+                                    pmix_ptl_base.nspace_filename, strerror(errno));
             }
         }
         free(pmix_ptl_base.nspace_filename);
@@ -299,7 +335,7 @@ static pmix_status_t pmix_ptl_close(void)
             if (0 != rc) {
                 pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                     "Remove of %s failed: %s",
-                                    pmix_ptl_base.system_filename, strerror(errno));
+                                    pmix_ptl_base.pid_filename, strerror(errno));
             }
         }
         free(pmix_ptl_base.pid_filename);
@@ -310,7 +346,7 @@ static pmix_status_t pmix_ptl_close(void)
             if (0 != rc) {
                 pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                     "Remove of %s failed: %s",
-                                    pmix_ptl_base.system_filename, strerror(errno));
+                                    pmix_ptl_base.rendezvous_filename, strerror(errno));
             }
         }
         free(pmix_ptl_base.rendezvous_filename);
@@ -325,7 +361,7 @@ static pmix_status_t pmix_ptl_close(void)
             if (0 != rc) {
                 pmix_output_verbose(2, pmix_ptl_base_framework.framework_output,
                                     "Remove of %s failed: %s",
-                                    pmix_ptl_base.system_filename, strerror(errno));
+                                    pmix_ptl_base.urifile, strerror(errno));
             }
         }
         free(pmix_ptl_base.urifile);
@@ -334,13 +370,13 @@ static pmix_status_t pmix_ptl_close(void)
     if (NULL != pmix_ptl_base.session_tmpdir) {
         /* if I created the session tmpdir, then remove it if empty */
         if (pmix_ptl_base.created_session_tmpdir) {
-            pmix_os_dirpath_destroy(pmix_ptl_base.session_tmpdir, true, NULL);
+            pmix_os_dirpath_destroy(pmix_ptl_base.session_tmpdir, true, _check_file);
         }
         free(pmix_ptl_base.session_tmpdir);
     }
     if (NULL != pmix_ptl_base.system_tmpdir) {
         if (pmix_ptl_base.created_system_tmpdir) {
-            pmix_os_dirpath_destroy(pmix_ptl_base.system_tmpdir, true, NULL);
+            pmix_os_dirpath_destroy(pmix_ptl_base.system_tmpdir, true, _check_file);
         }
         free(pmix_ptl_base.system_tmpdir);
     }

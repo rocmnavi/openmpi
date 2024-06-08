@@ -193,7 +193,7 @@
 
 Summary: An extended/exascale implementation of the PMIx Standard
 Name: %{?_name:%{_name}}%{!?_name:pmix}
-Version: 4.2.8rc1
+Version: 5.0.2rc2
 Release: 1%{?dist}
 License: BSD
 Group: Development/Libraries

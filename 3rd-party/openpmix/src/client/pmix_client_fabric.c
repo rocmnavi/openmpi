@@ -17,7 +17,7 @@
  */
 
 #include "src/include/pmix_config.h"
-#include "pmix.h"
+#include "include/pmix.h"
 
 #include "src/include/pmix_socket_errno.h"
 #include "src/include/pmix_stdint.h"

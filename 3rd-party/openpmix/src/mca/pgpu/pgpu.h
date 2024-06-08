@@ -27,7 +27,7 @@
 #define PMIX_PGPU_H
 
 #include "src/include/pmix_config.h"
-#include "pmix.h"
+#include "include/pmix.h"
 
 #include "src/class/pmix_list.h"
 #include "src/include/pmix_globals.h"
@@ -184,11 +184,7 @@ PMIX_EXPORT extern pmix_pgpu_API_module_t pmix_pgpu;
 /*
  * the standard component data structure
  */
-struct pmix_pgpu_base_component_t {
-    pmix_mca_base_component_t base;
-    pmix_mca_base_component_data_t data;
-};
-typedef struct pmix_pgpu_base_component_t pmix_pgpu_base_component_t;
+typedef pmix_mca_base_component_t pmix_pgpu_base_component_t;
 
 /*
  * Macro for use in components that are of type pgpu

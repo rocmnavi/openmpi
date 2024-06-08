@@ -16,7 +16,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include <string.h>
 #include <sys/stat.h>

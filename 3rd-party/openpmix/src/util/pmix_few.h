@@ -21,7 +21,7 @@
 #ifndef PMIX_FEW_H
 #define PMIX_FEW_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "pmix_common.h"
 

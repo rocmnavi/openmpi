@@ -16,7 +16,7 @@
  * Copyright (c) 2014-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2015-2019 Research Organization for Information Science
  *                         and Technology (RIST).  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * Copyright (c) 2021      FUJITSU LIMITED.  All rights reserved.
  * $COPYRIGHT$
  *
@@ -359,7 +359,8 @@ int pmix_mca_base_var_cache_files(bool rel_path_search)
     }
 
     /* Disable reading MCA parameter files. */
-    if (0 == strcmp(pmix_mca_base_var_files, "none")) {
+    if (NULL == pmix_mca_base_var_files ||
+        0 == strcmp(pmix_mca_base_var_files, "none")) {
         return PMIX_SUCCESS;
     }
 
@@ -430,11 +431,16 @@ int pmix_mca_base_var_cache_files(bool rel_path_search)
         resolve_relative_paths(&pmix_mca_base_var_file_prefix, pmix_mca_base_param_file_path,
                                rel_path_search, &pmix_mca_base_var_files, PMIX_ENV_SEP);
     }
-    read_files(pmix_mca_base_var_files, &pmix_mca_base_var_file_values, ',');
+    ret = read_files(pmix_mca_base_var_files, &pmix_mca_base_var_file_values, ',');
+    if (PMIX_SUCCESS != ret && PMIX_ERR_NOT_FOUND != ret) {
+        // it is okay if a file isn't found
+        return ret;
+    }
 
-    if (0 == access(pmix_mca_base_var_override_file, F_OK)) {
-        read_files(pmix_mca_base_var_override_file, &pmix_mca_base_var_override_values,
-                   PMIX_ENV_SEP);
+    ret = read_files(pmix_mca_base_var_override_file, &pmix_mca_base_var_override_values, PMIX_ENV_SEP);
+    if (PMIX_SUCCESS != ret && PMIX_ERR_NOT_FOUND != ret) {
+        // it is okay if the file isn't found
+        return ret;
     }
 
     return PMIX_SUCCESS;
@@ -996,7 +1002,7 @@ static int fixup_files(char **file_list, char *path, bool rel_path_search, char 
         char *msg_path = path;
         if (pmix_path_is_absolute(files[i])) {
             /* Absolute paths preserved */
-            tmp_file = pmix_path_access(files[i], NULL, mode);
+            tmp_file = pmix_os_path(false, files[i], NULL);
         } else if (!rel_path_search && NULL != strchr(files[i], PMIX_PATH_SEP[0])) {
             /* Resolve all relative paths:
              *  - If filename contains a "/" (e.g., "./foo" or "foo/bar")
@@ -1005,7 +1011,7 @@ static int fixup_files(char **file_list, char *path, bool rel_path_search, char 
              *    - ow warn/error
              */
             msg_path = rel_path;
-            tmp_file = pmix_path_access(files[i], rel_path, mode);
+            tmp_file = pmix_os_path(false, files[i], rel_path, NULL);
         } else {
             /* Resolve all relative paths:
              * - Use path resolution
@@ -1053,9 +1059,14 @@ static int fixup_files(char **file_list, char *path, bool rel_path_search, char 
 
 static int read_files(char *file_list, pmix_list_t *file_values, char sep)
 {
-    char **tmp = PMIx_Argv_split(file_list, sep);
-    int i, count;
+    char **tmp;
+    int i, count, rc;
 
+    if (NULL == file_list) {
+        return PMIX_SUCCESS;
+    }
+
+    tmp = PMIx_Argv_split(file_list, sep);
     if (!tmp) {
         return PMIX_ERR_OUT_OF_RESOURCE;
     }
@@ -1068,7 +1079,12 @@ static int read_files(char *file_list, pmix_list_t *file_values, char sep)
 
     for (i = count - 1; i >= 0; --i) {
         char *file_name = append_filename_to_list(tmp[i]);
-        pmix_mca_base_parse_paramfile(file_name, file_values);
+        rc = pmix_mca_base_parse_paramfile(file_name, file_values);
+        if (PMIX_SUCCESS != rc && PMIX_ERR_NOT_FOUND != rc) {
+            // it is okay if the file isn't found
+            PMIx_Argv_free(tmp);
+            return rc;
+        }
     }
 
     PMIx_Argv_free(tmp);

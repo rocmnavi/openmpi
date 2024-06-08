@@ -14,6 +14,7 @@
  *                         reserved.
  * Copyright (c) 2016-2020 Intel, Inc.  All rights reserved.
  * Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2023      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -44,18 +45,18 @@ static pmix_status_t component_query(pmix_mca_base_module_t **module, int *prior
  */
 pmix_gds_hash_component_t pmix_mca_gds_hash_component = {
     .super = {
-            PMIX_GDS_BASE_VERSION_1_0_0,
+        PMIX_GDS_BASE_VERSION_1_0_0,
 
-            /* Component name and version */
-            .pmix_mca_component_name = "hash",
-            PMIX_MCA_BASE_MAKE_VERSION(component,
-                                       PMIX_MAJOR_VERSION,
-                                       PMIX_MINOR_VERSION,
-                                       PMIX_RELEASE_VERSION),
+        /* Component name and version */
+        .pmix_mca_component_name = "hash",
+        PMIX_MCA_BASE_MAKE_VERSION(component,
+                                   PMIX_MAJOR_VERSION,
+                                   PMIX_MINOR_VERSION,
+                                   PMIX_RELEASE_VERSION),
 
-            /* Component open and close functions */
-            .pmix_mca_query_component = component_query,
-            .reserved = {0}
+        /* Component open and close functions */
+        .pmix_mca_query_component = component_query,
+        .reserved = {0}
     },
     .mysessions = PMIX_LIST_STATIC_INIT,
     .myjobs = PMIX_LIST_STATIC_INIT
@@ -111,11 +112,11 @@ static void htdes(pmix_job_t *p)
         PMIX_RELEASE(p->nptr);
     }
     PMIX_LIST_DESTRUCT(&p->jobinfo);
-    pmix_hash_remove_data(&p->internal, PMIX_RANK_WILDCARD, NULL);
+    pmix_hash_remove_data(&p->internal, PMIX_RANK_WILDCARD, NULL, NULL);
     PMIX_DESTRUCT(&p->internal);
-    pmix_hash_remove_data(&p->remote, PMIX_RANK_WILDCARD, NULL);
+    pmix_hash_remove_data(&p->remote, PMIX_RANK_WILDCARD, NULL, NULL);
     PMIX_DESTRUCT(&p->remote);
-    pmix_hash_remove_data(&p->local, PMIX_RANK_WILDCARD, NULL);
+    pmix_hash_remove_data(&p->local, PMIX_RANK_WILDCARD, NULL, NULL);
     PMIX_DESTRUCT(&p->local);
     PMIX_LIST_DESTRUCT(&p->apps);
     PMIX_LIST_DESTRUCT(&p->nodeinfo);

@@ -21,6 +21,7 @@ headers = psensor.h
 
 libmca_psensor_la_SOURCES += $(headers)
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

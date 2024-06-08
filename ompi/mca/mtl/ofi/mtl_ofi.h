@@ -131,7 +131,7 @@ opal_mutex_atomic_unlock(&ompi_mtl_ofi.ofi_ctxt[ctxt_id].context_lock)
 __opal_attribute_always_inline__ static inline int
 ompi_mtl_ofi_context_progress(int ctxt_id)
 {
-    int count = 0, i, events_read;
+    int count = 0, i, events_read, req_type = -1;
     ompi_mtl_ofi_request_t *ofi_req = NULL;
     struct fi_cq_err_entry error = { 0 };
     ssize_t ret;
@@ -151,13 +151,14 @@ ompi_mtl_ofi_context_progress(int ctxt_id)
             if (NULL != ompi_mtl_ofi_wc[i].op_context) {
                 ofi_req = TO_OFI_REQ(ompi_mtl_ofi_wc[i].op_context);
                 assert(ofi_req);
+                req_type = ofi_req->type;
                 ret = ofi_req->event_callback(&ompi_mtl_ofi_wc[i], ofi_req);
                 if (OMPI_SUCCESS != ret) {
-                    opal_output(0, "%s:%d: Error returned by request event callback: %zd.\n"
-                                   "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
-                                   __FILE__, __LINE__, ret);
-                    fflush(stderr);
-                    exit(1);
+                    opal_output(0,
+                                "%s:%d: Error returned by request (type: %d) event callback: %zd.\n"
+                                "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
+                                __FILE__, __LINE__, req_type, ret);
+                    goto bail;
                 }
             }
         }
@@ -179,35 +180,46 @@ ompi_mtl_ofi_context_progress(int ctxt_id)
              * thread fetches the entry while others get -FI_EAGAIN
              * indicating an empty queue, which is not erroneous.
              */
-            if (ret == -FI_EAGAIN)
+            if (ret == -FI_EAGAIN) {
                 return count;
+            }
             opal_output(0, "%s:%d: Error returned from fi_cq_readerr: %s(%zd).\n"
                            "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
                            __FILE__, __LINE__, fi_strerror(-ret), ret);
-            fflush(stderr);
-            exit(1);
+            goto bail;
         }
 
-        assert(error.op_context);
+        if (!error.op_context) {
+            opal_output(0, "%s:%d: Error returned from fi_cq_readerr with null context. "
+                           "Completion flags: %016lx\n"
+                           "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
+                           __FILE__, __LINE__, error.flags);
+            goto bail;
+        }
+
         ofi_req = TO_OFI_REQ(error.op_context);
         assert(ofi_req);
+        req_type = ofi_req->type;
         ret = ofi_req->error_callback(&error, ofi_req);
         if (OMPI_SUCCESS != ret) {
-                opal_output(0, "%s:%d: Error returned by request error callback: %zd.\n"
-                               "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
-                               __FILE__, __LINE__, ret);
-            fflush(stderr);
-            exit(1);
+            opal_output(0,
+                        "%s:%d: Error returned by request (type: %d) error callback: %zd.\n"
+                        "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
+                        __FILE__, __LINE__, req_type, ret);
+            goto bail;
         }
     } else if (ret != -FI_EAGAIN && ret != -EINTR) {
         opal_output(0, "%s:%d: Error returned from fi_cq_read: %s(%zd).\n"
                        "*** The Open MPI OFI MTL is aborting the MPI job (via exit(3)).\n",
                        __FILE__, __LINE__, fi_strerror(-ret), ret);
-        fflush(stderr);
-        exit(1);
+        goto bail;
     }
 
     return count;
+
+bail:
+    fflush(stderr);
+    exit(1);
 }
 
 __opal_attribute_always_inline__ static inline int
@@ -666,6 +678,7 @@ ompi_mtl_ofi_ssend_recv(ompi_mtl_ofi_request_t *ack_req,
     assert(ack_req);
 
     ack_req->parent = ofi_req;
+    ack_req->type = OMPI_MTL_OFI_ACK;
     ack_req->event_callback = ompi_mtl_ofi_send_ack_callback;
     ack_req->error_callback = ompi_mtl_ofi_send_ack_error_callback;
 
@@ -877,6 +890,7 @@ ompi_mtl_ofi_send_generic(struct mca_mtl_base_module_t *mtl,
     /**
      * Create a send request, start it and wait until it completes.
      */
+    ofi_req.type = OMPI_MTL_OFI_SEND;
     ofi_req.event_callback = ompi_mtl_ofi_send_callback;
     ofi_req.error_callback = ompi_mtl_ofi_send_error_callback;
 
@@ -1125,6 +1139,7 @@ ompi_mtl_ofi_isend_generic(struct mca_mtl_base_module_t *mtl,
     }
     set_thread_context(ctxt_id);
 
+    ofi_req->type = OMPI_MTL_OFI_SEND;
     ofi_req->event_callback = ompi_mtl_ofi_isend_callback;
     ofi_req->error_callback = ompi_mtl_ofi_send_error_callback;
 
@@ -1137,7 +1152,6 @@ ompi_mtl_ofi_isend_generic(struct mca_mtl_base_module_t *mtl,
     ompi_ret = ompi_mtl_datatype_pack(convertor, &start, &length, &free_after);
     if (OPAL_UNLIKELY(OMPI_SUCCESS != ompi_ret)) return ompi_ret;
 
-    ofi_req->type = OMPI_MTL_OFI_SEND;
     ofi_req->buffer = (free_after) ? start : NULL;
     ofi_req->length = length;
     ofi_req->status.MPI_ERROR = OMPI_SUCCESS;
@@ -1252,7 +1266,7 @@ __opal_attribute_always_inline__ static inline int
 ompi_mtl_ofi_recv_callback(struct fi_cq_tagged_entry *wc,
                            ompi_mtl_ofi_request_t *ofi_req)
 {
-    int ompi_ret;
+    int ompi_ret = OMPI_SUCCESS;
     int src = mtl_ofi_get_source(wc);
     ompi_status_public_t *status = NULL;
 
@@ -1312,9 +1326,11 @@ ompi_mtl_ofi_recv_callback(struct fi_cq_tagged_entry *wc,
         }
     }
 
+    ompi_ret = status->MPI_ERROR;
+
     ofi_req->super.completion_callback(&ofi_req->super);
 
-    return status->MPI_ERROR;
+    return ompi_ret;
 }
 
 /**
@@ -1454,13 +1470,13 @@ __opal_attribute_always_inline__ static inline int
 ompi_mtl_ofi_mrecv_callback(struct fi_cq_tagged_entry *wc,
                             ompi_mtl_ofi_request_t *ofi_req)
 {
+    int ompi_ret = OMPI_SUCCESS;
     struct mca_mtl_request_t *mrecv_req = ofi_req->mrecv_req;
     ompi_status_public_t *status = &mrecv_req->ompi_req->req_status;
     status->MPI_SOURCE = mtl_ofi_get_source(wc);
     status->MPI_TAG = MTL_OFI_GET_TAG(wc->tag);
     status->MPI_ERROR = MPI_SUCCESS;
     status->_ucount = wc->len;
-    int ompi_ret;
 
     ompi_mtl_ofi_deregister_and_free_buffer(ofi_req);
 
@@ -1475,11 +1491,12 @@ ompi_mtl_ofi_mrecv_callback(struct fi_cq_tagged_entry *wc,
         }
     }
 
+    ompi_ret = status->MPI_ERROR;
     free(ofi_req);
 
     mrecv_req->completion_callback(mrecv_req);
 
-    return status->MPI_ERROR;
+    return ompi_ret;
 }
 
 /**

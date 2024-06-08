@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>8. Version Numbers and Binary Compatibility &mdash; OpenPMIx 4.2.8rc1 documentation</title>
+  <title>9. Version Numbers and Binary Compatibility &mdash; OpenPMIx 5.0.2rc2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9. The Modular Component Architecture (MCA)" href="mca.html" />
-    <link rel="prev" title="7. History" href="history.html" /> 
+    <link rel="next" title="10. The Modular Component Architecture (MCA)" href="mca.html" />
+    <link rel="prev" title="8. History" href="history.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,22 +48,23 @@
 <li class="toctree-l1"><a class="reference internal" href="release-notes/index.html">3. Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exceptions.html">4. Exceptions to the PMIx Standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installing-pmix/index.html">5. Building and installing PMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="release-notes.html">6. Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">7. History</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Version Numbers and Binary Compatibility</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#software-version-number">8.1. Software Version Number</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shared-library-version-number">8.2. Shared Library Version Number</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#application-binary-interface-abi-compatibility">8.3. Application Binary Interface (ABI) Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-things-work/index.html">6. How Things Work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">7. Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">8. History</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. Version Numbers and Binary Compatibility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#software-version-number">9.1. Software Version Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shared-library-version-number">9.2. Shared Library Version Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-binary-interface-abi-compatibility">9.3. Application Binary Interface (ABI) Compatibility</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mca.html">9. The Modular Component Architecture (MCA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="building-apps/index.html">10. Building PMIx applications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developers/index.html">11. Developer’s guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">12. Contributing to OpenPMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">13. License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">14. OpenPMIx Security Policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="news/index.html">15. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="man/index.html">16. OpenPMIx manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mca.html">10. The Modular Component Architecture (MCA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building-apps/index.html">11. Building PMIx applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developers/index.html">12. Developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">13. Contributing to OpenPMIx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">14. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">15. OpenPMIx Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="news/index.html">16. News</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man/index.html">17. OpenPMIx manual pages</a></li>
 </ul>
 
         </div>
@@ -80,7 +81,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">8. </span>Version Numbers and Binary Compatibility</li>
+      <li class="breadcrumb-item active"><span class="section-number">9. </span>Version Numbers and Binary Compatibility</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/versions.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -93,7 +94,7 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="version-numbers-and-binary-compatibility">
-<span id="label-version-numbers"></span><h1><span class="section-number">8. </span>Version Numbers and Binary Compatibility<a class="headerlink" href="#version-numbers-and-binary-compatibility" title="Permalink to this heading"></a></h1>
+<span id="label-version-numbers"></span><h1><span class="section-number">9. </span>Version Numbers and Binary Compatibility<a class="headerlink" href="#version-numbers-and-binary-compatibility" title="Permalink to this heading"></a></h1>
 <p>OpenPMIx has two sets of version numbers that are likely of interest
 to end users / system administrator:</p>
 <ul class="simple">
@@ -103,7 +104,7 @@ to end users / system administrator:</p>
 <p>Both are described below, followed by a discussion of application
 binary interface (ABI) compatibility implications.</p>
 <div class="section" id="software-version-number">
-<h2><span class="section-number">8.1. </span>Software Version Number<a class="headerlink" href="#software-version-number" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">9.1. </span>Software Version Number<a class="headerlink" href="#software-version-number" title="Permalink to this heading"></a></h2>
 <p>OpenPMIx’s version numbers are the union of several different values:
 major, minor, release, and an optional quantifier.</p>
 <ul class="simple">
@@ -163,7 +164,7 @@ fairly meaningless; its sole purpose is to provide an easy,
 human-recognizable ordering for snapshot tarballs.</p>
 </div>
 <div class="section" id="shared-library-version-number">
-<h2><span class="section-number">8.2. </span>Shared Library Version Number<a class="headerlink" href="#shared-library-version-number" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">9.2. </span>Shared Library Version Number<a class="headerlink" href="#shared-library-version-number" title="Permalink to this heading"></a></h2>
 <p>OpenPMIx uses the GNU Libtool shared library versioning scheme.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -196,7 +197,7 @@ then set age to 0.</p></li>
 </ol>
 </div>
 <div class="section" id="application-binary-interface-abi-compatibility">
-<h2><span class="section-number">8.3. </span>Application Binary Interface (ABI) Compatibility<a class="headerlink" href="#application-binary-interface-abi-compatibility" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">9.3. </span>Application Binary Interface (ABI) Compatibility<a class="headerlink" href="#application-binary-interface-abi-compatibility" title="Permalink to this heading"></a></h2>
 <p>OpenPMIx provides forward ABI compatibility in all versions of a given
 feature release series and its corresponding
 super stable series.  For example, on a single platform, a PMIx
@@ -215,14 +216,14 @@ PMIx v1.5 shared libraries.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="history.html" class="btn btn-neutral float-left" title="7. History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="mca.html" class="btn btn-neutral float-right" title="9. The Modular Component Architecture (MCA)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="history.html" class="btn btn-neutral float-left" title="8. History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mca.html" class="btn btn-neutral float-right" title="10. The Modular Component Architecture (MCA)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2014-2023, The OpenPMIx Community.</p>
+    <p>&#169; Copyright 2014-2024, The OpenPMIx Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

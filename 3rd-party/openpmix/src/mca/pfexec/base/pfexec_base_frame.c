@@ -24,7 +24,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix_common.h"
 #include "src/include/pmix_types.h"
 

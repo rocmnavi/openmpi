@@ -23,7 +23,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix_common.h"
 
 /* This component will only be compiled on Linux, where we are

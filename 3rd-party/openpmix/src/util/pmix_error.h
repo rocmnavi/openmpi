@@ -35,7 +35,6 @@ BEGIN_C_DECLS
 /****    PMIX ERROR CONSTANTS    ****/
 
 /* internal error codes - never exposed outside of the library */
-#define PMIX_ERR_PERM                 -1361
 #define PMIX_ERR_FABRIC_NOT_PARSEABLE -1363
 #define PMIX_ERR_TAKE_NEXT_OPTION     -1366
 #define PMIX_ERR_TEMP_UNAVAILABLE     -1367

@@ -12,7 +12,7 @@
  */
 #include "src/include/pmix_config.h"
 
-#include "pmix.h"
+#include "include/pmix.h"
 #include "pmix_common.h"
 #include "include/pmix_server.h"
 
@@ -102,7 +102,7 @@ static void regevents_cbfunc(struct pmix_peer_t *peer,
     cnt = 1;
     PMIX_BFROPS_UNPACK(rc, peer, buf, &ret, &cnt, PMIX_STATUS);
     if ((PMIX_SUCCESS != rc) || (PMIX_SUCCESS != ret)) {
-        /* remove the err handler and call the pmix_error.handler
+        /* remove the err handler and call the error handler
          * reg completion callback fn so the requestor
          * doesn't hang */
         if (NULL == rb->list) {

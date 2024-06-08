@@ -9,6 +9,7 @@
  * Copyright (c) 2019      Mellanox Technologies, Inc.
  *                         All rights reserved.
  * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2023      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -24,6 +25,7 @@
 #include "src/include/pmix_socket_errno.h"
 #include "src/include/pmix_stdint.h"
 #include "src/include/pmix_types.h"
+#include "src/include/pmix_dictionary.h"
 
 #include "src/include/pmix_globals.h"
 
@@ -51,10 +53,10 @@
 #include "src/class/pmix_hash_table.h"
 #include "src/class/pmix_list.h"
 #include "src/mca/bfrops/bfrops_types.h"
+#include "src/mca/bfrops/base/bfrop_base_tma.h"
 #include "src/threads/pmix_threads.h"
 #include "src/util/pmix_argv.h"
 #include "src/util/pmix_os_path.h"
-
 
 const char* PMIX_PROXY_VERSION = PMIX_PROXY_VERSION_STRING;
 const char* PMIX_PROXY_BUGREPORT = PMIX_PROXY_BUGREPORT_STRING;
@@ -63,11 +65,9 @@ static void dirpath_destroy(char *path, pmix_cleanup_dir_t *cd,
                             pmix_epilog_t *epi);
 static bool dirpath_is_empty(const char *path);
 
-PMIX_EXPORT pmix_lock_t pmix_global_lock = {
-    .mutex = PMIX_MUTEX_STATIC_INIT,
-    .cond = PMIX_CONDITION_STATIC_INIT,
-    .active = false
-};
+PMIX_EXPORT pmix_lock_t pmix_global_lock = {.mutex = PMIX_MUTEX_STATIC_INIT,
+                                            .cond = PMIX_CONDITION_STATIC_INIT,
+                                            .active = false};
 
 static void nsenvcon(pmix_nspace_env_cache_t *p)
 {
@@ -196,6 +196,40 @@ PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_nspace_caddy_t,
                                 pmix_list_item_t,
                                 ncdcon, ncddes);
 
+static void keyindex_construct(pmix_keyindex_t *ki)
+{
+    pmix_tma_t *const tma = pmix_obj_get_tma(&ki->super);
+
+    ki->table = PMIX_NEW(pmix_pointer_array_t, tma);
+    ki->next_id = PMIX_INDEX_BOUNDARY;
+}
+
+static void keyindex_destruct(pmix_keyindex_t *ki)
+{
+    pmix_tma_t *const tma = pmix_obj_get_tma(&ki->super);
+
+    for (int i = 0; i < ki->table->size; i++) {
+        pmix_regattr_input_t *p = (pmix_regattr_input_t *)pmix_pointer_array_get_item(ki->table, i);
+        if (NULL != p) {
+            if (NULL != p->name) {
+                pmix_tma_free(tma, p->name);
+            }
+            if (NULL != p->string) {
+                pmix_tma_free(tma, p->string);
+            }
+            if (NULL != p->description) {
+                pmix_bfrops_base_tma_argv_free(p->description, tma);
+            }
+            pmix_tma_free(tma, p);
+        }
+    }
+    PMIX_RELEASE(ki->table);
+}
+
+PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_keyindex_t,
+                                pmix_object_t,
+                                keyindex_construct, keyindex_destruct);
+
 static void info_con(pmix_rank_info_t *info)
 {
     info->peerid = -1;
@@ -305,6 +339,7 @@ static void scon(pmix_shift_caddy_t *p)
     PMIX_CONSTRUCT_LOCK(&p->lock);
     p->codes = NULL;
     p->ncodes = 0;
+    p->sessionid = UINT32_MAX;
     p->peer = NULL;
     p->proc = NULL;
     p->pname.nspace = NULL;
@@ -350,10 +385,20 @@ static void lgcon(pmix_get_logic_t *p)
     p->pntrval = false;
     p->stval = false;
     p->optional = false;
+    p->immediate = false;
     p->add_immediate = false;
-    p->qualified_value = false;
     p->refresh_cache = false;
     p->scope = PMIX_SCOPE_UNDEF;
+    p->sessioninfo = false;
+    p->sessiondirective = false;
+    p->sessionid = UINT32_MAX;
+    p->nodeinfo = false;
+    p->nodedirective = false;
+    p->hostname = NULL;
+    p->nodeid = UINT32_MAX;
+    p->appinfo = false;
+    p->appdirective = false;
+    p->appnum = UINT32_MAX;
 }
 PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_get_logic_t,
                                 pmix_object_t,
@@ -401,9 +446,6 @@ static void cbdes(pmix_cb_t *p)
         PMIX_DEVICE_DIST_FREE(p->dist, p->nvals);
     }
     PMIX_LIST_DESTRUCT(&p->kvs);
-    if (NULL != p->lg) {
-        free(p->lg);
-    }
 }
 PMIX_EXPORT PMIX_CLASS_INSTANCE(pmix_cb_t,
                                 pmix_list_item_t,
@@ -508,6 +550,28 @@ PMIX_CLASS_INSTANCE(pmix_notify_caddy_t,
                     pmix_object_t,
                     ncon, ndes);
 
+pmix_dstor_t *pmix_dstor_new_tma(uint32_t index,
+                                 pmix_tma_t *tma)
+{
+    pmix_dstor_t *d = (pmix_dstor_t *)pmix_tma_malloc(tma, sizeof(pmix_dstor_t));
+    if (PMIX_LIKELY(NULL != d)) {
+        d->index = index;
+        d->qualindex = UINT32_MAX;
+        d->value = NULL;
+    }
+    return d;
+}
+
+void pmix_dstor_release_tma(pmix_dstor_t *d,
+                            pmix_tma_t *tma)
+{
+    if (NULL != d->value) {
+        pmix_bfrops_base_tma_value_destruct(d->value, tma);
+        pmix_tma_free(tma, d->value);
+    }
+    pmix_tma_free(tma, d);
+}
+
 static void grcon(pmix_group_t *p)
 {
     p->grpid = NULL;
@@ -531,37 +595,19 @@ void pmix_execute_epilog(pmix_epilog_t *epi)
 {
     pmix_cleanup_file_t *cf, *cfnext;
     pmix_cleanup_dir_t *cd, *cdnext;
-    struct stat statbuf;
+    DIR *tst;
     int rc;
     char **tmp;
     size_t n;
 
     /* start with any specified files */
     PMIX_LIST_FOREACH_SAFE (cf, cfnext, &epi->cleanup_files, pmix_cleanup_file_t) {
-        /* check the effective uid/gid of the file and ensure it
-         * matches that of the peer - we do this to provide at least
-         * some minimum level of protection */
         tmp = PMIx_Argv_split(cf->path, ',');
         for (n = 0; NULL != tmp[n]; n++) {
-            /* coverity[TOCTOU] */
-            rc = stat(tmp[n], &statbuf);
-            if (0 != rc) {
-                pmix_output_verbose(10, pmix_globals.debug_output, "File %s failed to stat: %d",
-                                    tmp[n], rc);
-                continue;
-            }
-            if (statbuf.st_uid != epi->uid || statbuf.st_gid != epi->gid) {
-                pmix_output_verbose(10, pmix_globals.debug_output,
-                                    "File %s uid/gid doesn't match: uid %lu(%lu) gid %lu(%lu)",
-                                    cf->path, (unsigned long) statbuf.st_uid,
-                                    (unsigned long) epi->uid, (unsigned long) statbuf.st_gid,
-                                    (unsigned long) epi->gid);
-                continue;
-            }
             rc = unlink(tmp[n]);
-            if (0 != rc) {
-                pmix_output_verbose(10, pmix_globals.debug_output, "File %s failed to unlink: %d",
-                                    tmp[n], rc);
+            if (0 > rc) {
+                pmix_output_verbose(10, pmix_globals.debug_output, "File %s failed to unlink: %s",
+                                    tmp[n], strerror(errno));
             }
         }
         PMIx_Argv_free(tmp);
@@ -571,31 +617,12 @@ void pmix_execute_epilog(pmix_epilog_t *epi)
 
     /* now cleanup the directories */
     PMIX_LIST_FOREACH_SAFE (cd, cdnext, &epi->cleanup_dirs, pmix_cleanup_dir_t) {
-        /* check the effective uid/gid of the file and ensure it
-         * matches that of the peer - we do this to provide at least
-         * some minimum level of protection */
         tmp = PMIx_Argv_split(cd->path, ',');
         for (n = 0; NULL != tmp[n]; n++) {
-            /* coverity[TOCTOU] */
-            rc = stat(tmp[n], &statbuf);
-            if (0 != rc) {
-                pmix_output_verbose(10, pmix_globals.debug_output,
-                                    "Directory %s failed to stat: %d", tmp[n], rc);
-                continue;
-            }
-            if (statbuf.st_uid != epi->uid || statbuf.st_gid != epi->gid) {
-                pmix_output_verbose(10, pmix_globals.debug_output,
-                                    "Directory %s uid/gid doesn't match: uid %lu(%lu) gid %lu(%lu)",
-                                    cd->path, (unsigned long) statbuf.st_uid,
-                                    (unsigned long) epi->uid, (unsigned long) statbuf.st_gid,
-                                    (unsigned long) epi->gid);
-                continue;
-            }
-            if ((statbuf.st_mode & S_IRWXU) == S_IRWXU) {
+            tst = opendir(tmp[n]);
+            if (NULL != tst) {
+                closedir(tst);
                 dirpath_destroy(tmp[n], cd, epi);
-            } else {
-                pmix_output_verbose(10, pmix_globals.debug_output, "Directory %s lacks permissions",
-                                    tmp[n]);
             }
         }
         PMIx_Argv_free(tmp);
@@ -606,12 +633,9 @@ void pmix_execute_epilog(pmix_epilog_t *epi)
 
 static void dirpath_destroy(char *path, pmix_cleanup_dir_t *cd, pmix_epilog_t *epi)
 {
-    int rc;
-    bool is_dir = false;
-    DIR *dp;
+    DIR *dp, *tst;
     struct dirent *ep;
     char *filenm;
-    struct stat buf;
     pmix_cleanup_file_t *cf;
 
     if (NULL == path) { /* protect against error */
@@ -658,43 +682,22 @@ static void dirpath_destroy(char *path, pmix_cleanup_dir_t *cd, pmix_epilog_t *e
         }
 
         /* Check to see if it is a directory */
-        is_dir = false;
-
-        /* coverity[TOCTOU] */
-        rc = stat(filenm, &buf);
-        if (0 > rc) {
-            /* Handle a race condition. filenm might have been deleted by an
-             * other process running on the same node. That typically occurs
-             * when one task is removing the job_session_dir and an other task
-             * is still removing its proc_session_dir.
+        tst = opendir(filenm);
+        if (NULL != tst) {
+            closedir(tst);
+            /*
+             * If not recursively descending, then if we find a directory then fail
+             * since we were not told to remove it.
              */
-            free(filenm);
-            continue;
-        }
-        /* if the uid/gid don't match, then leave it alone */
-        if (buf.st_uid != epi->uid || buf.st_gid != epi->gid) {
-            free(filenm);
-            continue;
-        }
-
-        if (S_ISDIR(buf.st_mode)) {
-            is_dir = true;
-        }
-
-        /*
-         * If not recursively descending, then if we find a directory then fail
-         * since we were not told to remove it.
-         */
-        if (is_dir && !cd->recurse) {
-            /* continue removing files */
-            free(filenm);
-            continue;
-        }
-
-        /* Directories are recursively destroyed */
-        if (is_dir && cd->recurse && ((buf.st_mode & S_IRWXU) == S_IRWXU)) {
-            dirpath_destroy(filenm, cd, epi);
-            free(filenm);
+            if (!cd->recurse) {
+                /* continue removing files */
+                free(filenm);
+                continue;
+            } else {
+                /* Directories are recursively destroyed */
+                dirpath_destroy(filenm, cd, epi);
+                free(filenm);
+            }
         } else {
             /* Files are removed right here */
             unlink(filenm);

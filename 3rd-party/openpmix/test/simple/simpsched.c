@@ -180,7 +180,6 @@ int main(int argc, char **argv)
 
     PMIX_INFO_LOAD(&iptr[3], PMIX_SETUP_APP_ENVARS, NULL, PMIX_BOOL);
     PMIX_LOAD_NSPACE(ncache, "SIMPSCHED");
-
     DEBUG_CONSTRUCT_LOCK(&cd.lock);
     rc = PMIx_server_setup_application(ncache, iptr, 4, setup_cbfunc, &cd);
     if (PMIX_SUCCESS != rc) {
@@ -194,7 +193,7 @@ int main(int argc, char **argv)
 
     /* setup the local subsystem */
     DEBUG_CONSTRUCT_LOCK(&lock);
-    rc = PMIx_server_setup_local_support(ncache, cd.info, cd.ninfo, local_cbfunc,  &lock);
+    rc = PMIx_server_setup_local_support(ncache, cd.info, cd.ninfo, local_cbfunc, &lock);
     if (PMIX_SUCCESS != rc) {
         pmix_output(0, "[%s:%d] PMIx_server_setup_local_support failed: %s", __FILE__, __LINE__,
                     PMIx_Error_string(rc));

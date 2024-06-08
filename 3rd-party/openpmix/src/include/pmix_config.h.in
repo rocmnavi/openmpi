@@ -154,6 +154,9 @@
 /* Define to 1 if you have the <minix/config.h> header file. */
 #undef HAVE_MINIX_CONFIG_H
 
+/* Define to 1 if you have the <mntent.h> header file. */
+#undef HAVE_MNTENT_H
+
 /* Define to 1 if you have the <netdb.h> header file. */
 #undef HAVE_NETDB_H
 
@@ -434,6 +437,12 @@
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
+/* Whether or not we have apple */
+#undef OAC_HAVE_APPLE
+
+/* Whether or not we have solaris */
+#undef OAC_HAVE_SOLARIS
+
 /* Define to the address where bug reports for this package should be sent. */
 #undef PACKAGE_BUGREPORT
 
@@ -503,7 +512,7 @@
 /* Whether C compiler supports __thread */
 #undef PMIX_C_HAVE___THREAD
 
-/* Whether we are in debugging mode or not */
+/* Whether we want developer-level debugging code or not */
 #undef PMIX_ENABLE_DEBUG
 
 /* Whether we want to enable dlopen support */
@@ -523,9 +532,6 @@
 
 /* If built from a git repo */
 #undef PMIX_GIT_REPO_BUILD
-
-/* Whether or not we have apple */
-#undef PMIX_HAVE_APPLE
 
 /* Whether your compiler has __attribute__ or not */
 #undef PMIX_HAVE_ATTRIBUTE
@@ -658,9 +664,6 @@
 /* whether socket is found and available */
 #undef PMIX_HAVE_SOCKET
 
-/* Whether or not we have solaris */
-#undef PMIX_HAVE_SOLARIS
-
 /* Whether the __sync builtin atomic compare and swap supports 128-bit values
    */
 #undef PMIX_HAVE_SYNC_BUILTIN_CSWAP_INT128
@@ -704,9 +707,6 @@
 
 /* Where to report bugs */
 #undef PMIX_PROXY_BUGREPORT_STRING
-
-/* Whether or not we found the optional write_nonrecursive_np flag */
-#undef PMIX_PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP
 
 /* type to use for ptrdiff_t */
 #undef PMIX_PTRDIFF_TYPE

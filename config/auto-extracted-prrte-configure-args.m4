@@ -52,11 +52,15 @@ AC_DEFUN([OMPI_PRRTE_ADD_ARGS],[
 # Warning: Excluded: slurm
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_slurm.m4:31
 
-# Warning: Excluded: tm
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_tm.m4:130
+    AC_ARG_WITH([tm],
+                [AS_HELP_STRING([--with-tm(=DIR)],
+                                [Build TM (Torque, PBSPro, and compatible) support, optionally adding DIR/include, DIR/lib, and DIR/lib64 to the search path for headers and libraries])])
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_tm.m4:132
 
-# Warning: Excluded: tm-libdir
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_tm.m4:133
+    AC_ARG_WITH([tm-libdir],
+                [AS_HELP_STRING([--with-tm-libdir=DIR],
+                                [Search for Torque libraries in DIR])])
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_tm.m4:135
 
 # Warning: Excluded: visibility
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_visibility.m4:31
@@ -199,20 +203,20 @@ AC_ARG_WITH(proxy-bugreport,
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_libevent.m4:45
 
 # Warning: Excluded: pmix
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:35
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:69
 
 # Warning: Excluded: pmix-libdir
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:38
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:72
 
     AC_ARG_WITH([pmix-extra-libs],
                 [AS_HELP_STRING([--with-pmix-extra-libs=LIBS],
                                 [Add LIBS as dependencies of pmix])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:43
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:77
 
     AC_ARG_ENABLE([pmix-lib-checks],
                   [AS_HELP_STRING([--disable-pmix-lib-checks],
                                   [If --disable-pmix-lib-checks is specified, configure will assume that -lpmix is available])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:46
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_setup_pmix.m4:80
 
     AC_ARG_ENABLE([prte-dlopen],
         [AS_HELP_STRING([--disable-prte-dlopen],
@@ -226,10 +230,8 @@ AC_ARG_WITH(proxy-bugreport,
 # Warning: Excluded: libltdl-libdir
 # ---------------------------------------- Above from 3rd-party/prrte//src/mca/prtedl/libltdl/configure.m4:51
 
-	AC_ARG_WITH([pbs],
-           [AS_HELP_STRING([--with-pbs],
-                           [Build PBS scheduler component (default: yes)])])
-# ---------------------------------------- Above from 3rd-party/prrte//src/mca/ras/pbs/configure.m4:36
+# Warning: Excluded: pbs
+# ---------------------------------------- Above from 3rd-party/prrte//src/mca/ras/pbs/configure.m4:34
 
     AC_ARG_ENABLE([ompi-support],
                   [AS_HELP_STRING([--disable-ompi-support],

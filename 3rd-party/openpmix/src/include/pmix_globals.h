@@ -15,7 +15,8 @@
  *                         and Technology (RIST).  All rights reserved.
  * Copyright (c) 2019      Mellanox Technologies, Inc.
  *                         All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2023      Triad National Security, LLC. All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -103,6 +104,38 @@ typedef struct {
     pmix_data_type_t type;
     char **description;
 } pmix_regattr_input_t;
+#define PMIX_REGATTR_INPUT_NEW(a, i, n, s, t, d)                            \
+do {                                                                        \
+    (a) = (pmix_regattr_input_t*)pmix_malloc(sizeof(pmix_regattr_input_t)); \
+    if (NULL != (a)) {                                                      \
+        memset((a), 0, sizeof(pmix_regattr_input_t));                       \
+        (a)->index = (i);                                                   \
+        if (NULL != (n)) {                                                    \
+            (a)->name = strdup((n));                                       \
+        }                                                                   \
+        if (NULL != (s)) {                                                    \
+            (a)->string = strdup((s));                                        \
+        }                                                                   \
+        (a)->type = (t);                                                    \
+        if (NULL != (d)) {                                                    \
+            (a)->description = PMIx_Argv_copy((d));                           \
+        }                                                                   \
+    }                                                                       \
+} while(0)
+#define PMIX_REGATTR_INPUT_FREE(a)      \
+do {                                    \
+    if (NULL != (a)) {                  \
+        if (NULL != (a)->name) {        \
+            free((a)->name);            \
+        }                               \
+        if (NULL != (a)->string)        \
+            free((a)->string);          \
+        }                               \
+        if (NULL != (a)->description) { \
+            free((a)->description);     \
+        }                               \
+    }                                   \
+} while(0)
 
 /* define a struct for holding entries in the
  * dictionary of event strings */
@@ -137,23 +170,28 @@ typedef struct {
     uint32_t qualindex;
     pmix_value_t *value;
 } pmix_dstor_t;
+
+PMIX_EXPORT pmix_dstor_t *
+pmix_dstor_new_tma(
+    uint32_t index,
+    pmix_tma_t *tma
+);
+
+PMIX_EXPORT void
+pmix_dstor_release_tma(
+    pmix_dstor_t *d,
+    pmix_tma_t *tma
+);
+
 #define PMIX_DSTOR_NEW(d, k)                                \
 do {                                                        \
-    (d) = (pmix_dstor_t*)pmix_malloc(sizeof(pmix_dstor_t)); \
-    if (NULL != (d)) {                                      \
-        (d)->index = k;                                     \
-        (d)->qualindex = UINT32_MAX;                        \
-        (d)->value = NULL;                                  \
-    }                                                       \
-} while(0)
-#define PMIX_DSTOR_RELEASE(d)           \
-do {                                    \
-    if (NULL != (d)->value) {           \
-        PMIX_VALUE_RELEASE((d)->value); \
-    }                                   \
-    free(d);                            \
+    (d) = pmix_dstor_new_tma((k), NULL);                    \
 } while(0)
 
+#define PMIX_DSTOR_RELEASE(d)           \
+do {                                    \
+    pmix_dstor_release_tma((d), NULL);  \
+} while(0)
 
 /* define a struct for passing topology objects */
 typedef struct {
@@ -201,6 +239,7 @@ typedef uint8_t pmix_cmd_t;
 #define PMIX_FABRIC_REGISTER_CMD          30
 #define PMIX_FABRIC_UPDATE_CMD            31
 #define PMIX_COMPUTE_DEVICE_DISTANCES_CMD 32
+#define PMIX_REFRESH_CACHE                33
 
 /* provide a "pretty-print" function for cmds */
 const char *pmix_command_string(pmix_cmd_t cmd);
@@ -292,7 +331,6 @@ typedef struct {
     .pattern = false,               \
     .raw = false                    \
 }
-
 
 /* objects used by servers for tracking active nspaces */
 typedef struct {
@@ -472,14 +510,6 @@ PMIX_CLASS_DECLARATION(pmix_group_t);
 
 typedef struct {
     pmix_list_item_t super;
-    pmix_group_t *grp;
-    pmix_rank_t rank;
-    size_t idx;
-} pmix_group_caddy_t;
-PMIX_CLASS_DECLARATION(pmix_group_caddy_t);
-
-typedef struct {
-    pmix_list_item_t super;
     pmix_proc_t proc;
     pmix_byte_object_t blob;  // packed blob of info provided by this proc
 } pmix_grpinfo_t;
@@ -496,21 +526,21 @@ typedef struct {
     char *id;         // string identifier for the collective
     pmix_cmd_t type;
     pmix_proc_t pname;
-    bool hybrid;        // true if participating procs are from more than one nspace
-    pmix_proc_t *pcs;   // copy of the original array of participants
-    size_t npcs;        // number of procs in the array
-    pmix_list_t nslist; // unique nspace list of participants
-    pmix_lock_t lock;   // flag for waiting for completion
-    bool def_complete;  // all local procs have been registered and the trk definition is complete
-    pmix_list_t
-        local_cbs;      // list of pmix_server_caddy_t for sending result to the local participants
-                        //    Note: there may be multiple entries for a given proc if that proc
-                        //    has fork/exec'd clones that are also participating
-    uint32_t nlocal;    // number of local participants
-    uint32_t local_cnt; // number of local participants who have contributed
-    pmix_info_t *info;  // array of info structs
-    size_t ninfo;       // number of info structs in array
+    bool hybrid;            // true if participating procs are from more than one nspace
+    pmix_proc_t *pcs;       // copy of the original array of participants
+    size_t npcs;            // number of procs in the array
+    pmix_list_t nslist;     // unique nspace list of participants
+    pmix_lock_t lock;       // flag for waiting for completion
+    bool def_complete;      // all local procs have been registered and the trk definition is complete
+    pmix_list_t local_cbs;  // list of pmix_server_caddy_t for sending result to the local participants
+                            //    Note: there may be multiple entries for a given proc if that proc
+                            //    has fork/exec'd clones that are also participating
+    uint32_t nlocal;        // number of local participants
+    uint32_t local_cnt;     // number of local participants who have contributed
+    pmix_info_t *info;      // array of info structs
+    size_t ninfo;           // number of info structs in array
     pmix_list_t grpinfo;    // list of group info to be distributed
+    int grpop;              // the group operation being tracked
     pmix_collect_t collect_type; // whether or not data is to be returned at completion
     pmix_modex_cbfunc_t modexcbfunc;
     pmix_op_cbfunc_t op_cbfunc;
@@ -543,6 +573,7 @@ typedef struct {
     pmix_status_t status;
     pmix_status_t *codes;
     size_t ncodes;
+    uint32_t sessionid;
     pmix_name_t pname;
     pmix_proc_t *proc;
     pmix_peer_t *peer;
@@ -578,10 +609,20 @@ typedef struct {
     bool pntrval;
     bool stval;
     bool optional;
+    bool immediate;
     bool add_immediate;
-    bool qualified_value;
     bool refresh_cache;
     pmix_scope_t scope;
+    bool sessioninfo;
+    bool sessiondirective;
+    uint32_t sessionid;
+    bool nodeinfo;
+    bool nodedirective;
+    char *hostname;
+    uint32_t nodeid;
+    bool appinfo;
+    bool appdirective;
+    uint32_t appnum;
 } pmix_get_logic_t;
 PMIX_CLASS_DECLARATION(pmix_get_logic_t);
 
@@ -689,6 +730,22 @@ typedef struct {
 } pmix_notify_caddy_t;
 PMIX_CLASS_DECLARATION(pmix_notify_caddy_t);
 
+typedef struct {
+    pmix_object_t super;
+    /** Points to key <--> index translation table. */
+    pmix_pointer_array_t *table;
+    /** Stores the next ID. */
+    uint32_t next_id;
+} pmix_keyindex_t;
+PMIX_CLASS_DECLARATION(pmix_keyindex_t);
+
+#define PMIX_KEYINDEX_STATIC_INIT                 \
+{                                                 \
+    .super = PMIX_OBJ_STATIC_INIT(pmix_object_t), \
+    .table = NULL,                                \
+    .next_id = PMIX_INDEX_BOUNDARY                \
+}
+
 /****    GLOBAL STORAGE    ****/
 /* define a global construct that includes values that must be shared
  * between various parts of the code library. The client, tool,
@@ -705,7 +762,7 @@ typedef struct {
     uint32_t appnum;     // my appnum
     pid_t pid;           // my local pid
     uint32_t nodeid;     // my nodeid, if given
-    uint32_t sessionid;
+    uint32_t sessionid;  // my sessionid, if given
     int pindex;
     pmix_event_base_t *evbase;
     pmix_event_base_t *evauxbase;
@@ -732,8 +789,7 @@ typedef struct {
     bool external_topology;
     bool external_progress;
     pmix_iof_flags_t iof_flags;
-    pmix_pointer_array_t keyindex;  // translation table of key <-> index
-    uint32_t next_keyid;
+    pmix_keyindex_t keyindex;
 } pmix_globals_t;
 
 /* provide access to a function to cleanup epilogs */
@@ -800,6 +856,23 @@ static inline bool pmix_check_session_info(const char *key)
         PMIX_SESSION_ID, PMIX_CLUSTER_ID,   PMIX_UNIV_SIZE,
         PMIX_TMPDIR,     PMIX_TDIR_RMCLEAN, PMIX_HOSTNAME_KEEP_FQDN,
         PMIX_RM_NAME,    PMIX_RM_VERSION,
+        NULL
+    };
+    size_t n;
+
+    for (n = 0; NULL != keys[n]; n++) {
+        if (0 == strncmp(key, keys[n], PMIX_MAX_KEYLEN)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static inline bool pmix_check_special_key(const char *key)
+{
+    char *keys[] = {
+        PMIX_GROUP_CONTEXT_ID,
+        PMIX_GROUP_LOCAL_CID,
         NULL
     };
     size_t n;

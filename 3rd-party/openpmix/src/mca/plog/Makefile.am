@@ -31,6 +31,7 @@ libmca_plog_la_SOURCES =
 headers = plog.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

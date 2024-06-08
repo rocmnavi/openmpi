@@ -31,6 +31,7 @@ libmca_pnet_la_SOURCES =
 headers = pnet.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

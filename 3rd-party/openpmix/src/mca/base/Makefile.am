@@ -62,5 +62,7 @@ libpmix_mca_base_la_SOURCES = \
         pmix_mca_base_framework.c \
         pmix_mca_base_alias.c
 
+# Unconditionally install the header files
+
 pmixdir = $(pmixincludedir)/$(subdir)
 pmix_HEADERS = $(headers)

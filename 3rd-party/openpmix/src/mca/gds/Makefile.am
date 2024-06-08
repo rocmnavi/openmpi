@@ -31,6 +31,7 @@ libmca_gds_la_SOURCES =
 headers = gds.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

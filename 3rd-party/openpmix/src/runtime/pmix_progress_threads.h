@@ -12,7 +12,7 @@
 #ifndef PMIX_PROGRESS_THREADS_H
 #define PMIX_PROGRESS_THREADS_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include <pthread.h>
 #include <event.h>

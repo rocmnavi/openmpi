@@ -69,7 +69,7 @@
  *   simply reports the error -- other things decide what to do).
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix.h"
 #include "src/include/pmix_types.h"
 

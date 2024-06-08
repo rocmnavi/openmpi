@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.11. Installation location &mdash; Open MPI 5.0.1 documentation</title>
+  <title>4.12. Installation location &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4.12. Installing custom components" href="custom-components.html" />
-    <link rel="prev" title="4.10. make targets" href="make-targets.html" /> 
+    <link rel="next" title="4.13. Installing custom components" href="custom-components.html" />
+    <link rel="prev" title="4.11. make targets" href="make-targets.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,35 +48,36 @@
 <li class="toctree-l1"><a class="reference internal" href="../release-notes/index.html">3. Release notes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">4. Building and installing Open MPI</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html">4.1. Quick start: Installing Open MPI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="supported-systems.html">4.2. Supported Systems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="definitions.html">4.3. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filesystem-requirements.html">4.4. Filesystem requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vpath-builds.html">4.5. VPATH builds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compilers-and-flags.html">4.6. Specifying compilers and flags</a></li>
-<li class="toctree-l2"><a class="reference internal" href="required-support-libraries.html">4.7. Required support libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configure-cli-options/index.html">4.8. <code class="docutils literal notranslate"><span class="pre">configure</span></code> command line options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configure-output-summary.html">4.9. <code class="docutils literal notranslate"><span class="pre">configure</span></code> output summary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="make-targets.html">4.10. <code class="docutils literal notranslate"><span class="pre">make</span></code> targets</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.11. Installation location</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#filesystem-types">4.11.1. Filesystem types</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#network-filesystem">4.11.1.1. Network filesystem</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#local-filesystem">4.11.1.2. Local filesystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloading.html">4.2. Downloading Open MPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-systems.html">4.3. Supported Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="definitions.html">4.4. Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filesystem-requirements.html">4.5. Filesystem requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpath-builds.html">4.6. VPATH builds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilers-and-flags.html">4.7. Specifying compilers and flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="required-support-libraries.html">4.8. Required support libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-cli-options/index.html">4.9. <code class="docutils literal notranslate"><span class="pre">configure</span></code> command line options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-output-summary.html">4.10. <code class="docutils literal notranslate"><span class="pre">configure</span></code> output summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="make-targets.html">4.11. <code class="docutils literal notranslate"><span class="pre">make</span></code> targets</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.12. Installation location</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filesystem-types">4.12.1. Filesystem types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#network-filesystem">4.12.1.1. Network filesystem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-filesystem">4.12.1.2. Local filesystem</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-over-a-prior-open-mpi-installation">4.11.2. Installing over a prior Open MPI installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#relocating-an-open-mpi-installation">4.11.3. Relocating an Open MPI installation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#move-an-existing-open-mpi-installation-to-a-new-prefix">4.11.3.1. Move an existing Open MPI installation to a new prefix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#stage-an-open-mpi-installation-in-a-temporary-location">4.11.3.2. “Stage” an Open MPI installation in a temporary location</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#overriding-individual-directories">4.11.3.3. Overriding individual directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-over-a-prior-open-mpi-installation">4.12.2. Installing over a prior Open MPI installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relocating-an-open-mpi-installation">4.12.3. Relocating an Open MPI installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#move-an-existing-open-mpi-installation-to-a-new-prefix">4.12.3.1. Move an existing Open MPI installation to a new prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stage-an-open-mpi-installation-in-a-temporary-location">4.12.3.2. “Stage” an Open MPI installation in a temporary location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overriding-individual-directories">4.12.3.3. Overriding individual directories</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-multiple-copies-of-open-mpi">4.11.4. Installing Multiple Copies of Open MPI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-multiple-copies-of-open-mpi">4.12.4. Installing Multiple Copies of Open MPI</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="custom-components.html">4.12. Installing custom components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updating.html">4.13. Updating or upgrading an Open MPI installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packagers.html">4.14. Advice for packagers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sysadmins.html">4.15. Advice for System Administrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom-components.html">4.13. Installing custom components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating.html">4.14. Updating or upgrading an Open MPI installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packagers.html">4.15. Advice for packagers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmins.html">4.16. Advice for System Administrators</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../features/index.html">5. Open MPI-specific features</a></li>
@@ -91,9 +92,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -111,7 +111,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>Building and installing Open MPI</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">4.11. </span>Installation location</li>
+      <li class="breadcrumb-item active"><span class="section-number">4.12. </span>Installation location</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/installing-open-mpi/installation-location.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -124,7 +124,7 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="installation-location">
-<span id="building-open-mpi-installation-location-label"></span><h1><span class="section-number">4.11. </span>Installation location<a class="headerlink" href="#installation-location" title="Permalink to this heading"></a></h1>
+<span id="building-open-mpi-installation-location-label"></span><h1><span class="section-number">4.12. </span>Installation location<a class="headerlink" href="#installation-location" title="Permalink to this heading"></a></h1>
 <p>A common environment to run Open MPI is in a “Beowulf”-class or
 similar cluster (e.g., a bunch of 1U servers in a bunch of racks).
 Simply stated, Open MPI can run on a group of servers or workstations
@@ -154,10 +154,10 @@ mainly addresses this question for homogeneous clusters (i.e., where
 all nodes and operating systems are the same), although elements of
 this discussion apply to heterogeneous clusters as well.</p>
 <div class="section" id="filesystem-types">
-<h2><span class="section-number">4.11.1. </span>Filesystem types<a class="headerlink" href="#filesystem-types" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.12.1. </span>Filesystem types<a class="headerlink" href="#filesystem-types" title="Permalink to this heading"></a></h2>
 <p>There are two common approaches.</p>
 <div class="section" id="network-filesystem">
-<h3><span class="section-number">4.11.1.1. </span>Network filesystem<a class="headerlink" href="#network-filesystem" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.12.1.1. </span>Network filesystem<a class="headerlink" href="#network-filesystem" title="Permalink to this heading"></a></h3>
 <p>Have a common filesystem, such as NFS, between all the machines to be
 used.  Install Open MPI such that the installation directory is the
 <em>same value</em> on each node.  This will <em>greatly</em> simplify user’s shell
@@ -211,7 +211,7 @@ application is past MPI initialization, it doesn’t use the Open MPI
 binaries very much.</p>
 </div>
 <div class="section" id="local-filesystem">
-<h3><span class="section-number">4.11.1.2. </span>Local filesystem<a class="headerlink" href="#local-filesystem" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.12.1.2. </span>Local filesystem<a class="headerlink" href="#local-filesystem" title="Permalink to this heading"></a></h3>
 <p>If you are concerned with networked filesystem costs of accessing the
 Open MPI binaries, you can install Open MPI on the local hard drive of
 each node in your system.  Again, it is <em>highly</em> advisable to install
@@ -227,7 +227,7 @@ very large parallel jobs.</p>
 </div>
 </div>
 <div class="section" id="installing-over-a-prior-open-mpi-installation">
-<span id="building-open-mpi-install-overwrite-label"></span><h2><span class="section-number">4.11.2. </span>Installing over a prior Open MPI installation<a class="headerlink" href="#installing-over-a-prior-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<span id="building-open-mpi-install-overwrite-label"></span><h2><span class="section-number">4.12.2. </span>Installing over a prior Open MPI installation<a class="headerlink" href="#installing-over-a-prior-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The Open MPI team does not recommend installing a new
@@ -253,7 +253,7 @@ installations — which can cause problems.</p>
 information about updating or upgrading an installation of Open MPI.</p>
 </div>
 <div class="section" id="relocating-an-open-mpi-installation">
-<h2><span class="section-number">4.11.3. </span>Relocating an Open MPI installation<a class="headerlink" href="#relocating-an-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.12.3. </span>Relocating an Open MPI installation<a class="headerlink" href="#relocating-an-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <p>It can be desirable to initially install Open MPI to one location
 (e.g., <code class="docutils literal notranslate"><span class="pre">/path/to/openmpi</span></code>) and then later move it to another
 location (e.g., <code class="docutils literal notranslate"><span class="pre">/opt/myproduct/bundled-openmpi-a.b.c</span></code>).</p>
@@ -272,7 +272,7 @@ already adjusted your <code class="docutils literal notranslate"><span class="pr
 variables to the new location where Open MPI now resides).</p>
 <p>There are three methods.</p>
 <div class="section" id="move-an-existing-open-mpi-installation-to-a-new-prefix">
-<h3><span class="section-number">4.11.3.1. </span>Move an existing Open MPI installation to a new prefix<a class="headerlink" href="#move-an-existing-open-mpi-installation-to-a-new-prefix" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.12.3.1. </span>Move an existing Open MPI installation to a new prefix<a class="headerlink" href="#move-an-existing-open-mpi-installation-to-a-new-prefix" title="Permalink to this heading"></a></h3>
 <p>Set the <code class="docutils literal notranslate"><span class="pre">OPAL_PREFIX</span></code> environment variable before launching Open
 MPI.  For example, if Open MPI had initially been installed to
 <code class="docutils literal notranslate"><span class="pre">/opt/openmpi</span></code> and the entire <code class="docutils literal notranslate"><span class="pre">openmpi</span></code> tree was later moved to
@@ -280,7 +280,7 @@ MPI.  For example, if Open MPI had initially been installed to
 enable Open MPI to function properly.</p>
 </div>
 <div class="section" id="stage-an-open-mpi-installation-in-a-temporary-location">
-<h3><span class="section-number">4.11.3.2. </span>“Stage” an Open MPI installation in a temporary location<a class="headerlink" href="#stage-an-open-mpi-installation-in-a-temporary-location" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.12.3.2. </span>“Stage” an Open MPI installation in a temporary location<a class="headerlink" href="#stage-an-open-mpi-installation-in-a-temporary-location" title="Permalink to this heading"></a></h3>
 <p>When <em>creating</em> self-contained installation packages, systems such as
 RPM install Open MPI into temporary locations.  The package system
 then bundles up everything under the temporary location into a package
@@ -297,7 +297,7 @@ environment variable can be used; setting <code class="docutils literal notransl
 that Open MPI can function properly.</p>
 </div>
 <div class="section" id="overriding-individual-directories">
-<h3><span class="section-number">4.11.3.3. </span>Overriding individual directories<a class="headerlink" href="#overriding-individual-directories" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.12.3.3. </span>Overriding individual directories<a class="headerlink" href="#overriding-individual-directories" title="Permalink to this heading"></a></h3>
 <p>Open MPI uses the GNU-specified directories (per Autoconf/Automake),
 and can be overridden by setting environment variables directly
 related to their common names.  The list of environment variables that
@@ -333,7 +333,7 @@ ignores <code class="docutils literal notranslate"><span class="pre">$prefix</sp
 </div>
 </div>
 <div class="section" id="installing-multiple-copies-of-open-mpi">
-<span id="building-open-mpi-installation-location-multiple-copies-label"></span><h2><span class="section-number">4.11.4. </span>Installing Multiple Copies of Open MPI<a class="headerlink" href="#installing-multiple-copies-of-open-mpi" title="Permalink to this heading"></a></h2>
+<span id="building-open-mpi-installation-location-multiple-copies-label"></span><h2><span class="section-number">4.12.4. </span>Installing Multiple Copies of Open MPI<a class="headerlink" href="#installing-multiple-copies-of-open-mpi" title="Permalink to this heading"></a></h2>
 <p>Open MPI can handle a variety of different run-time environments
 (e.g., ssh, Slurm, PBS, etc.) and a variety of different
 interconnection networks (e.g., ethernet, InfiniBand, etc.)
@@ -428,14 +428,14 @@ little incentive to resolve.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="make-targets.html" class="btn btn-neutral float-left" title="4.10. make targets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="custom-components.html" class="btn btn-neutral float-right" title="4.12. Installing custom components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="make-targets.html" class="btn btn-neutral float-left" title="4.11. make targets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom-components.html" class="btn btn-neutral float-right" title="4.13. Installing custom components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

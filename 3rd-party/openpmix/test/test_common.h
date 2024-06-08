@@ -19,7 +19,7 @@
 #define TEST_COMMON_H
 
 #include "src/include/pmix_config.h"
-#include "include/pmix_common.h"
+#include "pmix_common.h"
 
 #include <stdint.h>
 #include <stdio.h>

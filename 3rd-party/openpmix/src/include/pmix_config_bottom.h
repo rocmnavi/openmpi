@@ -54,7 +54,7 @@
  **********************************************************************/
 
 /* Do we have posix or solaris thread lib */
-#define PMIX_HAVE_THREADS (PMIX_HAVE_POSIX_THREADS || PMIX_HAVE_SOLARIS_THREADS)
+#define PMIX_HAVE_THREADS (PMIX_HAVE_POSIX_THREADS || OAC_HAVE_SOLARIS_THREADS)
 
 /*
  * BEGIN_C_DECLS should be used at the beginning of your declarations,
@@ -187,7 +187,7 @@
 #endif
 
 #if PMIX_HAVE_ATTRIBUTE_FORMAT
-    #if PMIX_HAVE_SOLARIS
+    #if OAC_HAVE_SOLARIS
     #    define __pmix_attribute_format__(a, b, c)
     #else
     #    define __pmix_attribute_format__(a, b, c) __attribute__((__format__(a, b, c)))
@@ -300,7 +300,7 @@
 #endif
 
 #if PMIX_HAVE_ATTRIBUTE_SENTINEL
-    #if PMIX_HAVE_SOLARIS
+    #if OAC_HAVE_SOLARIS
     #    define __pmix_attribute_sentinel__
     #else
     #    define __pmix_attribute_sentinel__ __attribute__((__sentinel__))
@@ -550,8 +550,8 @@ typedef PMIX_PTRDIFF_TYPE ptrdiff_t;
 
 /* For a similar reason to what is listed in pmix_config_top.h, we
    want to protect others from the autoconf/automake-generated
-   PACKAGE_<foo> macros in src/include/pmix_config.h.  We can't put these undef's
-   directly in src/include/pmix_config.h because they'll be turned into #defines'
+   PACKAGE_<foo> macros in pmix_config.h.  We can't put these undef's
+   directly in pmix_config.h because they'll be turned into #defines'
    via autoconf.
 
    So put them here in case any one else includes PMIX's

@@ -32,7 +32,7 @@
  *
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix_common.h"
 
 #include <errno.h>
@@ -66,8 +66,8 @@
 #include "src/util/pmix_environ.h"
 #include "src/util/pmix_show_help.h"
 
-#include "pmix.h"
-#include "pmix_tool.h"
+#include "include/pmix.h"
+#include "include/pmix_tool.h"
 #include "src/include/pmix_globals.h"
 
 typedef struct {

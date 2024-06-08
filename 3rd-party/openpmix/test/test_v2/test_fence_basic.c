@@ -2,7 +2,6 @@
  * Copyright (c) 2021-2022 Triad National Security, LLC.
  *                         All rights reserved.
  *
- * Copyright (c) 2022      Nanook Consulting.  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow

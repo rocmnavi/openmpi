@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.15. Advice for System Administrators &mdash; Open MPI 5.0.1 documentation</title>
+  <title>4.16. Advice for System Administrators &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="5. Open MPI-specific features" href="../features/index.html" />
-    <link rel="prev" title="4.14. Advice for packagers" href="packagers.html" /> 
+    <link rel="prev" title="4.15. Advice for packagers" href="packagers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,25 +48,26 @@
 <li class="toctree-l1"><a class="reference internal" href="../release-notes/index.html">3. Release notes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">4. Building and installing Open MPI</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html">4.1. Quick start: Installing Open MPI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="supported-systems.html">4.2. Supported Systems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="definitions.html">4.3. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filesystem-requirements.html">4.4. Filesystem requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vpath-builds.html">4.5. VPATH builds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compilers-and-flags.html">4.6. Specifying compilers and flags</a></li>
-<li class="toctree-l2"><a class="reference internal" href="required-support-libraries.html">4.7. Required support libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configure-cli-options/index.html">4.8. <code class="docutils literal notranslate"><span class="pre">configure</span></code> command line options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configure-output-summary.html">4.9. <code class="docutils literal notranslate"><span class="pre">configure</span></code> output summary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="make-targets.html">4.10. <code class="docutils literal notranslate"><span class="pre">make</span></code> targets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-location.html">4.11. Installation location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom-components.html">4.12. Installing custom components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updating.html">4.13. Updating or upgrading an Open MPI installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packagers.html">4.14. Advice for packagers</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.15. Advice for System Administrators</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-global-mca-parameters">4.15.1. Setting Global MCA Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setting-mca-parameters-for-a-global-open-mpi-installation">4.15.2. Setting MCA Parameters for a Global Open MPI installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#adding-a-new-plugin-to-a-global-open-mpi-installation">4.15.3. Adding a new plugin to a global Open MPI installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#upgrading-network-hardware-with-a-global-open-mpi-installation">4.15.4. Upgrading network hardware with a global Open MPI installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#user-customization-of-a-global-open-mpi-installation">4.15.5. User customization of a global Open MPI installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloading.html">4.2. Downloading Open MPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supported-systems.html">4.3. Supported Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="definitions.html">4.4. Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filesystem-requirements.html">4.5. Filesystem requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpath-builds.html">4.6. VPATH builds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilers-and-flags.html">4.7. Specifying compilers and flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="required-support-libraries.html">4.8. Required support libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-cli-options/index.html">4.9. <code class="docutils literal notranslate"><span class="pre">configure</span></code> command line options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-output-summary.html">4.10. <code class="docutils literal notranslate"><span class="pre">configure</span></code> output summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="make-targets.html">4.11. <code class="docutils literal notranslate"><span class="pre">make</span></code> targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-location.html">4.12. Installation location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom-components.html">4.13. Installing custom components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating.html">4.14. Updating or upgrading an Open MPI installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packagers.html">4.15. Advice for packagers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.16. Advice for System Administrators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-global-mca-parameters">4.16.1. Setting Global MCA Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-mca-parameters-for-a-global-open-mpi-installation">4.16.2. Setting MCA Parameters for a Global Open MPI installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-new-plugin-to-a-global-open-mpi-installation">4.16.3. Adding a new plugin to a global Open MPI installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrading-network-hardware-with-a-global-open-mpi-installation">4.16.4. Upgrading network hardware with a global Open MPI installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-customization-of-a-global-open-mpi-installation">4.16.5. User customization of a global Open MPI installation</a></li>
 </ul>
 </li>
 </ul>
@@ -83,9 +84,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -103,7 +103,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>Building and installing Open MPI</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">4.15. </span>Advice for System Administrators</li>
+      <li class="breadcrumb-item active"><span class="section-number">4.16. </span>Advice for System Administrators</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/installing-open-mpi/sysadmins.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -116,7 +116,7 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="advice-for-system-administrators">
-<h1><span class="section-number">4.15. </span>Advice for System Administrators<a class="headerlink" href="#advice-for-system-administrators" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">4.16. </span>Advice for System Administrators<a class="headerlink" href="#advice-for-system-administrators" title="Permalink to this heading"></a></h1>
 <p>Several members of the Open MPI team have strong system
 administrator backgrounds; we recognize the value of having software
 that is friendly to system administrators.  Here are some of the reasons
@@ -129,7 +129,7 @@ that Open MPI is attractive for system administrators:</p>
 </ul>
 <p>See the rest of this section for more details.</p>
 <div class="section" id="setting-global-mca-parameters">
-<h2><span class="section-number">4.15.1. </span>Setting Global MCA Parameters<a class="headerlink" href="#setting-global-mca-parameters" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.16.1. </span>Setting Global MCA Parameters<a class="headerlink" href="#setting-global-mca-parameters" title="Permalink to this heading"></a></h2>
 <p>MCA parameters are a way to tweak Open MPI’s behavior at
 run-time.  For example, MCA parameters can specify:</p>
 <ul class="simple">
@@ -155,7 +155,7 @@ the network meant for MPI jobs.</p>
 set global MCA parameters.</p>
 </div>
 <div class="section" id="setting-mca-parameters-for-a-global-open-mpi-installation">
-<h2><span class="section-number">4.15.2. </span>Setting MCA Parameters for a Global Open MPI installation<a class="headerlink" href="#setting-mca-parameters-for-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.16.2. </span>Setting MCA Parameters for a Global Open MPI installation<a class="headerlink" href="#setting-mca-parameters-for-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <p>Which global MCA parameters to set depends on both your specific
 cluster setup and the applications that typically run there.</p>
 <p>The best thing to do is to use the <a class="reference internal" href="../man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> command
@@ -224,7 +224,7 @@ specific plug-in with the command line parameters:</p>
 </ul>
 </div>
 <div class="section" id="adding-a-new-plugin-to-a-global-open-mpi-installation">
-<h2><span class="section-number">4.15.3. </span>Adding a new plugin to a global Open MPI installation<a class="headerlink" href="#adding-a-new-plugin-to-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.16.3. </span>Adding a new plugin to a global Open MPI installation<a class="headerlink" href="#adding-a-new-plugin-to-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <p>If you add a new component (such as support for a new network) to a global
 Open MPI installation, Open MPI will
 simply open the new plugin at run-time — your applications do not need
@@ -233,7 +233,7 @@ to be recompiled or re-linked.</p>
 details.</p>
 </div>
 <div class="section" id="upgrading-network-hardware-with-a-global-open-mpi-installation">
-<h2><span class="section-number">4.15.4. </span>Upgrading network hardware with a global Open MPI installation<a class="headerlink" href="#upgrading-network-hardware-with-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.16.4. </span>Upgrading network hardware with a global Open MPI installation<a class="headerlink" href="#upgrading-network-hardware-with-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <p>If you upgrade your network hardware and your installation of Open MPI uses
 shared libraries, you simply need to
 recompile the Open MPI components that support that network and
@@ -244,7 +244,7 @@ This is a major advantage over many other MPI implementations.
 MPI applications will simply open the new plugin when they run.</p>
 </div>
 <div class="section" id="user-customization-of-a-global-open-mpi-installation">
-<h2><span class="section-number">4.15.5. </span>User customization of a global Open MPI installation<a class="headerlink" href="#user-customization-of-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.16.5. </span>User customization of a global Open MPI installation<a class="headerlink" href="#user-customization-of-a-global-open-mpi-installation" title="Permalink to this heading"></a></h2>
 <p>It is typically sufficient for a single Open MPI
 installation (or perhaps a small number of Open MPI installations,
 depending on compiler interoperability,
@@ -270,14 +270,14 @@ of the users on the system.  Or power users can download 3rd party components
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="packagers.html" class="btn btn-neutral float-left" title="4.14. Advice for packagers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="packagers.html" class="btn btn-neutral float-left" title="4.15. Advice for packagers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../features/index.html" class="btn btn-neutral float-right" title="5. Open MPI-specific features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

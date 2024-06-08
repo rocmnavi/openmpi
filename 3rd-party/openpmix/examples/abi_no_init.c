@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2022      IBM Corporation.  All rights reserved.
- * Copyright (c) 2022      Nanook Consulting.  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.5. MPI Functionality and Features &mdash; Open MPI 5.0.1 documentation</title>
+  <title>3.6. MPI Functionality and Features &mdash; Open MPI 5.0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3.6. OpenSHMEM Functionality and Features" href="openshmem.html" />
-    <link rel="prev" title="3.4. General Run-Time Support Notes" href="run-time.html" /> 
+    <link rel="next" title="3.7. OpenSHMEM Functionality and Features" href="openshmem.html" />
+    <link rel="prev" title="3.5. General Run-Time Support Notes" href="run-time.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,24 +46,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">1. Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-help.html">2. Getting help</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. Release notes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="general.html">3.1. General notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="platform.html">3.2. Platform Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compilers.html">3.3. Compiler Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run-time.html">3.4. General Run-Time Support Notes</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. MPI Functionality and Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mpi-standard-conformance">3.5.1. MPI Standard conformance</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#mpi-4-0-partial-compliance">3.5.1.1. MPI-4.0 partial compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog/index.html">3.1. Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general.html">3.2. General notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html">3.3. Platform Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilers.html">3.4. Compiler Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-time.html">3.5. General Run-Time Support Notes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.6. MPI Functionality and Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mpi-standard-conformance">3.6.1. MPI Standard conformance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mpi-4-0-partial-compliance">3.6.1.1. MPI-4.0 partial compliance</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#removed-mpi-apis">3.5.2. Removed MPI APIs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#other-mpi-features">3.5.3. Other MPI features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removed-mpi-apis">3.6.2. Removed MPI APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-mpi-features">3.6.3. Other MPI features</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="openshmem.html">3.6. OpenSHMEM Functionality and Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpi-collectives.html">3.7. MPI Collectives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshmem-collectives.html">3.8. OpenSHMEM Collectives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="networks.html">3.9. Network Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extensions.html">3.10. Open MPI Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openshmem.html">3.7. OpenSHMEM Functionality and Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpi-collectives.html">3.8. MPI Collectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openshmem-collectives.html">3.9. OpenSHMEM Collectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">3.10. Network Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">3.11. Open MPI Extensions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing-open-mpi/index.html">4. Building and installing Open MPI</a></li>
@@ -79,9 +80,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">14. Contributing to Open MPI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license/index.html">15. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../history.html">16. History of Open MPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">17. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">18. Open MPI manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">19. OpenSHMEM manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openmpi/index.html">17. Open MPI manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man-openshmem/index.html">18. OpenSHMEM manual pages</a></li>
 </ul>
 
         </div>
@@ -99,7 +99,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html"><span class="section-number">3. </span>Release notes</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">3.5. </span>MPI Functionality and Features</li>
+      <li class="breadcrumb-item active"><span class="section-number">3.6. </span>MPI Functionality and Features</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/release-notes/mpi.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -112,9 +112,9 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="mpi-functionality-and-features">
-<h1><span class="section-number">3.5. </span>MPI Functionality and Features<a class="headerlink" href="#mpi-functionality-and-features" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">3.6. </span>MPI Functionality and Features<a class="headerlink" href="#mpi-functionality-and-features" title="Permalink to this heading"></a></h1>
 <div class="section" id="mpi-standard-conformance">
-<span id="release-notes-mpi-standard-conformance-label"></span><h2><span class="section-number">3.5.1. </span>MPI Standard conformance<a class="headerlink" href="#mpi-standard-conformance" title="Permalink to this heading"></a></h2>
+<span id="release-notes-mpi-standard-conformance-label"></span><h2><span class="section-number">3.6.1. </span>MPI Standard conformance<a class="headerlink" href="#mpi-standard-conformance" title="Permalink to this heading"></a></h2>
 <p>In the Open MPI v5.0.x series, all MPI-3.1
 functionality is supported.  <em>Some</em> MPI-4.0 functionality is
 supported.</p>
@@ -147,7 +147,7 @@ to 1.</p>
 </tbody>
 </table>
 <div class="section" id="mpi-4-0-partial-compliance">
-<h3><span class="section-number">3.5.1.1. </span>MPI-4.0 partial compliance<a class="headerlink" href="#mpi-4-0-partial-compliance" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.6.1.1. </span>MPI-4.0 partial compliance<a class="headerlink" href="#mpi-4-0-partial-compliance" title="Permalink to this heading"></a></h3>
 <p>In the Open MPI v5.0.x series, only partial MPI-4.0 functionality is
 supported. This section contains a list of features added for the release.</p>
 <ul class="simple">
@@ -180,7 +180,7 @@ dropped on communicators, files, and windows.</p></li>
 </div>
 </div>
 <div class="section" id="removed-mpi-apis">
-<h2><span class="section-number">3.5.2. </span>Removed MPI APIs<a class="headerlink" href="#removed-mpi-apis" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.6.2. </span>Removed MPI APIs<a class="headerlink" href="#removed-mpi-apis" title="Permalink to this heading"></a></h2>
 <p>Note that starting with Open MPI v4.0.0, prototypes for several
 legacy MPI-1 symbols that were deleted in the MPI-3.0 specification
 are no longer available by default in <code class="docutils literal notranslate"><span class="pre">mpi.h</span></code>.  Specifically,
@@ -236,7 +236,7 @@ re-enable them in <code class="docutils literal notranslate"><span class="pre">m
 <code class="docutils literal notranslate"><span class="pre">--enable-mpi1-compatibility</span></code> flag.</p>
 </div>
 <div class="section" id="other-mpi-features">
-<h2><span class="section-number">3.5.3. </span>Other MPI features<a class="headerlink" href="#other-mpi-features" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.6.3. </span>Other MPI features<a class="headerlink" href="#other-mpi-features" title="Permalink to this heading"></a></h2>
 <ul>
 <li><p>Rank reordering support is available using the TreeMatch library. It
 is activated for the graph and <code class="docutils literal notranslate"><span class="pre">dist_graph</span></code> communicator topologies.</p></li>
@@ -314,14 +314,14 @@ would be greatly appreciated.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="run-time.html" class="btn btn-neutral float-left" title="3.4. General Run-Time Support Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="openshmem.html" class="btn btn-neutral float-right" title="3.6. OpenSHMEM Functionality and Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="run-time.html" class="btn btn-neutral float-left" title="3.5. General Run-Time Support Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="openshmem.html" class="btn btn-neutral float-right" title="3.7. OpenSHMEM Functionality and Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2023, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

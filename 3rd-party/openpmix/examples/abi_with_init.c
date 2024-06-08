@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2022      IBM Corporation.  All rights reserved.
- * Copyright (c) 2022      Nanook Consulting.  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -67,7 +66,7 @@ int main(int argc, char **argv) {
     PMIX_INFO_FREE(info, ninfo);
     PMIX_QUERY_FREE(query, nqueries);
 
-    PMIx_Finalize(NULL, 0);
+    rc = PMIx_Finalize(NULL, 0);
 
-    return 0;
+    return rc;
 }

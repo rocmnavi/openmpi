@@ -23,7 +23,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/threads/pmix_mutex.h"
 

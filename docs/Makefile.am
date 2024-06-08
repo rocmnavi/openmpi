@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2022 Cisco Systems, Inc.  All rights reserved.
+# Copyright (c) 2023-2024 Jeffrey M. Squyres.  All rights reserved.
 #
-# Copyright (c) 2023      Jeffrey M. Squyres.  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -41,6 +41,7 @@ IMAGE_SOURCE_FILES = \
 RST_SOURCE_FILES   = \
         $(srcdir)/*.rst \
         $(srcdir)/release-notes/*.rst \
+        $(srcdir)/release-notes/changelog/*.rst \
         $(srcdir)/installing-open-mpi/*.rst \
         $(srcdir)/installing-open-mpi/*/*.rst \
         $(srcdir)/features/*.rst \
@@ -51,7 +52,6 @@ RST_SOURCE_FILES   = \
         $(srcdir)/app-debug/*.rst \
         $(srcdir)/developers/*.rst \
         $(srcdir)/license/*.rst \
-        $(srcdir)/news/*.rst \
         $(srcdir)/man-openmpi/*.rst \
         $(srcdir)/man-openmpi/man*/*.rst \
         $(srcdir)/man-openshmem/*.rst \
@@ -962,8 +962,8 @@ $(builddir)/schizo-ompi-rst-content/schizo-ompi-cli.rstxt: $(OMPI_SCHIZO_OMPI_RS
 else
 $(builddir)/schizo-ompi-rst-content/schizo-ompi-cli.rstxt: $(builddir)/schizo-ompi-rst-content
 $(builddir)/schizo-ompi-rst-content/schizo-ompi-cli.rstxt: $(srcdir)/no-prrte-content.rst.txt
-	dir=`dirname $@`; if test ! -d "$$dir"; then mkdir "$$dir"; fi
 	$(OMPI_V_SPHINX_COPYRST) \
+	dir=`dirname $@`; if test ! -d "$$dir"; then mkdir "$$dir"; fi; \
 	cp -pf $(srcdir)/no-prrte-content.rst.txt "$@"
 endif
 

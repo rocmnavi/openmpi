@@ -31,6 +31,7 @@ libmca_ptl_la_SOURCES =
 headers = ptl.h ptl_types.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

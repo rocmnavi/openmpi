@@ -21,7 +21,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "pmix_common.h"
 
 #ifdef HAVE_UNISTD_H

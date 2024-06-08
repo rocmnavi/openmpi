@@ -68,7 +68,6 @@
 #include "src/server/pmix_server_ops.h"
 #include "src/util/pmix_argv.h"
 #include "src/util/pmix_error.h"
-#include "src/util/pmix_hash.h"
 #include "src/util/pmix_name_fns.h"
 #include "src/util/pmix_output.h"
 #include "src/util/pmix_environ.h"
@@ -646,6 +645,7 @@ PMIX_EXPORT int PMIx_tool_init(pmix_proc_t *proc, pmix_info_t info[], size_t nin
     pmix_globals.iof_flags.local_output = outputio;
 
     /* setup the globals */
+    PMIX_CONSTRUCT(&pmix_client_globals.groups, pmix_list_t);
     PMIX_CONSTRUCT(&pmix_client_globals.pending_requests, pmix_list_t);
     PMIX_CONSTRUCT(&pmix_client_globals.peers, pmix_pointer_array_t);
     pmix_pointer_array_init(&pmix_client_globals.peers, 1, INT_MAX, 1);
@@ -1381,6 +1381,8 @@ PMIX_EXPORT pmix_status_t pmix_tool_init_info(void)
 pmix_status_t PMIx_tool_set_server_module(pmix_server_module_t *module)
 {
     pmix_host_server = *module;
+    /* mark that we are now a server */
+    PMIX_SET_PEER_TYPE(pmix_globals.mypeer, PMIX_PROC_SERVER);
     return PMIX_SUCCESS;
 }
 

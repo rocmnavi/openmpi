@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>9. The Modular Component Architecture (MCA) &mdash; OpenPMIx 4.2.8rc1 documentation</title>
+  <title>10. The Modular Component Architecture (MCA) &mdash; OpenPMIx 5.0.2rc2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="10. Building PMIx applications" href="building-apps/index.html" />
-    <link rel="prev" title="8. Version Numbers and Binary Compatibility" href="versions.html" /> 
+    <link rel="next" title="11. Building PMIx applications" href="building-apps/index.html" />
+    <link rel="prev" title="9. Version Numbers and Binary Compatibility" href="versions.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,33 +48,34 @@
 <li class="toctree-l1"><a class="reference internal" href="release-notes/index.html">3. Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exceptions.html">4. Exceptions to the PMIx Standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installing-pmix/index.html">5. Building and installing PMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="release-notes.html">6. Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">7. History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="versions.html">8. Version Numbers and Binary Compatibility</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">9. The Modular Component Architecture (MCA)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#terminology">9.1. Terminology</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#frameworks">9.1.1. Frameworks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#components">9.1.2. Components</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#modules">9.1.3. Modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parameters-variables">9.1.4. Parameters (variables)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-things-work/index.html">6. How Things Work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">7. Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">8. History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="versions.html">9. Version Numbers and Binary Compatibility</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. The Modular Component Architecture (MCA)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#terminology">10.1. Terminology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#frameworks">10.1.1. Frameworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#components">10.1.2. Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">10.1.3. Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters-variables">10.1.4. Parameters (variables)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#setting-mca-parameter-values">9.2. Setting MCA parameter values</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#environment-variables">9.2.1. Environment variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-files">9.2.2. Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-mca-parameter-values">10.2. Setting MCA parameter values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#environment-variables">10.2.1. Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-files">10.2.2. Configuration files</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#selecting-which-pmix-components-are-used-at-run-time">9.3. Selecting which PMIx components are used at run time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#common-mca-parameters">9.4. Common MCA parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selecting-which-pmix-components-are-used-at-run-time">10.3. Selecting which PMIx components are used at run time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-mca-parameters">10.4. Common MCA parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="building-apps/index.html">10. Building PMIx applications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developers/index.html">11. Developer’s guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">12. Contributing to OpenPMIx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">13. License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">14. OpenPMIx Security Policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="news/index.html">15. News</a></li>
-<li class="toctree-l1"><a class="reference internal" href="man/index.html">16. OpenPMIx manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building-apps/index.html">11. Building PMIx applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developers/index.html">12. Developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">13. Contributing to OpenPMIx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">14. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">15. OpenPMIx Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="news/index.html">16. News</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man/index.html">17. OpenPMIx manual pages</a></li>
 </ul>
 
         </div>
@@ -91,7 +92,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">9. </span>The Modular Component Architecture (MCA)</li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>The Modular Component Architecture (MCA)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/mca.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,7 +105,7 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="the-modular-component-architecture-mca">
-<span id="label-mca"></span><h1><span class="section-number">9. </span>The Modular Component Architecture (MCA)<a class="headerlink" href="#the-modular-component-architecture-mca" title="Permalink to this heading"></a></h1>
+<span id="label-mca"></span><h1><span class="section-number">10. </span>The Modular Component Architecture (MCA)<a class="headerlink" href="#the-modular-component-architecture-mca" title="Permalink to this heading"></a></h1>
 <p>PMIx is a highly-customizable system; it can be configured via
 configuration files, command line parameters, and environment
 variables.  The main functionality of PMIx’s configuration system
@@ -118,7 +119,7 @@ parameters that can be used to affect PMIx’s behavior.</p></li>
 </ul>
 <hr class="docutils" />
 <div class="section" id="terminology">
-<h2><span class="section-number">9.1. </span>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">10.1. </span>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading"></a></h2>
 <p>The Modular Component Architecture (MCA) is the backbone for much of
 PMIx’s functionality.  It is a series of <em>frameworks</em>,
 <em>components</em>, and <em>modules</em> that are assembled at run-time to create
@@ -127,7 +128,7 @@ the PMIx implementation.</p>
 PMIx’s behavior at run-time.</p>
 <p>Each of these entities are described below.</p>
 <div class="section" id="frameworks">
-<h3><span class="section-number">9.1.1. </span>Frameworks<a class="headerlink" href="#frameworks" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.1.1. </span>Frameworks<a class="headerlink" href="#frameworks" title="Permalink to this heading"></a></h3>
 <p>An MCA framework manages zero or more components at run-time and is
 targeted at a specific task (e.g., providing support for network
 functionality).  Although each MCA framework supports only a single
@@ -144,10 +145,10 @@ variables to be forwarded to application processes</p></li>
 <p>There are many frameworks within PMIx; the exact set varies
 between different versions of PMIx.  You can use the
 <a class="reference internal" href="man/man1/pmix_info.1.html#man1-pmix-info"><span class="std std-ref">pmix_info(1)</span></a> command to see the full list of
-frameworks that are included in PMIx v4.2.8rc1.</p>
+frameworks that are included in PMIx v5.0.2rc2.</p>
 </div>
 <div class="section" id="components">
-<h3><span class="section-number">9.1.2. </span>Components<a class="headerlink" href="#components" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.1.2. </span>Components<a class="headerlink" href="#components" title="Permalink to this heading"></a></h3>
 <p>An MCA component is an implementation of a framework’s formal
 interface.  It is a standalone collection of code that can be bundled
 into a plugin that can be inserted into the PMIx code base, either
@@ -161,16 +162,16 @@ at run-time and/or compile-time.</p>
 MPI.  PMIx’s code base includes support for many components, but
 not all of them may be present or available on your system.  You can
 use the <a class="reference internal" href="man/man1/pmix_info.1.html#man1-pmix-info"><span class="std std-ref">pmix_info(1)</span></a> command to see what
-components are included in PMIx v4.2.8rc1 on your system.</p>
+components are included in PMIx v5.0.2rc2 on your system.</p>
 </div>
 <div class="section" id="modules">
-<h3><span class="section-number">9.1.3. </span>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.1.3. </span>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h3>
 <p>An MCA module (frequently called a <code class="docutils literal notranslate"><span class="pre">plugin</span></code>) is an instance of a
 component.  While it is possible for a component to have multiple
 active plugins, it would be a very rare component that did so.</p>
 </div>
 <div class="section" id="parameters-variables">
-<h3><span class="section-number">9.1.4. </span>Parameters (variables)<a class="headerlink" href="#parameters-variables" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.1.4. </span>Parameters (variables)<a class="headerlink" href="#parameters-variables" title="Permalink to this heading"></a></h3>
 <p>MCA <em>parameters</em> (sometimes called MCA <em>variables</em>) are the basic unit
 of run-time tuning for PMIx.  They are simple “key = value” pairs
 that are used extensively throughout PMIx.  The general rules of
@@ -196,7 +197,7 @@ require a significantly larger cache than the default size.</p>
 </div>
 </div>
 <div class="section" id="setting-mca-parameter-values">
-<span id="label-running-setting-mca-param-values"></span><h2><span class="section-number">9.2. </span>Setting MCA parameter values<a class="headerlink" href="#setting-mca-parameter-values" title="Permalink to this heading"></a></h2>
+<span id="label-running-setting-mca-param-values"></span><h2><span class="section-number">10.2. </span>Setting MCA parameter values<a class="headerlink" href="#setting-mca-parameter-values" title="Permalink to this heading"></a></h2>
 <p>MCA parameters may be set in several different ways.</p>
 <div class="tip admonition">
 <p class="admonition-title">Rationale</p>
@@ -217,7 +218,7 @@ in priority order:</p>
 <li><p>Configuration files</p></li>
 </ol>
 <div class="section" id="environment-variables">
-<h3><span class="section-number">9.2.1. </span>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.2.1. </span>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h3>
 <p>Environment variables are given the highest priority.  Any environment variable
 named <code class="docutils literal notranslate"><span class="pre">PMIX_MCA_&lt;param_name&gt;</span></code> will be examined for use. Note that
 misspelling of names will cause the value to be ignored - i.e.,
@@ -234,7 +235,7 @@ quoting, such as:</p>
 </div>
 </div>
 <div class="section" id="configuration-files">
-<h3><span class="section-number">9.2.2. </span>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.2.2. </span>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this heading"></a></h3>
 <p>Simple configuration text files can also be used to set MCA
 parameter values.  Parameters are set one per line (comments are
 permitted).  For example:</p>
@@ -283,7 +284,7 @@ entails editing (by default) the following files:</p>
 </div>
 </div>
 <div class="section" id="selecting-which-pmix-components-are-used-at-run-time">
-<span id="label-running-selecting-framework-components"></span><h2><span class="section-number">9.3. </span>Selecting which PMIx components are used at run time<a class="headerlink" href="#selecting-which-pmix-components-are-used-at-run-time" title="Permalink to this heading"></a></h2>
+<span id="label-running-selecting-framework-components"></span><h2><span class="section-number">10.3. </span>Selecting which PMIx components are used at run time<a class="headerlink" href="#selecting-which-pmix-components-are-used-at-run-time" title="Permalink to this heading"></a></h2>
 <p>Each MCA framework has a top-level MCA parameter that helps guide
 which components are selected to be used at run-time.  Specifically,
 every framework has an MCA parameter of the same name that can be used
@@ -323,7 +324,7 @@ clearly contradict each other.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="common-mca-parameters">
-<h2><span class="section-number">9.4. </span>Common MCA parameters<a class="headerlink" href="#common-mca-parameters" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">10.4. </span>Common MCA parameters<a class="headerlink" href="#common-mca-parameters" title="Permalink to this heading"></a></h2>
 <p>PMIx has a <em>large</em> number of MCA parameters available.  Users can
 use the <a class="reference internal" href="man/man1/pmix_info.1.html#man1-pmix-info"><span class="std std-ref">pmix_info(1)</span></a> command to see <em>all</em>
 available MCA parameters.</p>
@@ -371,7 +372,7 @@ because it alerted users to the misconfiguration.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>By default, PMIx v4.2.8rc1 includes all components in
+<p>By default, PMIx v5.0.2rc2 includes all components in
 its base libraries (e.g., on Linux, <code class="docutils literal notranslate"><span class="pre">libpmix.so</span></code> includes
 all the components that were built with PMIx, and
 therefore no component need to be opened dynamically), and
@@ -421,14 +422,14 @@ framework nor are the OPA PNET component.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="versions.html" class="btn btn-neutral float-left" title="8. Version Numbers and Binary Compatibility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="building-apps/index.html" class="btn btn-neutral float-right" title="10. Building PMIx applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="versions.html" class="btn btn-neutral float-left" title="9. Version Numbers and Binary Compatibility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="building-apps/index.html" class="btn btn-neutral float-right" title="11. Building PMIx applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2014-2023, The OpenPMIx Community.</p>
+    <p>&#169; Copyright 2014-2024, The OpenPMIx Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

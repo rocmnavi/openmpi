@@ -28,7 +28,7 @@
 # Copyright (c) 2006-2010 Cisco Systems, Inc.  All rights reserved.
 # Copyright (c) 2012-2013 Los Alamos National Security, Inc.  All rights reserved.
 # Copyright (c) 2013-2020 Intel, Inc.  All rights reserved.
-# Copyright (c) 2021      Nanook Consulting.  All rights reserved.
+# Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -119,10 +119,11 @@ noinst_PROGRAMS = simptest$(EXEEXT) simpclient$(EXEEXT) \
 	simpjctrl$(EXEEXT) simpio$(EXEEXT) simpsched$(EXEEXT) \
 	simpcoord$(EXEEXT) simpcycle$(EXEEXT) doubleget$(EXEEXT) \
 	simpfabric$(EXEEXT) get_put_example$(EXEEXT) simpvni$(EXEEXT) \
-	hybrid$(EXEEXT)
+	hybrid$(EXEEXT) simpqual$(EXEEXT) legacy$(EXEEXT)
 subdir = test/simple
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
+	$(top_srcdir)/config/oac/oac_check_os_flavors.m4 \
 	$(top_srcdir)/config/oac/oac_check_package.m4 \
 	$(top_srcdir)/config/oac/oac_check_vendor.m4 \
 	$(top_srcdir)/config/oac/oac_init.m4 \
@@ -144,8 +145,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/config/pmix_check_compiler_version.m4 \
 	$(top_srcdir)/config/pmix_check_curl.m4 \
 	$(top_srcdir)/config/pmix_check_jansson.m4 \
-	$(top_srcdir)/config/pmix_check_lock.m4 \
-	$(top_srcdir)/config/pmix_check_os_flavors.m4 \
+	$(top_srcdir)/config/pmix_check_lustre.m4 \
 	$(top_srcdir)/config/pmix_check_pthread_pids.m4 \
 	$(top_srcdir)/config/pmix_check_slurm.m4 \
 	$(top_srcdir)/config/pmix_check_visibility.m4 \
@@ -170,13 +170,15 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pdl/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/configure.m4 \
-	$(top_srcdir)/src/mca/common/dstore/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds12/configure.m4 \
-	$(top_srcdir)/src/mca/gds/ds21/configure.m4 \
+	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
+	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
 	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
+	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv4/configure.m4 \
 	$(top_srcdir)/src/mca/pif/bsdx_ipv6/configure.m4 \
 	$(top_srcdir)/src/mca/pif/linux_ipv6/configure.m4 \
@@ -185,12 +187,20 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/config/configure.m4 \
 	$(top_srcdir)/src/mca/pinstalldirs/env/configure.m4 \
 	$(top_srcdir)/src/mca/plog/syslog/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/nvd/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/opa/configure.m4 \
 	$(top_srcdir)/src/mca/pnet/simptest/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/sshot/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/tcp/configure.m4 \
+	$(top_srcdir)/src/mca/pnet/usnic/configure.m4 \
+	$(top_srcdir)/src/mca/prm/alps/configure.m4 \
+	$(top_srcdir)/src/mca/prm/hpesmf/configure.m4 \
+	$(top_srcdir)/src/mca/prm/pbs/configure.m4 \
 	$(top_srcdir)/src/mca/prm/slurm/configure.m4 \
 	$(top_srcdir)/src/mca/psec/munge/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pstat/test/configure.m4 \
+	$(top_srcdir)/src/mca/pstrg/lustre/configure.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -238,6 +248,12 @@ hybrid_DEPENDENCIES = $(top_builddir)/src/libpmix.la
 hybrid_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(hybrid_LDFLAGS) $(LDFLAGS) -o $@
+am_legacy_OBJECTS = $(am__objects_1) legacy.$(OBJEXT)
+legacy_OBJECTS = $(am_legacy_OBJECTS)
+legacy_DEPENDENCIES = $(top_builddir)/src/libpmix.la
+legacy_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(legacy_LDFLAGS) $(LDFLAGS) -o $@
 am_quietclient_OBJECTS = $(am__objects_1) quietclient.$(OBJEXT)
 quietclient_OBJECTS = $(am_quietclient_OBJECTS)
 quietclient_DEPENDENCIES = $(top_builddir)/src/libpmix.la
@@ -310,6 +326,12 @@ simppub_DEPENDENCIES = $(top_builddir)/src/libpmix.la
 simppub_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(simppub_LDFLAGS) $(LDFLAGS) -o $@
+am_simpqual_OBJECTS = $(am__objects_1) simpqual.$(OBJEXT)
+simpqual_OBJECTS = $(am_simpqual_OBJECTS)
+simpqual_DEPENDENCIES = $(top_builddir)/src/libpmix.la
+simpqual_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(simpqual_LDFLAGS) $(LDFLAGS) -o $@
 am_simpsched_OBJECTS = $(am__objects_1) simpsched.$(OBJEXT)
 simpsched_OBJECTS = $(am_simpsched_OBJECTS)
 simpsched_DEPENDENCIES = $(top_builddir)/src/libpmix.la
@@ -370,12 +392,13 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/doubleget.Po \
 	./$(DEPDIR)/get_put_example.Po ./$(DEPDIR)/gwclient.Po \
 	./$(DEPDIR)/gwtest.Po ./$(DEPDIR)/hybrid.Po \
-	./$(DEPDIR)/quietclient.Po ./$(DEPDIR)/simpclient.Po \
-	./$(DEPDIR)/simpcoord.Po ./$(DEPDIR)/simpcycle.Po \
-	./$(DEPDIR)/simpdie.Po ./$(DEPDIR)/simpdmodex.Po \
-	./$(DEPDIR)/simpdyn.Po ./$(DEPDIR)/simpfabric.Po \
-	./$(DEPDIR)/simpft.Po ./$(DEPDIR)/simpio.Po \
-	./$(DEPDIR)/simpjctrl.Po ./$(DEPDIR)/simppub.Po \
+	./$(DEPDIR)/legacy.Po ./$(DEPDIR)/quietclient.Po \
+	./$(DEPDIR)/simpclient.Po ./$(DEPDIR)/simpcoord.Po \
+	./$(DEPDIR)/simpcycle.Po ./$(DEPDIR)/simpdie.Po \
+	./$(DEPDIR)/simpdmodex.Po ./$(DEPDIR)/simpdyn.Po \
+	./$(DEPDIR)/simpfabric.Po ./$(DEPDIR)/simpft.Po \
+	./$(DEPDIR)/simpio.Po ./$(DEPDIR)/simpjctrl.Po \
+	./$(DEPDIR)/simppub.Po ./$(DEPDIR)/simpqual.Po \
 	./$(DEPDIR)/simpsched.Po ./$(DEPDIR)/simptest.Po \
 	./$(DEPDIR)/simptimeout.Po ./$(DEPDIR)/simptool.Po \
 	./$(DEPDIR)/simpvni.Po ./$(DEPDIR)/stability.Po \
@@ -401,22 +424,22 @@ am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(doubleget_SOURCES) $(get_put_example_SOURCES) \
 	$(gwclient_SOURCES) $(gwtest_SOURCES) $(hybrid_SOURCES) \
-	$(quietclient_SOURCES) $(simpclient_SOURCES) \
+	$(legacy_SOURCES) $(quietclient_SOURCES) $(simpclient_SOURCES) \
 	$(simpcoord_SOURCES) $(simpcycle_SOURCES) $(simpdie_SOURCES) \
 	$(simpdmodex_SOURCES) $(simpdyn_SOURCES) $(simpfabric_SOURCES) \
 	$(simpft_SOURCES) $(simpio_SOURCES) $(simpjctrl_SOURCES) \
-	$(simppub_SOURCES) $(simpsched_SOURCES) $(simptest_SOURCES) \
-	$(simptimeout_SOURCES) $(simptool_SOURCES) $(simpvni_SOURCES) \
-	$(stability_SOURCES) $(test_pmix_SOURCES)
+	$(simppub_SOURCES) $(simpqual_SOURCES) $(simpsched_SOURCES) \
+	$(simptest_SOURCES) $(simptimeout_SOURCES) $(simptool_SOURCES) \
+	$(simpvni_SOURCES) $(stability_SOURCES) $(test_pmix_SOURCES)
 DIST_SOURCES = $(doubleget_SOURCES) $(get_put_example_SOURCES) \
 	$(gwclient_SOURCES) $(gwtest_SOURCES) $(hybrid_SOURCES) \
-	$(quietclient_SOURCES) $(simpclient_SOURCES) \
+	$(legacy_SOURCES) $(quietclient_SOURCES) $(simpclient_SOURCES) \
 	$(simpcoord_SOURCES) $(simpcycle_SOURCES) $(simpdie_SOURCES) \
 	$(simpdmodex_SOURCES) $(simpdyn_SOURCES) $(simpfabric_SOURCES) \
 	$(simpft_SOURCES) $(simpio_SOURCES) $(simpjctrl_SOURCES) \
-	$(simppub_SOURCES) $(simpsched_SOURCES) $(simptest_SOURCES) \
-	$(simptimeout_SOURCES) $(simptool_SOURCES) $(simpvni_SOURCES) \
-	$(stability_SOURCES) $(test_pmix_SOURCES)
+	$(simppub_SOURCES) $(simpqual_SOURCES) $(simpsched_SOURCES) \
+	$(simptest_SOURCES) $(simptimeout_SOURCES) $(simptool_SOURCES) \
+	$(simpvni_SOURCES) $(stability_SOURCES) $(test_pmix_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -518,13 +541,6 @@ MCA_pmix_bfrops_DSO_SUBDIRS = @MCA_pmix_bfrops_DSO_SUBDIRS@
 MCA_pmix_bfrops_STATIC_COMPONENTS = @MCA_pmix_bfrops_STATIC_COMPONENTS@
 MCA_pmix_bfrops_STATIC_LTLIBS = @MCA_pmix_bfrops_STATIC_LTLIBS@
 MCA_pmix_bfrops_STATIC_SUBDIRS = @MCA_pmix_bfrops_STATIC_SUBDIRS@
-MCA_pmix_common_ALL_COMPONENTS = @MCA_pmix_common_ALL_COMPONENTS@
-MCA_pmix_common_ALL_SUBDIRS = @MCA_pmix_common_ALL_SUBDIRS@
-MCA_pmix_common_DSO_COMPONENTS = @MCA_pmix_common_DSO_COMPONENTS@
-MCA_pmix_common_DSO_SUBDIRS = @MCA_pmix_common_DSO_SUBDIRS@
-MCA_pmix_common_STATIC_COMPONENTS = @MCA_pmix_common_STATIC_COMPONENTS@
-MCA_pmix_common_STATIC_LTLIBS = @MCA_pmix_common_STATIC_LTLIBS@
-MCA_pmix_common_STATIC_SUBDIRS = @MCA_pmix_common_STATIC_SUBDIRS@
 MCA_pmix_gds_ALL_COMPONENTS = @MCA_pmix_gds_ALL_COMPONENTS@
 MCA_pmix_gds_ALL_SUBDIRS = @MCA_pmix_gds_ALL_SUBDIRS@
 MCA_pmix_gds_DSO_COMPONENTS = @MCA_pmix_gds_DSO_COMPONENTS@
@@ -623,13 +639,6 @@ MCA_pmix_psensor_DSO_SUBDIRS = @MCA_pmix_psensor_DSO_SUBDIRS@
 MCA_pmix_psensor_STATIC_COMPONENTS = @MCA_pmix_psensor_STATIC_COMPONENTS@
 MCA_pmix_psensor_STATIC_LTLIBS = @MCA_pmix_psensor_STATIC_LTLIBS@
 MCA_pmix_psensor_STATIC_SUBDIRS = @MCA_pmix_psensor_STATIC_SUBDIRS@
-MCA_pmix_pshmem_ALL_COMPONENTS = @MCA_pmix_pshmem_ALL_COMPONENTS@
-MCA_pmix_pshmem_ALL_SUBDIRS = @MCA_pmix_pshmem_ALL_SUBDIRS@
-MCA_pmix_pshmem_DSO_COMPONENTS = @MCA_pmix_pshmem_DSO_COMPONENTS@
-MCA_pmix_pshmem_DSO_SUBDIRS = @MCA_pmix_pshmem_DSO_SUBDIRS@
-MCA_pmix_pshmem_STATIC_COMPONENTS = @MCA_pmix_pshmem_STATIC_COMPONENTS@
-MCA_pmix_pshmem_STATIC_LTLIBS = @MCA_pmix_pshmem_STATIC_LTLIBS@
-MCA_pmix_pshmem_STATIC_SUBDIRS = @MCA_pmix_pshmem_STATIC_SUBDIRS@
 MCA_pmix_psquash_ALL_COMPONENTS = @MCA_pmix_psquash_ALL_COMPONENTS@
 MCA_pmix_psquash_ALL_SUBDIRS = @MCA_pmix_psquash_ALL_SUBDIRS@
 MCA_pmix_psquash_DSO_COMPONENTS = @MCA_pmix_psquash_DSO_COMPONENTS@
@@ -768,7 +777,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 libpmi2_so_version = @libpmi2_so_version@
 libpmi_so_version = @libpmi_so_version@
-libpmix_mca_common_dstore_so_version = @libpmix_mca_common_dstore_so_version@
 libpmix_so_version = @libpmix_so_version@
 localedir = @localedir@
 localstatedir = @localstatedir@
@@ -794,6 +802,9 @@ pmixminor = @pmixminor@
 pmixnumeric = @pmixnumeric@
 pmixrelease = @pmixrelease@
 prefix = @prefix@
+prm_alps_CPPFLAGS = @prm_alps_CPPFLAGS@
+prm_alps_LDFLAGS = @prm_alps_LDFLAGS@
+prm_alps_LIBS = @prm_alps_LIBS@
 prm_slurm_CPPFLAGS = @prm_slurm_CPPFLAGS@
 prm_slurm_LDFLAGS = @prm_slurm_LDFLAGS@
 prm_slurm_LIBS = @prm_slurm_LIBS@
@@ -802,6 +813,9 @@ psdir = @psdir@
 psec_munge_CPPFLAGS = @psec_munge_CPPFLAGS@
 psec_munge_LDFLAGS = @psec_munge_LDFLAGS@
 psec_munge_LIBS = @psec_munge_LIBS@
+pstrg_lustre_CPPFLAGS = @pstrg_lustre_CPPFLAGS@
+pstrg_lustre_LDFLAGS = @pstrg_lustre_LDFLAGS@
+pstrg_lustre_LIBS = @pstrg_lustre_LIBS@
 pyexecdir = @pyexecdir@
 pythondir = @pythondir@
 runstatedir = @runstatedir@
@@ -988,6 +1002,20 @@ hybrid_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 hybrid_LDADD = \
     $(top_builddir)/src/libpmix.la
 
+simpqual_SOURCES = $(headers) \
+        simpqual.c
+
+simpqual_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+simpqual_LDADD = \
+    $(top_builddir)/src/libpmix.la
+
+legacy_SOURCES = $(headers) \
+        legacy.c
+
+legacy_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+legacy_LDADD = \
+    $(top_builddir)/src/libpmix.la
+
 all: all-am
 
 .SUFFIXES:
@@ -1051,6 +1079,10 @@ hybrid$(EXEEXT): $(hybrid_OBJECTS) $(hybrid_DEPENDENCIES) $(EXTRA_hybrid_DEPENDE
 	@rm -f hybrid$(EXEEXT)
 	$(AM_V_CCLD)$(hybrid_LINK) $(hybrid_OBJECTS) $(hybrid_LDADD) $(LIBS)
 
+legacy$(EXEEXT): $(legacy_OBJECTS) $(legacy_DEPENDENCIES) $(EXTRA_legacy_DEPENDENCIES) 
+	@rm -f legacy$(EXEEXT)
+	$(AM_V_CCLD)$(legacy_LINK) $(legacy_OBJECTS) $(legacy_LDADD) $(LIBS)
+
 quietclient$(EXEEXT): $(quietclient_OBJECTS) $(quietclient_DEPENDENCIES) $(EXTRA_quietclient_DEPENDENCIES) 
 	@rm -f quietclient$(EXEEXT)
 	$(AM_V_CCLD)$(quietclient_LINK) $(quietclient_OBJECTS) $(quietclient_LDADD) $(LIBS)
@@ -1099,6 +1131,10 @@ simppub$(EXEEXT): $(simppub_OBJECTS) $(simppub_DEPENDENCIES) $(EXTRA_simppub_DEP
 	@rm -f simppub$(EXEEXT)
 	$(AM_V_CCLD)$(simppub_LINK) $(simppub_OBJECTS) $(simppub_LDADD) $(LIBS)
 
+simpqual$(EXEEXT): $(simpqual_OBJECTS) $(simpqual_DEPENDENCIES) $(EXTRA_simpqual_DEPENDENCIES) 
+	@rm -f simpqual$(EXEEXT)
+	$(AM_V_CCLD)$(simpqual_LINK) $(simpqual_OBJECTS) $(simpqual_LDADD) $(LIBS)
+
 simpsched$(EXEEXT): $(simpsched_OBJECTS) $(simpsched_DEPENDENCIES) $(EXTRA_simpsched_DEPENDENCIES) 
 	@rm -f simpsched$(EXEEXT)
 	$(AM_V_CCLD)$(simpsched_LINK) $(simpsched_OBJECTS) $(simpsched_LDADD) $(LIBS)
@@ -1138,6 +1174,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gwclient.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gwtest.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hybrid.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/legacy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/quietclient.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpclient.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpcoord.Po@am__quote@ # am--include-marker
@@ -1150,6 +1187,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpio.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpjctrl.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simppub.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpqual.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simpsched.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simptest.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simptimeout.Po@am__quote@ # am--include-marker
@@ -1324,6 +1362,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/gwclient.Po
 	-rm -f ./$(DEPDIR)/gwtest.Po
 	-rm -f ./$(DEPDIR)/hybrid.Po
+	-rm -f ./$(DEPDIR)/legacy.Po
 	-rm -f ./$(DEPDIR)/quietclient.Po
 	-rm -f ./$(DEPDIR)/simpclient.Po
 	-rm -f ./$(DEPDIR)/simpcoord.Po
@@ -1336,6 +1375,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/simpio.Po
 	-rm -f ./$(DEPDIR)/simpjctrl.Po
 	-rm -f ./$(DEPDIR)/simppub.Po
+	-rm -f ./$(DEPDIR)/simpqual.Po
 	-rm -f ./$(DEPDIR)/simpsched.Po
 	-rm -f ./$(DEPDIR)/simptest.Po
 	-rm -f ./$(DEPDIR)/simptimeout.Po
@@ -1393,6 +1433,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/gwclient.Po
 	-rm -f ./$(DEPDIR)/gwtest.Po
 	-rm -f ./$(DEPDIR)/hybrid.Po
+	-rm -f ./$(DEPDIR)/legacy.Po
 	-rm -f ./$(DEPDIR)/quietclient.Po
 	-rm -f ./$(DEPDIR)/simpclient.Po
 	-rm -f ./$(DEPDIR)/simpcoord.Po
@@ -1405,6 +1446,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/simpio.Po
 	-rm -f ./$(DEPDIR)/simpjctrl.Po
 	-rm -f ./$(DEPDIR)/simppub.Po
+	-rm -f ./$(DEPDIR)/simpqual.Po
 	-rm -f ./$(DEPDIR)/simpsched.Po
 	-rm -f ./$(DEPDIR)/simptest.Po
 	-rm -f ./$(DEPDIR)/simptimeout.Po

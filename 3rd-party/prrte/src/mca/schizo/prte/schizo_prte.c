@@ -18,7 +18,7 @@
  * Copyright (c) 2015      Research Organization for Information Science
  *                         and Technology (RIST). All rights reserved.
  * Copyright (c) 2018-2022 IBM Corporation.  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -98,7 +98,6 @@ static struct option prteoptions[] = {
     PMIX_OPTION_DEFINE(PRTE_CLI_SET_SID, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_REPORT_PID, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_REPORT_URI, PMIX_ARG_REQD),
-    PMIX_OPTION_DEFINE(PRTE_CLI_TEST_SUICIDE, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_DEFAULT_HOSTFILE, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_SINGLETON, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_KEEPALIVE, PMIX_ARG_REQD),
@@ -152,7 +151,6 @@ static struct option prterunoptions[] = {
     PMIX_OPTION_DEFINE(PRTE_CLI_SET_SID, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_REPORT_PID, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_REPORT_URI, PMIX_ARG_REQD),
-    PMIX_OPTION_DEFINE(PRTE_CLI_TEST_SUICIDE, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_DEFAULT_HOSTFILE, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_KEEPALIVE, PMIX_ARG_REQD),
     PMIX_OPTION_DEFINE(PRTE_CLI_LAUNCH_AGENT, PMIX_ARG_REQD),
@@ -402,6 +400,7 @@ static struct option prtedoptions[] = {
     PMIX_OPTION_DEFINE(PRTE_CLI_TEST_SUICIDE, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_LEAVE_SESSION_ATTACHED, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE(PRTE_CLI_BOOTSTRAP, PMIX_ARG_NONE),
+    PMIX_OPTION_DEFINE(PRTE_CLI_RUN_AS_ROOT, PMIX_ARG_NONE),
 
     PMIX_OPTION_END
 };
@@ -565,10 +564,10 @@ static int convert_deprecated_cli(pmix_cli_result_t *results,
                                                 warn);
             PMIX_CLI_REMOVE_DEPRECATED(results, opt);
         }
-        /* --use-hwthread-cpus -> --bind-to hwthread */
+        /* --use-hwthread-cpus -> --map-by hwtcpus */
         else if (0 == strcmp(option, "use-hwthread-cpus")) {
             rc = prte_schizo_base_add_qualifier(results, option,
-                                                PRTE_CLI_BINDTO, PRTE_CLI_HWT,
+                                                PRTE_CLI_MAPBY, PRTE_CLI_HWTCPUS,
                                                 warn);
             PMIX_CLI_REMOVE_DEPRECATED(results, opt);
             if (NULL != prte_set_slots) {

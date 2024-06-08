@@ -28,7 +28,7 @@
 /*
  * includes
  */
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/class/pmix_list.h"
 #include "src/common/pmix_iof.h"

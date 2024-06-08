@@ -335,7 +335,6 @@ AC_SUBST([CONFIGURE_DEPENDENCIES], ['$(top_srcdir)/VERSION'])
 AC_SUBST([libpmix_so_version])
 AC_SUBST([libpmi_so_version])
 AC_SUBST([libpmi2_so_version])
-AC_SUBST([libpmix_mca_common_dstore_so_version])
 
 AC_CONFIG_FILES(pmix_config_prefix[contrib/Makefile]
                 pmix_config_prefix[examples/Makefile]
@@ -343,6 +342,8 @@ AC_CONFIG_FILES(pmix_config_prefix[contrib/Makefile]
                 pmix_config_prefix[test/test_v2/Makefile]
                 pmix_config_prefix[test/python/Makefile]
                 pmix_config_prefix[test/simple/Makefile]
+                pmix_config_prefix[test/sshot/Makefile]
+                pmix_config_prefix[test/util/Makefile]
                 pmix_config_prefix[docs/Makefile]
                 pmix_config_prefix[maint/pmix.pc])
 

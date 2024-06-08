@@ -31,6 +31,7 @@ libmca_prm_la_SOURCES =
 headers = prm.h
 sources =
 
+# install the header files
 pmixdir = $(pmixincludedir)/$(subdir)
 nobase_pmix_HEADERS = $(headers)
 

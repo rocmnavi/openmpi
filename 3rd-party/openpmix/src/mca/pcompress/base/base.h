@@ -14,7 +14,7 @@
 #ifndef PMIX_COMPRESS_BASE_H
 #define PMIX_COMPRESS_BASE_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 #include "src/mca/pcompress/pcompress.h"
 #include "src/util/pmix_environ.h"
 

@@ -204,7 +204,6 @@ int main(int argc, char **argv)
 
     PMIX_INFO_LOAD(&iptr[3], PMIX_SETUP_APP_ENVARS, NULL, PMIX_BOOL);
     PMIX_LOAD_NSPACE(ncache, "SIMPSCHED");
-
     DEBUG_CONSTRUCT_LOCK(&cd.lock);
     rc = PMIx_server_setup_application(ncache, iptr, 4, setup_cbfunc, &cd);
     if (PMIX_SUCCESS != rc) {

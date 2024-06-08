@@ -23,7 +23,7 @@
 #ifndef PLOG_SYSLOG_H
 #define PLOG_SYSLOG_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/mca/plog/plog.h"
 

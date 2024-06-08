@@ -14,7 +14,7 @@
 # Copyright (c) 2013-2022 Intel, Inc.  All rights reserved.
 # Copyright (c) 2019      Amazon.com, Inc. or its affiliates.  All Rights
 #                         reserved.
-# Copyright (c) 2021      Nanook Consulting.  All rights reserved.
+# Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -37,8 +37,8 @@ EXTRA_DIST = AUTHORS README.md VERSION LICENSE autogen.pl
 
 # Only install the valgrind suppressions file and man pages
 # if we're building in standalone mode
-dist_pmixdata_DATA = contrib/pmix-valgrind.supp
-
+dist_pmixdata_DATA =
+dist_pmixdata_DATA += contrib/pmix-valgrind.supp
 
 if PMIX_TESTS_EXAMPLES
 SUBDIRS += . test/test_v2 test examples

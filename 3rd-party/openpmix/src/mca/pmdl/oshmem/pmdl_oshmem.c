@@ -27,7 +27,7 @@
 #endif
 #include <time.h>
 
-#include "pmix.h"
+#include "include/pmix.h"
 
 #include "src/class/pmix_list.h"
 #include "src/class/pmix_pointer_array.h"

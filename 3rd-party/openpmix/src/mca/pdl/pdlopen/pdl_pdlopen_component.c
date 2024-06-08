@@ -61,12 +61,6 @@ pmix_pdl_pdlopen_component_t pmix_mca_pdl_pdlopen_component = {
             .pmix_mca_query_component = pdlopen_component_query,
         },
 
-        .base_data = {
-            /* The component is checkpoint ready */
-            PMIX_MCA_BASE_METADATA_PARAM_CHECKPOINT,
-            .reserved = {0}
-        },
-
         /* The pdl framework members */
         .priority = 80
     },
@@ -77,10 +71,11 @@ static int pdlopen_component_register(void)
     int ret;
 
     pmix_mca_pdl_pdlopen_component.filename_suffixes_mca_storage = ".so,.dylib,.dll,.sl";
-    ret = pmix_mca_base_component_var_register(&pmix_mca_pdl_pdlopen_component.base.base_version, "filename_suffixes",
-                                               "Comma-delimited list of filename suffixes that the pdlopen component will try",
-                                               PMIX_MCA_BASE_VAR_TYPE_STRING,
-                                               &pmix_mca_pdl_pdlopen_component.filename_suffixes_mca_storage);
+    ret = pmix_mca_base_component_var_register(
+        &pmix_mca_pdl_pdlopen_component.base.base_version, "filename_suffixes",
+        "Comma-delimited list of filename suffixes that the pdlopen component will try",
+        PMIX_MCA_BASE_VAR_TYPE_STRING,
+        &pmix_mca_pdl_pdlopen_component.filename_suffixes_mca_storage);
     if (ret < 0) {
         return ret;
     }

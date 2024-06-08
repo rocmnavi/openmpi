@@ -24,7 +24,7 @@
 #ifndef PMIX_PFEXEC_LINUX_H
 #define PMIX_PFEXEC_LINUX_H
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/mca/mca.h"
 

@@ -25,7 +25,7 @@
  */
 
 #include "src/include/pmix_config.h"
-#include "pmix_tool.h"
+#include "include/pmix_tool.h"
 
 #include <stdio.h>
 #include <stdlib.h>

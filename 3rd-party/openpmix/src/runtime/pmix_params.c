@@ -31,7 +31,7 @@
  * $HEADER$
  */
 
-#include "src/include/pmix_config.h"
+#include "pmix_config.h"
 
 #include "src/client/pmix_client_ops.h"
 #include "src/hwloc/pmix_hwloc.h"
@@ -65,20 +65,22 @@ pmix_status_t pmix_register_params(void)
 
 #if PMIX_ENABLE_TIMING
     pmix_timing_output = NULL;
-    (void) pmix_mca_base_var_register("pmix", "pmix", NULL, "timing_output",
-                                      "The name of output file for timing information. If this parameter is not set then output "
-                                      "will be directed into PMIX debug channel.",
-                                      PMIX_MCA_BASE_VAR_TYPE_STRING,
-                                      &pmix_timing_output);
+    (void) pmix_mca_base_var_register(
+        "pmix", "pmix", NULL, "timing_output",
+        "The name of output file for timing information. If this parameter is not set then output "
+        "will be directed into PMIX debug channel.",
+        PMIX_MCA_BASE_VAR_TYPE_STRING,
+        &pmix_timing_output);
 
     pmix_timing_overhead = true;
-    (void) pmix_mca_base_var_register("pmix", "pmix", NULL, "timing_overhead",
-                                      "Timing framework introduce additional overhead (malloc's mostly)."
-                                      " The time spend in such costly routines is measured and may be accounted"
-                                      " (subtracted from timestamps). 'true' means consider overhead, 'false' - ignore (default: "
-                                      "true).",
-                                      PMIX_MCA_BASE_VAR_TYPE_BOOL,
-                                      &pmix_timing_overhead);
+    (void) pmix_mca_base_var_register(
+        "pmix", "pmix", NULL, "timing_overhead",
+        "Timing framework introduce additional overhead (malloc's mostly)."
+        " The time spend in such costly routines is measured and may be accounted"
+        " (subtracted from timestamps). 'true' means consider overhead, 'false' - ignore (default: "
+        "true).",
+        PMIX_MCA_BASE_VAR_TYPE_BOOL,
+        &pmix_timing_overhead);
 #endif
 
     /* RFC1918 defines
@@ -90,20 +92,22 @@ pmix_status_t pmix_register_params(void)
        - 169.254.0.0/16 for DHCP onlink iff there's no DHCP server
     */
     pmix_net_private_ipv4 = "10.0.0.0/8;172.16.0.0/12;192.168.0.0/16;169.254.0.0/16";
-    ret = pmix_mca_base_var_register("pmix", "pmix", "net", "private_ipv4",
-                                        "Semicolon-delimited list of CIDR notation entries specifying what networks are considered "
-                                     "\"private\" (default value based on RFC1918 and RFC3330)",
-                                     PMIX_MCA_BASE_VAR_TYPE_STRING,
-                                     &pmix_net_private_ipv4);
+    ret = pmix_mca_base_var_register(
+        "pmix", "pmix", "net", "private_ipv4",
+        "Semicolon-delimited list of CIDR notation entries specifying what networks are considered "
+        "\"private\" (default value based on RFC1918 and RFC3330)",
+        PMIX_MCA_BASE_VAR_TYPE_STRING,
+        &pmix_net_private_ipv4);
     if (0 > ret) {
         return ret;
     }
 
-    (void) pmix_mca_base_var_register("pmix", "pmix", NULL, "event_caching_window",
-                                      "Time (in seconds) to aggregate events before reporting them - this "
-                                      "suppresses event cascades when processes abnormally terminate",
-                                      PMIX_MCA_BASE_VAR_TYPE_INT,
-                                      &pmix_event_caching_window);
+    (void) pmix_mca_base_var_register(
+        "pmix", "pmix", NULL, "event_caching_window",
+        "Time (in seconds) to aggregate events before reporting them - this "
+        "suppresses event cascades when processes abnormally terminate",
+        PMIX_MCA_BASE_VAR_TYPE_INT,
+        &pmix_event_caching_window);
 
     (void) pmix_mca_base_var_register("pmix", "pmix", NULL, "suppress_missing_data_warning",
                                       "Suppress warning that PMIx is missing job-level data that "
@@ -202,10 +206,11 @@ pmix_status_t pmix_register_params(void)
                                       &pmix_server_globals.group_verbose);
 
     pmix_server_globals.fence_localonly_opt = true;
-    (void) pmix_mca_base_var_register("pmix", "pmix", "server", "fence_localonly_opt",
-                                      "Optimize local-only fence opteration by eliminating the upcall to the RM (default: true)",
-                                      PMIX_MCA_BASE_VAR_TYPE_BOOL,
-                                      &pmix_server_globals.fence_localonly_opt);
+    (void) pmix_mca_base_var_register(
+        "pmix", "pmix", "server", "fence_localonly_opt",
+        "Optimize local-only fence opteration by eliminating the upcall to the RM (default: true)",
+        PMIX_MCA_BASE_VAR_TYPE_BOOL,
+        &pmix_server_globals.fence_localonly_opt);
 
     /* check for maximum number of pending output messages */
     pmix_globals.output_limit = (size_t) INT_MAX;
