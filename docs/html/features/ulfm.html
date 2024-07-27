@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>5.3. User-Level Fault Mitigation (ULFM) &mdash; Open MPI 5.0.3 documentation</title>
+  <title>5.3. User-Level Fault Mitigation (ULFM) &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -193,7 +193,7 @@ notably:</p>
 <li><p>PML: <code class="docutils literal notranslate"><span class="pre">ob1</span></code>, <code class="docutils literal notranslate"><span class="pre">cm</span></code>, <code class="docutils literal notranslate"><span class="pre">ucx</span></code></p></li>
 <li><p>MTL: <code class="docutils literal notranslate"><span class="pre">ofi</span></code>, <code class="docutils literal notranslate"><span class="pre">portals4</span></code>, <code class="docutils literal notranslate"><span class="pre">psm2</span></code></p></li>
 </ul>
-<p>However, in Open MPI v5.0.3, only <code class="docutils literal notranslate"><span class="pre">ob1</span></code> is fully adapted to support
+<p>However, in Open MPI v5.0.5, only <code class="docutils literal notranslate"><span class="pre">ob1</span></code> is fully adapted to support
 fault tolerance. The UCX PML has been successfully tested in some setups,
 but at this point we cannot confirm that all UCT devices are fully capable
 to provide the necessary features.</p>
@@ -231,7 +231,7 @@ capability: Design and rationale. IJHPCA 27(3): 244-254 (2013).</em></p>
 </div>
 <div class="section" id="building-ulfm-support-in-open-mpi">
 <h2><span class="section-number">5.3.6. </span>Building ULFM support in Open MPI<a class="headerlink" href="#building-ulfm-support-in-open-mpi" title="Permalink to this heading"></a></h2>
-<p>In Open MPI v5.0.3, ULFM support is <strong>built-in by default</strong> —
+<p>In Open MPI v5.0.5, ULFM support is <strong>built-in by default</strong> —
 that is, when you build Open MPI, unless you specify <code class="docutils literal notranslate"><span class="pre">--without-ft</span></code>, ULFM
 support is automatically available (but is inactive unless enabled at
 runtime).</p>
@@ -508,7 +508,7 @@ deadlock)</p></li>
 <h2><span class="section-number">5.3.10. </span>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h2>
 <div class="section" id="ulfm-integrated-in-open-mpi">
 <h3><span class="section-number">5.3.10.1. </span>ULFM Integrated in Open MPI<a class="headerlink" href="#ulfm-integrated-in-open-mpi" title="Permalink to this heading"></a></h3>
-<p>As of v5.0.3, ULFM is now integrated directly in to the community
+<p>As of v5.0.5, ULFM is now integrated directly in to the community
 release of Open MPI.  The following sections describe previous ULFM
 standlone releases.</p>
 </div>

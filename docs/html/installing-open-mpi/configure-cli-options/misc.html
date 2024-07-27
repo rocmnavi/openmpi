@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.9.8. Miscellaneous functionality &mdash; Open MPI 5.0.3 documentation</title>
+  <title>4.9.8. Miscellaneous functionality &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -182,6 +182,34 @@ Fortran compiler</p></li>
 </ul>
 <p>See the section on <a class="reference internal" href="../../building-apps/customizing-wrappers.html#label-customizing-wrapper-compiler"><span class="std std-ref">customizing wrapper compiler behavior</span></a> to see how to alter the
 wrapper compiler behavior at run time.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-mpi-moduledir</span></code>: Specify the directory where the Fortran
+MPI module files are installed.</p>
+<p>For historical reasons, Open MPI’s Fortran MPI modulefiles are
+installed into <code class="docutils literal notranslate"><span class="pre">$libdir</span></code> by default.  This option lets you change
+where they are installed; some users prefer Fortran module files
+installed into <code class="docutils literal notranslate"><span class="pre">$installdir</span></code>, for example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you intend to make your Open MPI installation
+relocatable <a class="reference internal" href="../installation-location.html#install-location-opal-prefix"><span class="std std-ref">via the OPAL_PREFIX mechanism</span></a>, you will want to ensure
+to specify the module directory relative to the
+<code class="docutils literal notranslate"><span class="pre">prefix</span></code>.  For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/opt/openmpi --with-mpi-moduledir=&#39;${includedir}/modules`...
+</pre></div>
+</div>
+<p>Note the additional shell quoting that is likely necessary
+to prevent shell variable expansion, and the additional
+<code class="docutils literal notranslate"><span class="pre">${}</span></code> around <code class="docutils literal notranslate"><span class="pre">includedir</span></code> that is necessary for Open MPI
+to recognize that it is a special name that needs to be
+expanded.</p>
+<p>Finally, note that the Fortran module installation
+directory is <em>not</em> one of the <a class="reference internal" href="../installation-location.html#install-location-overriding-individual-directories"><span class="std std-ref">recognized directories
+that can be specified via environment variable at run time</span></a>.
+Instead, to make the Fortran module directory relocatable,
+it needs to be relative to one of the other recognized
+directories.</p>
+</div>
 </li>
 </ul>
 </div>

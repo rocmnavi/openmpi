@@ -72,31 +72,31 @@ AC_DEFUN([OMPI_PRRTE_ADD_ARGS],[
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_config_asm.m4:87
 
 # Warning: Excluded: prte-prefix-by-default
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:39
-
-# Warning: Excluded: devel-check
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:68
-
-# Warning: Excluded: memory-sanitizers
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:83
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:50
 
 # Warning: Excluded: debug
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:105
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:68
 
 # Warning: Excluded: debug-symbols
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:124
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:87
+
+# Warning: Excluded: devel-check
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:96
+
+# Warning: Excluded: memory-sanitizers
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:117
 
 # Warning: Excluded: devel-headers
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:132
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:139
 
 # Warning: Excluded: pretty-print-stacktrace
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:149
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:156
 
 # Warning: Excluded: pty-support
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:169
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:176
 
 # Warning: Excluded: dlopen
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:188
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:195
 
 AC_ARG_ENABLE([show-load-errors-by-default],
     [AS_HELP_STRING([--enable-show-load-errors-by-default],
@@ -109,37 +109,37 @@ AC_ARG_ENABLE([show-load-errors-by-default],
                      (default: enabled in --enable-debug builds, meaning that
                       mca_base_component_show_load_errors is enabled
                       by default when configured with --enable-debug])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:220
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:227
 
 AC_ARG_WITH(proxy-version-string,
     AS_HELP_STRING([--with-proxy-version-string],
                    [Return the provided string when prte is used in proxy mode and the version is requested]))
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:242
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:249
 
 AC_ARG_WITH(proxy-package-name,
     AS_HELP_STRING([--with-proxy-package-name],
                    [Return the provided string when prte is used in proxy mode and the package name is requested]))
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:269
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:276
 
 AC_ARG_WITH(proxy-bugreport,
     AS_HELP_STRING([--with-proxy-bugreport],
                    [Return the provided string when prte is used in proxy mode and the PACKAGE_BUGREPORT is requested]))
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:283
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:290
 
 # Warning: Excluded: per-user-config-files
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:298
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:305
 
 # Warning: Excluded: ipv6
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:313
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:320
 
 # Warning: Excluded: package-string
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:330
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:337
 
 # Warning: Excluded: ident-string
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:344
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:351
 
 # Warning: Excluded: getpwuid
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:367
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_configure_options.m4:374
 
 # Warning: Excluded: max-
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_functions.m4:308

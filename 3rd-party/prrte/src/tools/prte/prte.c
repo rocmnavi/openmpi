@@ -256,7 +256,7 @@ static void shutdown_callback(int fd, short flags, void *arg)
     exit(PRTE_ERROR_DEFAULT_EXIT_CODE);
 }
 
-#if PMIX_NUMERIC_VERSION < 0x00040208
+#if PMIX_NUMERIC_VERSION < 0x00040205
 static char *pmix_getline(FILE *fp)
 {
     char *ret, *buff;
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
     pmix_info_t *iptr, *iptr2, info;
     pmix_status_t ret;
     bool flag;
-    size_t n, ninfo, param_len;
+    size_t n, m, ninfo, param_len;
     pmix_app_t *papps;
     size_t napps;
     mylock_t mylock;
@@ -320,8 +320,7 @@ int main(int argc, char *argv[])
         prte_tool_actual = "prte";
     }
     pargc = argc;
-    pargv = pmix_argv_copy_strip(argv); // strip any incoming quoted arguments
-
+    pargv = PMIx_Argv_copy(argv);
     /* save a pristine copy of the environment for launch purposes.
      * This MUST be done so that we can pass it to any local procs we
      * spawn - otherwise, those local procs will get a bunch of
@@ -977,7 +976,6 @@ int main(int argc, char *argv[])
                 close(outpipe);
             } else {
                 /* must be a file */
-                FILE *fp;
                 fp = fopen(opt->values[0], "w");
                 if (NULL == fp) {
                     pmix_output(0, "Impossible to open the file %s in write mode\n", opt->values[0]);
@@ -1105,11 +1103,11 @@ int main(int argc, char *argv[])
     opt = pmix_cmd_line_get_param(&results, PRTE_CLI_TIMEOUT);
     if (NULL != opt || NULL != (timeoutenv = getenv("MPIEXEC_TIMEOUT"))) {
         if (NULL != timeoutenv) {
-            i = strtol(timeoutenv, NULL, 10);
+            m = strtoul(timeoutenv, NULL, 10);
             /* both cannot be present, or they must agree */
             if (NULL != opt) {
-                n = strtol(opt->values[0], NULL, 10);
-                if (i != n) {
+                n = strtoul(opt->values[0], NULL, 10);
+                if (m != n) {
                     pmix_show_help("help-prun.txt", "prun:timeoutconflict", false,
                                    prte_tool_basename, n, timeoutenv);
                     PRTE_UPDATE_EXIT_STATUS(1);

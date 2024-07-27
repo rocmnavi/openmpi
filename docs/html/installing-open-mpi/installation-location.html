@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.12. Installation location &mdash; Open MPI 5.0.3 documentation</title>
+  <title>4.12. Installation location &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -272,12 +272,41 @@ already adjusted your <code class="docutils literal notranslate"><span class="pr
 variables to the new location where Open MPI now resides).</p>
 <p>There are three methods.</p>
 <div class="section" id="move-an-existing-open-mpi-installation-to-a-new-prefix">
-<h3><span class="section-number">4.12.3.1. </span>Move an existing Open MPI installation to a new prefix<a class="headerlink" href="#move-an-existing-open-mpi-installation-to-a-new-prefix" title="Permalink to this heading"></a></h3>
+<span id="install-location-opal-prefix"></span><h3><span class="section-number">4.12.3.1. </span>Move an existing Open MPI installation to a new prefix<a class="headerlink" href="#move-an-existing-open-mpi-installation-to-a-new-prefix" title="Permalink to this heading"></a></h3>
 <p>Set the <code class="docutils literal notranslate"><span class="pre">OPAL_PREFIX</span></code> environment variable before launching Open
 MPI.  For example, if Open MPI had initially been installed to
 <code class="docutils literal notranslate"><span class="pre">/opt/openmpi</span></code> and the entire <code class="docutils literal notranslate"><span class="pre">openmpi</span></code> tree was later moved to
 <code class="docutils literal notranslate"><span class="pre">/home/openmpi</span></code>, setting <code class="docutils literal notranslate"><span class="pre">OPAL_PREFIX</span></code> to <code class="docutils literal notranslate"><span class="pre">/home/openmpi</span></code> will
 enable Open MPI to function properly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OPAL_PREFIX</span></code> mechanism relies on all installation
+directories being specified as relative to the <code class="docutils literal notranslate"><span class="pre">prefix</span></code>
+directory specified during <code class="docutils literal notranslate"><span class="pre">configure</span></code>.</p>
+<p>For example, if Open MPI is configured the following way:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/opt/openmpi --libdir=/usr/lib ...
+</pre></div>
+</div>
+<p>Then setting <code class="docutils literal notranslate"><span class="pre">OPAL_PREFIX</span></code> will not affect the run-time
+implications of <code class="docutils literal notranslate"><span class="pre">libdir</span></code>, since <code class="docutils literal notranslate"><span class="pre">/usr/lib</span></code> is not
+specified as relative to <code class="docutils literal notranslate"><span class="pre">/opt/openmpi</span></code>.</p>
+<p>Instead of specifying absolute directories, you can make
+them relative to other <code class="docutils literal notranslate"><span class="pre">configure</span></code>-recognized directories.
+For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/opt/openmpi --libdir=&#39;${exec_prefix}/x86_64/lib&#39; ...
+</pre></div>
+</div>
+<p>Note the additional shell quoting that is likely necessary
+to prevent shell variable expansion, and the additional
+<code class="docutils literal notranslate"><span class="pre">${}</span></code> around <code class="docutils literal notranslate"><span class="pre">exec_prefix</span></code> that is necessary for Open MPI
+to recognize that it is a special name that needs to be
+expanded.</p>
+<p>The directory names recognized by Open MPI are listed in the
+<a class="reference internal" href="#install-location-overriding-individual-directories"><span class="std std-ref">Overriding individual directories</span></a>
+section (below), without the <code class="docutils literal notranslate"><span class="pre">OPAL_</span></code> prefix, and in lower
+case.  For example, the <code class="docutils literal notranslate"><span class="pre">OPAL_SYSCONFDIR</span></code> environment
+variable corresponds to <code class="docutils literal notranslate"><span class="pre">${sysconfdir}</span></code>.</p>
+</div>
 </div>
 <div class="section" id="stage-an-open-mpi-installation-in-a-temporary-location">
 <h3><span class="section-number">4.12.3.2. </span>“Stage” an Open MPI installation in a temporary location<a class="headerlink" href="#stage-an-open-mpi-installation-in-a-temporary-location" title="Permalink to this heading"></a></h3>
@@ -297,7 +326,7 @@ environment variable can be used; setting <code class="docutils literal notransl
 that Open MPI can function properly.</p>
 </div>
 <div class="section" id="overriding-individual-directories">
-<h3><span class="section-number">4.12.3.3. </span>Overriding individual directories<a class="headerlink" href="#overriding-individual-directories" title="Permalink to this heading"></a></h3>
+<span id="install-location-overriding-individual-directories"></span><h3><span class="section-number">4.12.3.3. </span>Overriding individual directories<a class="headerlink" href="#overriding-individual-directories" title="Permalink to this heading"></a></h3>
 <p>Open MPI uses the GNU-specified directories (per Autoconf/Automake),
 and can be overridden by setting environment variables directly
 related to their common names.  The list of environment variables that

@@ -2424,8 +2424,5 @@ const pmix_regattr_input_t pmix_dictionary[] = {
     {.index = 560, .name = "PMIX_NOTIFY_LAUNCH", .string = "pmix.note.lnch", .type = PMIX_BOOL,
      .description = (char *[]){"***** DEPRECATED ***** notify the requestor upon",
                                "launch of the child job and return its namespace in",
-                               "the event", NULL}},
-
-    {.index = UINT32_MAX, .name = "", .string = "", .type = PMIX_POINTER, .description = (char *[]){"NONE", NULL}}
+                               "the event", NULL}}
 };
-

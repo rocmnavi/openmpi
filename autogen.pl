@@ -71,7 +71,7 @@ my $ompi_automake_search = "automake";
 my $ompi_libtoolize_search = "libtoolize;glibtoolize";
 
 # version of packages we ship as tarballs
-my $libevent_version="2.1.12-stable";
+my $libevent_version="2.1.12-stable-ompi";
 my $hwloc_version="2.7.1";
 
 # One-time setup
@@ -1411,7 +1411,12 @@ if (-f ".gitmodules") {
         }
 
         if (!$happy) {
-            print("    ==> ERROR: Missing submodule\n\nThe submodule \"$path\" is missing.\n\n");
+                print("    ==> ERROR: Missing
+
+The submodule \"$path\" is missing.
+
+Perhaps you forgot to \"git clone --recursive ...\", or you need to
+\"git submodule update --init --recursive\"...?\n\n");
             exit(1);
         }
     }

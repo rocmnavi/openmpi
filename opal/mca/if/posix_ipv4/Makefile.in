@@ -315,6 +315,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/ompi/mca/mtl/ofi/configure.m4 \
 	$(top_srcdir)/ompi/mca/mtl/portals4/configure.m4 \
 	$(top_srcdir)/ompi/mca/mtl/psm2/configure.m4 \
+	$(top_srcdir)/ompi/mca/op/aarch64/configure.m4 \
 	$(top_srcdir)/ompi/mca/op/avx/configure.m4 \
 	$(top_srcdir)/ompi/mca/osc/monitoring/configure.m4 \
 	$(top_srcdir)/ompi/mca/osc/portals4/configure.m4 \
@@ -503,6 +504,9 @@ MANIFEST_TOOL = @MANIFEST_TOOL@
 MCA_BUILD_OP_AVX2_FLAGS = @MCA_BUILD_OP_AVX2_FLAGS@
 MCA_BUILD_OP_AVX512_FLAGS = @MCA_BUILD_OP_AVX512_FLAGS@
 MCA_BUILD_OP_AVX_FLAGS = @MCA_BUILD_OP_AVX_FLAGS@
+MCA_BUILD_ompi_op_has_neon_fp_support = @MCA_BUILD_ompi_op_has_neon_fp_support@
+MCA_BUILD_ompi_op_has_neon_support = @MCA_BUILD_ompi_op_has_neon_support@
+MCA_BUILD_ompi_op_has_sve_support = @MCA_BUILD_ompi_op_has_sve_support@
 MCA_PROJECT_DIST_SUBDIRS = @MCA_PROJECT_DIST_SUBDIRS@
 MCA_PROJECT_SUBDIRS = @MCA_PROJECT_SUBDIRS@
 MCA_ompi_FRAMEWORKS = @MCA_ompi_FRAMEWORKS@
@@ -877,6 +881,7 @@ OMPI_FORTRAN_IGNORE_TKR_PREDECL = @OMPI_FORTRAN_IGNORE_TKR_PREDECL@
 OMPI_FORTRAN_IGNORE_TKR_TYPE = @OMPI_FORTRAN_IGNORE_TKR_TYPE@
 OMPI_FORTRAN_IKINDS = @OMPI_FORTRAN_IKINDS@
 OMPI_FORTRAN_MAX_ARRAY_RANK = @OMPI_FORTRAN_MAX_ARRAY_RANK@
+OMPI_FORTRAN_MODULEDIR = @OMPI_FORTRAN_MODULEDIR@
 OMPI_FORTRAN_MPIFH_LINK = @OMPI_FORTRAN_MPIFH_LINK@
 OMPI_FORTRAN_NEED_WRAPPER_ROUTINES = @OMPI_FORTRAN_NEED_WRAPPER_ROUTINES@
 OMPI_FORTRAN_PLAIN = @OMPI_FORTRAN_PLAIN@

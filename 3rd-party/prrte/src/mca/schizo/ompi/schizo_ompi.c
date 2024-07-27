@@ -18,8 +18,8 @@
  * Copyright (c) 2015      Research Organization for Information Science
  *                         and Technology (RIST). All rights reserved.
  * Copyright (c) 2018-2022 IBM Corporation.  All rights reserved.
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
- * Copyright (c) 2022      Triad National Security, LLC. All rights
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
+ * Copyright (c) 2022-2024 Triad National Security, LLC. All rights
  *                         reserved.
  * $COPYRIGHT$
  *
@@ -194,8 +194,10 @@ static struct option ompioptions[] = {
     PMIX_OPTION_DEFINE(PRTE_CLI_CONTINUOUS, PMIX_ARG_NONE),
     PMIX_OPTION_DEFINE("with-ft", PMIX_ARG_REQD),
 
-    /* mpiexec mandated form launch key parameters */
+    /* mpiexec mandated form launch key parameters - MPI 4.0 */
     PMIX_OPTION_DEFINE("initial-errhandler", PMIX_ARG_REQD),
+    /* mpiexec mandated form launch key parameters  - MPI 4.1*/
+    PMIX_OPTION_DEFINE("memory-alloc-kinds", PMIX_ARG_REQD),
 
     /* Display Commumication Protocol : MPI_Init */
     PMIX_OPTION_DEFINE("display-comm", PMIX_ARG_NONE),
@@ -422,7 +424,7 @@ static bool mcaoption(char *s)
 static int parse_cli(char **argv, pmix_cli_result_t *results,
                      bool silent)
 {
-    int rc, m, n;
+    int rc, n;
     pmix_cli_item_t *opt;
     char *p1, *p2;
     char **pargv;
@@ -475,7 +477,7 @@ static int parse_cli(char **argv, pmix_cli_result_t *results,
         /* check for single-dash errors */
         if ('-' != pargv[n][1] && 2 < strlen(pargv[n])) {
             /* we know this is incorrect */
-            char *p2 = pargv[n];
+            p2 = pargv[n];
             pmix_asprintf(&pargv[n], "-%s", p2);
             if(warn) {
                 caught_single_dashes[cur_caught_pos] = strdup(p2);
@@ -1568,6 +1570,15 @@ static int parse_env(char **srcenv, char ***dstenv,
 
     if (NULL != (opt = pmix_cmd_line_get_param(results, "initial-errhandler"))) {
         rc = check_cache(&cache, &cachevals, "mpi_initial_errhandler", opt->values[0]);
+        if (PRTE_SUCCESS != rc) {
+            PMIX_ARGV_FREE_COMPAT(cache);
+            PMIX_ARGV_FREE_COMPAT(cachevals);
+            return rc;
+        }
+    }
+
+    if (NULL != (opt = pmix_cmd_line_get_param(results, "memory-alloc-kinds"))) {
+        rc = check_cache(&cache, &cachevals, "mpi_memory_alloc_kinds", opt->values[0]);
         if (PRTE_SUCCESS != rc) {
             PMIX_ARGV_FREE_COMPAT(cache);
             PMIX_ARGV_FREE_COMPAT(cachevals);

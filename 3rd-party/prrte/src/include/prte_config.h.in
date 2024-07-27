@@ -467,6 +467,9 @@
 /* Whether user wants PTY support or not */
 #undef PRTE_ENABLE_PTY_SUPPORT
 
+/* If built from a git repo */
+#undef PRTE_GIT_REPO_BUILD
+
 /* Greek - alpha, beta, etc - release number of PMIx Reference Run-Time
    Environment */
 #undef PRTE_GREEK_VERSION

@@ -455,24 +455,6 @@
 
 # This makefile.am does not stand on its own - it is included from ompi/Makefile.am
 
-# Copyright (c) 2013 Oak Ridge National Laboratory.  All rights reserved.
-# Copyright (c) 2016      IBM Corporation.  All rights reserved.
-# $COPYRIGHT$
-#
-# Additional copyrights may follow
-#
-# $HEADER$
-#
-
-# Copyright (c) 2013 Oak Ridge National Laboratory.  All rights reserved.
-# Copyright (c) 2016      IBM Corporation.  All rights reserved.
-# $COPYRIGHT$
-#
-# Additional copyrights may follow
-#
-# $HEADER$
-#
-
 #
 # Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
 #                         University Research and Technology
@@ -842,6 +824,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/ompi/mca/mtl/ofi/configure.m4 \
 	$(top_srcdir)/ompi/mca/mtl/portals4/configure.m4 \
 	$(top_srcdir)/ompi/mca/mtl/psm2/configure.m4 \
+	$(top_srcdir)/ompi/mca/op/aarch64/configure.m4 \
 	$(top_srcdir)/ompi/mca/op/avx/configure.m4 \
 	$(top_srcdir)/ompi/mca/osc/monitoring/configure.m4 \
 	$(top_srcdir)/ompi/mca/osc/portals4/configure.m4 \
@@ -924,15 +907,11 @@ am__lib@OMPI_LIBMPI_NAME@_la_SOURCES_DIST = class/ompi_seq_tracker.h \
 	request/request_dbg.h request/grequestx.h runtime/mpiruntime.h \
 	runtime/params.h runtime/ompi_info_support.h \
 	runtime/ompi_spc.h runtime/ompi_rte.h win/win.h \
-	mpiext/mpiext.h patterns/net/netpatterns.h \
-	patterns/net/netpatterns_knomial_tree.h \
-	patterns/net/coll_ops.h patterns/comm/coll_ops.h \
-	patterns/comm/commpatterns.h mca/mca.h util/timings.h \
-	instance/instance.h class/ompi_seq_tracker.c \
-	attribute/attribute.c attribute/attribute_predefined.c \
-	communicator/comm_init.c communicator/comm.c \
-	communicator/comm_cid.c communicator/comm_request.c \
-	communicator/ft/comm_ft.c \
+	mpiext/mpiext.h mca/mca.h util/timings.h instance/instance.h \
+	class/ompi_seq_tracker.c attribute/attribute.c \
+	attribute/attribute_predefined.c communicator/comm_init.c \
+	communicator/comm.c communicator/comm_cid.c \
+	communicator/comm_request.c communicator/ft/comm_ft.c \
 	communicator/ft/comm_ft_reliable_bcast.c \
 	communicator/ft/comm_ft_propagator.c \
 	communicator/ft/comm_ft_detector.c \
@@ -951,12 +930,7 @@ am__lib@OMPI_LIBMPI_NAME@_la_SOURCES_DIST = class/ompi_seq_tracker.h \
 	runtime/ompi_mpi_finalize.c runtime/ompi_mpi_params.c \
 	runtime/ompi_mpi_preconnect.c runtime/ompi_info_support.c \
 	runtime/ompi_spc.c runtime/ompi_rte.c win/win.c \
-	mpiext/mpiext.c patterns/net/netpatterns_base.c \
-	patterns/net/netpatterns_multinomial_tree.c \
-	patterns/net/netpatterns_nary_tree.c \
-	patterns/net/netpatterns_knomial_tree.c \
-	patterns/comm/allreduce.c patterns/comm/allgather.c \
-	patterns/comm/bcast.c instance/instance.c
+	mpiext/mpiext.c instance/instance.c
 am__objects_1 =
 am__objects_2 = $(am__objects_1)
 am__dirstamp = $(am__leading_dot)dirstamp
@@ -989,12 +963,7 @@ am_lib@OMPI_LIBMPI_NAME@_la_OBJECTS = $(am__objects_2) \
 	runtime/ompi_mpi_finalize.lo runtime/ompi_mpi_params.lo \
 	runtime/ompi_mpi_preconnect.lo runtime/ompi_info_support.lo \
 	runtime/ompi_spc.lo runtime/ompi_rte.lo win/win.lo \
-	mpiext/mpiext.lo patterns/net/netpatterns_base.lo \
-	patterns/net/netpatterns_multinomial_tree.lo \
-	patterns/net/netpatterns_nary_tree.lo \
-	patterns/net/netpatterns_knomial_tree.lo \
-	patterns/comm/allreduce.lo patterns/comm/allgather.lo \
-	patterns/comm/bcast.lo instance/instance.lo
+	mpiext/mpiext.lo instance/instance.lo
 lib@OMPI_LIBMPI_NAME@_la_OBJECTS =  \
 	$(am_lib@OMPI_LIBMPI_NAME@_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -1047,13 +1016,6 @@ am__depfiles_remade = attribute/$(DEPDIR)/attribute.Plo \
 	instance/$(DEPDIR)/instance.Plo \
 	interlib/$(DEPDIR)/interlib.Plo message/$(DEPDIR)/message.Plo \
 	mpiext/$(DEPDIR)/mpiext.Plo op/$(DEPDIR)/op.Plo \
-	patterns/comm/$(DEPDIR)/allgather.Plo \
-	patterns/comm/$(DEPDIR)/allreduce.Plo \
-	patterns/comm/$(DEPDIR)/bcast.Plo \
-	patterns/net/$(DEPDIR)/netpatterns_base.Plo \
-	patterns/net/$(DEPDIR)/netpatterns_knomial_tree.Plo \
-	patterns/net/$(DEPDIR)/netpatterns_multinomial_tree.Plo \
-	patterns/net/$(DEPDIR)/netpatterns_nary_tree.Plo \
 	peruse/$(DEPDIR)/peruse.Plo peruse/$(DEPDIR)/peruse_module.Plo \
 	proc/$(DEPDIR)/proc.Plo request/$(DEPDIR)/grequest.Plo \
 	request/$(DEPDIR)/grequestx.Plo request/$(DEPDIR)/req_ft.Plo \
@@ -1115,11 +1077,7 @@ am__nobase_ompi_HEADERS_DIST = class/ompi_seq_tracker.h \
 	request/request_dbg.h request/grequestx.h runtime/mpiruntime.h \
 	runtime/params.h runtime/ompi_info_support.h \
 	runtime/ompi_spc.h runtime/ompi_rte.h win/win.h \
-	mpiext/mpiext.h patterns/net/netpatterns.h \
-	patterns/net/netpatterns_knomial_tree.h \
-	patterns/net/coll_ops.h patterns/comm/coll_ops.h \
-	patterns/comm/commpatterns.h mca/mca.h util/timings.h \
-	instance/instance.h
+	mpiext/mpiext.h mca/mca.h util/timings.h instance/instance.h
 HEADERS = $(include_HEADERS) $(nobase_ompi_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -1154,12 +1112,11 @@ am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/instance/Makefile.am $(srcdir)/interlib/Makefile.am \
 	$(srcdir)/mca/Makefile.am $(srcdir)/message/Makefile.am \
 	$(srcdir)/mpi/Makefile.am $(srcdir)/mpiext/Makefile.am \
-	$(srcdir)/op/Makefile.am $(srcdir)/patterns/comm/Makefile.am \
-	$(srcdir)/patterns/net/Makefile.am \
-	$(srcdir)/peruse/Makefile.am $(srcdir)/proc/Makefile.am \
-	$(srcdir)/request/Makefile.am $(srcdir)/runtime/Makefile.am \
-	$(srcdir)/tools/Makefile.am $(srcdir)/util/Makefile.am \
-	$(srcdir)/win/Makefile.am $(top_srcdir)/config/depcomp
+	$(srcdir)/op/Makefile.am $(srcdir)/peruse/Makefile.am \
+	$(srcdir)/proc/Makefile.am $(srcdir)/request/Makefile.am \
+	$(srcdir)/runtime/Makefile.am $(srcdir)/tools/Makefile.am \
+	$(srcdir)/util/Makefile.am $(srcdir)/win/Makefile.am \
+	$(top_srcdir)/config/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -1267,6 +1224,9 @@ MANIFEST_TOOL = @MANIFEST_TOOL@
 MCA_BUILD_OP_AVX2_FLAGS = @MCA_BUILD_OP_AVX2_FLAGS@
 MCA_BUILD_OP_AVX512_FLAGS = @MCA_BUILD_OP_AVX512_FLAGS@
 MCA_BUILD_OP_AVX_FLAGS = @MCA_BUILD_OP_AVX_FLAGS@
+MCA_BUILD_ompi_op_has_neon_fp_support = @MCA_BUILD_ompi_op_has_neon_fp_support@
+MCA_BUILD_ompi_op_has_neon_support = @MCA_BUILD_ompi_op_has_neon_support@
+MCA_BUILD_ompi_op_has_sve_support = @MCA_BUILD_ompi_op_has_sve_support@
 MCA_PROJECT_DIST_SUBDIRS = @MCA_PROJECT_DIST_SUBDIRS@
 MCA_PROJECT_SUBDIRS = @MCA_PROJECT_SUBDIRS@
 MCA_ompi_FRAMEWORKS = @MCA_ompi_FRAMEWORKS@
@@ -1641,6 +1601,7 @@ OMPI_FORTRAN_IGNORE_TKR_PREDECL = @OMPI_FORTRAN_IGNORE_TKR_PREDECL@
 OMPI_FORTRAN_IGNORE_TKR_TYPE = @OMPI_FORTRAN_IGNORE_TKR_TYPE@
 OMPI_FORTRAN_IKINDS = @OMPI_FORTRAN_IKINDS@
 OMPI_FORTRAN_MAX_ARRAY_RANK = @OMPI_FORTRAN_MAX_ARRAY_RANK@
+OMPI_FORTRAN_MODULEDIR = @OMPI_FORTRAN_MODULEDIR@
 OMPI_FORTRAN_MPIFH_LINK = @OMPI_FORTRAN_MPIFH_LINK@
 OMPI_FORTRAN_NEED_WRAPPER_ROUTINES = @OMPI_FORTRAN_NEED_WRAPPER_ROUTINES@
 OMPI_FORTRAN_PLAIN = @OMPI_FORTRAN_PLAIN@
@@ -2185,12 +2146,7 @@ lib@OMPI_LIBMPI_NAME@_la_SOURCES = $(headers) class/ompi_seq_tracker.c \
 	runtime/ompi_mpi_params.c runtime/ompi_mpi_preconnect.c \
 	runtime/ompi_info_support.c runtime/ompi_spc.c \
 	runtime/ompi_rte.c win/win.c mpiext/mpiext.c \
-	patterns/net/netpatterns_base.c \
-	patterns/net/netpatterns_multinomial_tree.c \
-	patterns/net/netpatterns_nary_tree.c \
-	patterns/net/netpatterns_knomial_tree.c \
-	patterns/comm/allreduce.c patterns/comm/allgather.c \
-	patterns/comm/bcast.c instance/instance.c
+	instance/instance.c
 lib@OMPI_LIBMPI_NAME@_la_LIBADD = datatype/libdatatype.la \
 	debuggers/libdebuggers.la mpi/c/libmpi_c.la \
 	mpi/tool/libmpi_mpit.la $(c_mpi_lib) $(c_pmpi_lib) \
@@ -2219,11 +2175,7 @@ headers = class/ompi_seq_tracker.h attribute/attribute.h \
 	request/request_dbg.h $(am__append_5) runtime/mpiruntime.h \
 	runtime/params.h runtime/ompi_info_support.h \
 	runtime/ompi_spc.h runtime/ompi_rte.h win/win.h \
-	mpiext/mpiext.h patterns/net/netpatterns.h \
-	patterns/net/netpatterns_knomial_tree.h \
-	patterns/net/coll_ops.h patterns/comm/coll_ops.h \
-	patterns/comm/commpatterns.h mca/mca.h util/timings.h \
-	instance/instance.h
+	mpiext/mpiext.h mca/mca.h util/timings.h instance/instance.h
 noinst_LTLIBRARIES = 
 include_HEADERS = $(am__append_3)
 dist_ompidata_DATA = communicator/help-comm.txt dpm/help-dpm.txt \
@@ -2240,7 +2192,7 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/class/Makefile.am $(srcdir)/attribute/Makefile.am $(srcdir)/communicator/Makefile.am $(srcdir)/dpm/Makefile.am $(srcdir)/errhandler/Makefile.am $(srcdir)/file/Makefile.am $(srcdir)/group/Makefile.am $(srcdir)/info/Makefile.am $(srcdir)/interlib/Makefile.am $(srcdir)/message/Makefile.am $(srcdir)/op/Makefile.am $(srcdir)/peruse/Makefile.am $(srcdir)/proc/Makefile.am $(srcdir)/request/Makefile.am $(srcdir)/runtime/Makefile.am $(srcdir)/win/Makefile.am $(srcdir)/tools/Makefile.am $(srcdir)/mpi/Makefile.am $(srcdir)/mpiext/Makefile.am $(srcdir)/patterns/net/Makefile.am $(srcdir)/patterns/comm/Makefile.am $(srcdir)/mca/Makefile.am $(srcdir)/util/Makefile.am $(srcdir)/instance/Makefile.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/class/Makefile.am $(srcdir)/attribute/Makefile.am $(srcdir)/communicator/Makefile.am $(srcdir)/dpm/Makefile.am $(srcdir)/errhandler/Makefile.am $(srcdir)/file/Makefile.am $(srcdir)/group/Makefile.am $(srcdir)/info/Makefile.am $(srcdir)/interlib/Makefile.am $(srcdir)/message/Makefile.am $(srcdir)/op/Makefile.am $(srcdir)/peruse/Makefile.am $(srcdir)/proc/Makefile.am $(srcdir)/request/Makefile.am $(srcdir)/runtime/Makefile.am $(srcdir)/win/Makefile.am $(srcdir)/tools/Makefile.am $(srcdir)/mpi/Makefile.am $(srcdir)/mpiext/Makefile.am $(srcdir)/mca/Makefile.am $(srcdir)/util/Makefile.am $(srcdir)/instance/Makefile.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -2260,7 +2212,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__maybe_remake_depfiles)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__maybe_remake_depfiles);; \
 	esac;
-$(srcdir)/class/Makefile.am $(srcdir)/attribute/Makefile.am $(srcdir)/communicator/Makefile.am $(srcdir)/dpm/Makefile.am $(srcdir)/errhandler/Makefile.am $(srcdir)/file/Makefile.am $(srcdir)/group/Makefile.am $(srcdir)/info/Makefile.am $(srcdir)/interlib/Makefile.am $(srcdir)/message/Makefile.am $(srcdir)/op/Makefile.am $(srcdir)/peruse/Makefile.am $(srcdir)/proc/Makefile.am $(srcdir)/request/Makefile.am $(srcdir)/runtime/Makefile.am $(srcdir)/win/Makefile.am $(srcdir)/tools/Makefile.am $(srcdir)/mpi/Makefile.am $(srcdir)/mpiext/Makefile.am $(srcdir)/patterns/net/Makefile.am $(srcdir)/patterns/comm/Makefile.am $(srcdir)/mca/Makefile.am $(srcdir)/util/Makefile.am $(srcdir)/instance/Makefile.am $(am__empty):
+$(srcdir)/class/Makefile.am $(srcdir)/attribute/Makefile.am $(srcdir)/communicator/Makefile.am $(srcdir)/dpm/Makefile.am $(srcdir)/errhandler/Makefile.am $(srcdir)/file/Makefile.am $(srcdir)/group/Makefile.am $(srcdir)/info/Makefile.am $(srcdir)/interlib/Makefile.am $(srcdir)/message/Makefile.am $(srcdir)/op/Makefile.am $(srcdir)/peruse/Makefile.am $(srcdir)/proc/Makefile.am $(srcdir)/request/Makefile.am $(srcdir)/runtime/Makefile.am $(srcdir)/win/Makefile.am $(srcdir)/tools/Makefile.am $(srcdir)/mpi/Makefile.am $(srcdir)/mpiext/Makefile.am $(srcdir)/mca/Makefile.am $(srcdir)/util/Makefile.am $(srcdir)/instance/Makefile.am $(am__empty):
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -2519,34 +2471,6 @@ mpiext/$(DEPDIR)/$(am__dirstamp):
 	@: > mpiext/$(DEPDIR)/$(am__dirstamp)
 mpiext/mpiext.lo: mpiext/$(am__dirstamp) \
 	mpiext/$(DEPDIR)/$(am__dirstamp)
-patterns/net/$(am__dirstamp):
-	@$(MKDIR_P) patterns/net
-	@: > patterns/net/$(am__dirstamp)
-patterns/net/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) patterns/net/$(DEPDIR)
-	@: > patterns/net/$(DEPDIR)/$(am__dirstamp)
-patterns/net/netpatterns_base.lo: patterns/net/$(am__dirstamp) \
-	patterns/net/$(DEPDIR)/$(am__dirstamp)
-patterns/net/netpatterns_multinomial_tree.lo:  \
-	patterns/net/$(am__dirstamp) \
-	patterns/net/$(DEPDIR)/$(am__dirstamp)
-patterns/net/netpatterns_nary_tree.lo: patterns/net/$(am__dirstamp) \
-	patterns/net/$(DEPDIR)/$(am__dirstamp)
-patterns/net/netpatterns_knomial_tree.lo:  \
-	patterns/net/$(am__dirstamp) \
-	patterns/net/$(DEPDIR)/$(am__dirstamp)
-patterns/comm/$(am__dirstamp):
-	@$(MKDIR_P) patterns/comm
-	@: > patterns/comm/$(am__dirstamp)
-patterns/comm/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) patterns/comm/$(DEPDIR)
-	@: > patterns/comm/$(DEPDIR)/$(am__dirstamp)
-patterns/comm/allreduce.lo: patterns/comm/$(am__dirstamp) \
-	patterns/comm/$(DEPDIR)/$(am__dirstamp)
-patterns/comm/allgather.lo: patterns/comm/$(am__dirstamp) \
-	patterns/comm/$(DEPDIR)/$(am__dirstamp)
-patterns/comm/bcast.lo: patterns/comm/$(am__dirstamp) \
-	patterns/comm/$(DEPDIR)/$(am__dirstamp)
 instance/$(am__dirstamp):
 	@$(MKDIR_P) instance
 	@: > instance/$(am__dirstamp)
@@ -2589,10 +2513,6 @@ mostlyclean-compile:
 	-rm -f mpiext/*.lo
 	-rm -f op/*.$(OBJEXT)
 	-rm -f op/*.lo
-	-rm -f patterns/comm/*.$(OBJEXT)
-	-rm -f patterns/comm/*.lo
-	-rm -f patterns/net/*.$(OBJEXT)
-	-rm -f patterns/net/*.lo
 	-rm -f peruse/*.$(OBJEXT)
 	-rm -f peruse/*.lo
 	-rm -f proc/*.$(OBJEXT)
@@ -2639,13 +2559,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@message/$(DEPDIR)/message.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@mpiext/$(DEPDIR)/mpiext.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@op/$(DEPDIR)/op.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/comm/$(DEPDIR)/allgather.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/comm/$(DEPDIR)/allreduce.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/comm/$(DEPDIR)/bcast.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/net/$(DEPDIR)/netpatterns_base.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/net/$(DEPDIR)/netpatterns_knomial_tree.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/net/$(DEPDIR)/netpatterns_multinomial_tree.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@patterns/net/$(DEPDIR)/netpatterns_nary_tree.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@peruse/$(DEPDIR)/peruse.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@peruse/$(DEPDIR)/peruse_module.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@proc/$(DEPDIR)/proc.Plo@am__quote@ # am--include-marker
@@ -2715,8 +2628,6 @@ clean-libtool:
 	-rm -rf message/.libs message/_libs
 	-rm -rf mpiext/.libs mpiext/_libs
 	-rm -rf op/.libs op/_libs
-	-rm -rf patterns/comm/.libs patterns/comm/_libs
-	-rm -rf patterns/net/.libs patterns/net/_libs
 	-rm -rf peruse/.libs peruse/_libs
 	-rm -rf proc/.libs proc/_libs
 	-rm -rf request/.libs request/_libs
@@ -3008,10 +2919,6 @@ distclean-generic:
 	-rm -f mpiext/$(am__dirstamp)
 	-rm -f op/$(DEPDIR)/$(am__dirstamp)
 	-rm -f op/$(am__dirstamp)
-	-rm -f patterns/comm/$(DEPDIR)/$(am__dirstamp)
-	-rm -f patterns/comm/$(am__dirstamp)
-	-rm -f patterns/net/$(DEPDIR)/$(am__dirstamp)
-	-rm -f patterns/net/$(am__dirstamp)
 	-rm -f peruse/$(DEPDIR)/$(am__dirstamp)
 	-rm -f peruse/$(am__dirstamp)
 	-rm -f proc/$(DEPDIR)/$(am__dirstamp)
@@ -3064,13 +2971,6 @@ distclean: distclean-recursive
 	-rm -f message/$(DEPDIR)/message.Plo
 	-rm -f mpiext/$(DEPDIR)/mpiext.Plo
 	-rm -f op/$(DEPDIR)/op.Plo
-	-rm -f patterns/comm/$(DEPDIR)/allgather.Plo
-	-rm -f patterns/comm/$(DEPDIR)/allreduce.Plo
-	-rm -f patterns/comm/$(DEPDIR)/bcast.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_base.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_knomial_tree.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_multinomial_tree.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_nary_tree.Plo
 	-rm -f peruse/$(DEPDIR)/peruse.Plo
 	-rm -f peruse/$(DEPDIR)/peruse_module.Plo
 	-rm -f proc/$(DEPDIR)/proc.Plo
@@ -3168,13 +3068,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f message/$(DEPDIR)/message.Plo
 	-rm -f mpiext/$(DEPDIR)/mpiext.Plo
 	-rm -f op/$(DEPDIR)/op.Plo
-	-rm -f patterns/comm/$(DEPDIR)/allgather.Plo
-	-rm -f patterns/comm/$(DEPDIR)/allreduce.Plo
-	-rm -f patterns/comm/$(DEPDIR)/bcast.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_base.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_knomial_tree.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_multinomial_tree.Plo
-	-rm -f patterns/net/$(DEPDIR)/netpatterns_nary_tree.Plo
 	-rm -f peruse/$(DEPDIR)/peruse.Plo
 	-rm -f peruse/$(DEPDIR)/peruse_module.Plo
 	-rm -f proc/$(DEPDIR)/proc.Plo

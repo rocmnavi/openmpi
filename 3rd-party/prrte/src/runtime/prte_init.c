@@ -18,7 +18,7 @@
  * Copyright (c) 2014-2016 Research Organization for Information Science
  *                         and Technology (RIST). All rights reserved.
  *
- * Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+ * Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
  * $COPYRIGHT$
  *
  * Additional copyrights may follow
@@ -37,6 +37,9 @@
 #endif
 #ifdef HAVE_SYS_STAT_H
 #    include <sys/stat.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include "src/util/error.h"
@@ -110,11 +113,6 @@ pmix_nspace_t prte_nspace_wildcard = {0};
 static bool util_initialized = false;
 static bool min_initialized = false;
 
-#if PRTE_CC_USE_PRAGMA_IDENT
-#    pragma ident PRTE_IDENT_STRING
-#elif PRTE_CC_USE_IDENT
-#    ident PRTE_IDENT_STRING
-#endif
 const char prte_version_string[] = PRTE_IDENT_STRING;
 
 static bool check_exist(char *path)
@@ -127,15 +125,52 @@ static bool check_exist(char *path)
     return false;
 }
 
+static void print_error(unsigned major,
+                        unsigned minor,
+                        unsigned release)
+{
+    fprintf(stderr, "************************************************\n");
+    fprintf(stderr, "We have detected that the runtime version\n");
+    fprintf(stderr, "of the PMIx library we were given is binary\n");
+    fprintf(stderr, "incompatible with the version we were built against:\n\n");
+    fprintf(stderr, "    Runtime: 0x%x%02x%02x\n", major, minor, release);
+    fprintf(stderr, "    Build:   0x%0x\n\n", PMIX_NUMERIC_VERSION);
+    fprintf(stderr, "Please update your LD_LIBRARY_PATH to point\n");
+    fprintf(stderr, "us to the same PMIx version used to build PRRTE.\n");
+    fprintf(stderr, "************************************************\n");
+}
+
 int prte_init_minimum(void)
 {
     int ret;
     char *path = NULL;
+    const char *rvers;
+    char token[100];
+    unsigned int major, minor, release;
 
     if (min_initialized) {
         return PRTE_SUCCESS;
     }
     min_initialized = true;
+
+    /* check to see if the version of PMIx we were given in the
+     * library path matches the version we were built against.
+     * Because we are using PMIx internals, we cannot support
+     * cross version operations from inside of PRRTE.
+     */
+    rvers = PMIx_Get_version();
+    ret = sscanf(rvers, "%s %u.%u.%u", token, &major, &minor, &release);
+
+    /* check the version triplet - we know that version
+     * 5 and above are not runtime compatible with version
+     * 4 and below. Since PRRTE has a minimum PMIx requirement
+     * in the v4.x series, we only need to check v4 vs 5
+     * and above */
+    if ((PMIX_VERSION_MAJOR > 4 && 4 == major) ||
+        (PMIX_VERSION_MAJOR == 4 && 5 <= major)) {
+        print_error(major, minor, release);
+        return PRTE_ERR_SILENT;
+    }
 
     /* carry across the toolname */
     pmix_tool_basename = prte_tool_basename;
@@ -183,7 +218,6 @@ int prte_init_util(prte_proc_type_t flags)
 {
     int ret;
     char *error = NULL;
-    char *path = NULL;
 
     if (util_initialized) {
         return PRTE_SUCCESS;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2. Getting help &mdash; Open MPI 5.0.3 documentation</title>
+  <title>2. Getting help &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -195,7 +195,7 @@ mkdir<span class="w"> </span><span class="nv">$dir</span>
 <span class="c1"># Fill in the options you want to pass to configure here</span>
 <span class="nv">options</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
 ./configure<span class="w"> </span><span class="nv">$options</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span><span class="nv">$dir</span>/config.out
-tar<span class="w"> </span>-cf<span class="w"> </span>-<span class="w"> </span><span class="sb">`</span>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span>config.log<span class="sb">`</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>-x<span class="w"> </span>-C<span class="w"> </span><span class="nv">$dir</span><span class="w"> </span>-
+tar<span class="w"> </span>-cf<span class="w"> </span>-<span class="w"> </span><span class="sb">`</span>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span>config.log<span class="sb">`</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>-x<span class="w"> </span>-C<span class="w"> </span><span class="nv">$dir</span>
 
 <span class="c1"># Build and install Open MPI</span>
 make<span class="w"> </span><span class="nv">V</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>all<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w">          </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span><span class="nv">$dir</span>/make.out

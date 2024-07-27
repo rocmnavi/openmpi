@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.15. Advice for packagers &mdash; Open MPI 5.0.3 documentation</title>
+  <title>4.15. Advice for packagers &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -195,7 +195,7 @@ statically included in core libraries (regardless of whether those
 libraries are built as shared or static libraries).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As of Open MPI v5.0.3, <code class="docutils literal notranslate"><span class="pre">configure</span></code>’s global default is
+<p>As of Open MPI v5.0.5, <code class="docutils literal notranslate"><span class="pre">configure</span></code>’s global default is
 to build all components as static (i.e., part of the Open
 MPI core libraries, not as DSOs).  Prior to Open MPI v5.0.0,
 the global default behavior was to build most components as
@@ -255,7 +255,7 @@ scale.</p>
 </div>
 <div class="section" id="direct-controls-for-building-components-as-dsos-or-not">
 <h3><span class="section-number">4.15.3.3. </span>Direct controls for building components as DSOs or not<a class="headerlink" href="#direct-controls-for-building-components-as-dsos-or-not" title="Permalink to this heading"></a></h3>
-<p>Open MPI v5.0.3 has two <code class="docutils literal notranslate"><span class="pre">configure</span></code>-time defaults regarding the
+<p>Open MPI v5.0.5 has two <code class="docutils literal notranslate"><span class="pre">configure</span></code>-time defaults regarding the
 treatment of components that may be of interest to packagers:</p>
 <ol class="arabic">
 <li><p>Open MPI’s libraries default to building as shared libraries
@@ -337,7 +337,7 @@ flattened dependencies.  There is no performance impact associated
 with having — or not having — the flattened dependencies.
 We mention this situation here in the documentation simply because it
 surprised some Open MPI downstream package managers to see that
-<a class="reference internal" href="../man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> in Open MPI v5.0.3 had more
+<a class="reference internal" href="../man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> in Open MPI v5.0.5 had more
 shared library dependencies than it did in prior Open MPI releases.</p>
 <p>If packagers want <a class="reference internal" href="../man-openmpi/man1/ompi_info.1.html#man1-ompi-info"><span class="std std-ref">ompi_info(1)</span></a> to not have
 these flattened dependencies, use either of the following mechanisms:</p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2.6. CUDA &mdash; Open MPI 5.0.3 documentation</title>
+  <title>11.2.6. CUDA &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -69,20 +69,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#what-kind-of-cuda-support-exists-in-open-mpi">11.2.6.5. What kind of CUDA support exists in Open MPI?</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#psm2-support-for-cuda">11.2.6.6. PSM2 support for CUDA</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ofi-support-for-cuda">11.2.6.7. OFI support for CUDA</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-can-i-tell-if-open-mpi-was-built-with-cuda-support">11.2.6.8. How can I tell if Open MPI was built with CUDA support?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#can-i-get-additional-cuda-debug-level-information-at-run-time">11.2.6.9. Can I get additional CUDA debug-level information at run-time?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#numa-node-issues">11.2.6.10. NUMA Node Issues</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-do-i-develop-cuda-aware-open-mpi-applications">11.2.6.11. How do I develop CUDA-aware Open MPI applications?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-work-with-cuda-aware">11.2.6.12. Which MPI APIs work with CUDA-aware?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-do-not-work-with-cuda-aware">11.2.6.13. Which MPI APIs do NOT work with CUDA-aware?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-do-i-use-cuda-aware-ucx-for-open-mpi">11.2.6.14. How do I use CUDA-aware UCX for Open MPI?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-work-with-cuda-aware-ucx">11.2.6.15. Which MPI APIs work with CUDA-aware UCX?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-do-not-work-with-cuda-aware-ucx">11.2.6.16. Which MPI APIs do NOT work with CUDA-aware UCX?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#can-i-tell-at-compile-time-or-runtime-whether-i-have-cuda-aware-support">11.2.6.17. Can I tell at compile time or runtime whether I have CUDA-aware support?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-do-i-limit-how-much-cuda-ipc-memory-is-held-in-the-registration-cache">11.2.6.18. How do I limit how much CUDA IPC memory is held in the registration cache?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path">11.2.6.19. What are some guidelines for using CUDA and Open MPI with Omni-Path?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#when-do-i-need-to-select-a-cuda-device">11.2.6.20. When do I need to select a CUDA device?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-do-i-enable-cuda-support-in-hcoll-collective-component">11.2.6.21. How do I enable CUDA support in HCOLL collective component</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#can-i-get-additional-cuda-debug-level-information-at-run-time">11.2.6.8. Can I get additional CUDA debug-level information at run-time?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numa-node-issues">11.2.6.9. NUMA Node Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-do-i-develop-cuda-aware-open-mpi-applications">11.2.6.10. How do I develop CUDA-aware Open MPI applications?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-work-with-cuda-aware">11.2.6.11. Which MPI APIs work with CUDA-aware?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-do-not-work-with-cuda-aware">11.2.6.12. Which MPI APIs do NOT work with CUDA-aware?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-do-i-use-cuda-aware-ucx-for-open-mpi">11.2.6.13. How do I use CUDA-aware UCX for Open MPI?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-work-with-cuda-aware-ucx">11.2.6.14. Which MPI APIs work with CUDA-aware UCX?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#which-mpi-apis-do-not-work-with-cuda-aware-ucx">11.2.6.15. Which MPI APIs do NOT work with CUDA-aware UCX?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#can-i-tell-at-compile-time-or-runtime-whether-i-have-cuda-aware-support">11.2.6.16. Can I tell at compile time or runtime whether I have CUDA-aware support?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-do-i-limit-how-much-cuda-ipc-memory-is-held-in-the-registration-cache">11.2.6.17. How do I limit how much CUDA IPC memory is held in the registration cache?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path">11.2.6.18. What are some guidelines for using CUDA and Open MPI with Omni-Path?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#when-do-i-need-to-select-a-cuda-device">11.2.6.19. When do I need to select a CUDA device?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-do-i-enable-cuda-support-in-hcoll-collective-component">11.2.6.20. How do I enable CUDA support in HCOLL collective component</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="rocm.html">11.2.7. ROCm</a></li>
@@ -95,8 +94,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../large-clusters/index.html">11.7. Large Clusters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../affinity.html">11.8. Processor and memory affinity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mpi-io/index.html">11.9. MPI-IO tuning options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html">11.10. Benchmarking Open MPI applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../heterogeneity.html">11.11. Building heterogeneous MPI applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coll-tuned.html">11.10. Tuning Collectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html">11.11. Benchmarking Open MPI applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heterogeneity.html">11.12. Building heterogeneous MPI applications</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../app-debug/index.html">12. Debugging Open MPI Parallel Applications</a></li>
@@ -202,10 +202,13 @@ shell$<span class="w"> </span>./configure<span class="w"> </span>--with-cuda<spa
 <hr class="docutils" />
 <div class="section" id="how-do-i-verify-that-open-mpi-has-been-built-with-cuda-support">
 <h2><span class="section-number">11.2.6.2. </span>How do I verify that Open MPI has been built with CUDA support?<a class="headerlink" href="#how-do-i-verify-that-open-mpi-has-been-built-with-cuda-support" title="Permalink to this heading"></a></h2>
-<p>Verify that Open MPI has been built with cuda using <code class="docutils literal notranslate"><span class="pre">ompi_info</span></code></p>
+<p>Verify that Open MPI has been built with cuda using <code class="docutils literal notranslate"><span class="pre">ompi_info</span></code>
+with one of the following commands.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use ompi_info to verify cuda support in Open MPI</span>
-shell$<span class="w"> </span>./ompi_info<span class="w"> </span><span class="p">|</span>grep<span class="w"> </span><span class="s2">&quot;MPI extensions&quot;</span>
+shell$<span class="w"> </span>ompi_info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;MPI extensions&quot;</span>
 <span class="w">       </span>MPI<span class="w"> </span>extensions:<span class="w"> </span>affinity,<span class="w"> </span>cuda,<span class="w"> </span>pcollreq
+shell$<span class="w"> </span>ompi_info<span class="w"> </span>--parsable<span class="w"> </span>--all<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mpi_built_with_cuda_support:value
+<span class="w">       </span>mca:mpi:base:param:mpi_built_with_cuda_support:value:true
 </pre></div>
 </div>
 </div>
@@ -298,17 +301,8 @@ be copied to host buffers before being transferred through
 Libfabric’s API.</p>
 </div>
 <hr class="docutils" />
-<div class="section" id="how-can-i-tell-if-open-mpi-was-built-with-cuda-support">
-<h2><span class="section-number">11.2.6.8. </span>How can I tell if Open MPI was built with CUDA support?<a class="headerlink" href="#how-can-i-tell-if-open-mpi-was-built-with-cuda-support" title="Permalink to this heading"></a></h2>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">ompi_info</span></code> command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ompi_info --parsable --all | grep mpi_built_with_cuda_support:value
-mca:mpi:base:param:mpi_built_with_cuda_support:value:true
-</pre></div>
-</div>
-</div>
-<hr class="docutils" />
 <div class="section" id="can-i-get-additional-cuda-debug-level-information-at-run-time">
-<h2><span class="section-number">11.2.6.9. </span>Can I get additional CUDA debug-level information at run-time?<a class="headerlink" href="#can-i-get-additional-cuda-debug-level-information-at-run-time" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.8. </span>Can I get additional CUDA debug-level information at run-time?<a class="headerlink" href="#can-i-get-additional-cuda-debug-level-information-at-run-time" title="Permalink to this heading"></a></h2>
 <p>Yes, by enabling some vebosity flags.</p>
 <ul>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">opal_cuda_verbose</span></code> parameter has only one level of verbosity:</p>
@@ -352,7 +346,7 @@ between two GPUs.</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="numa-node-issues">
-<span id="faq-cuda-mpi-cuda-numa-issues-label"></span><h2><span class="section-number">11.2.6.10. </span>NUMA Node Issues<a class="headerlink" href="#numa-node-issues" title="Permalink to this heading"></a></h2>
+<span id="faq-cuda-mpi-cuda-numa-issues-label"></span><h2><span class="section-number">11.2.6.9. </span>NUMA Node Issues<a class="headerlink" href="#numa-node-issues" title="Permalink to this heading"></a></h2>
 <p>When running on a node that has multiple GPUs, you may want to select
 the GPU that is closest to the NUMA node on which your process is
 running.  One way to do this is to make use of the <code class="docutils literal notranslate"><span class="pre">hwloc</span></code> library.
@@ -477,7 +471,7 @@ GPUs that are the same distance away.  This is dependent on having
 </div>
 <hr class="docutils" />
 <div class="section" id="how-do-i-develop-cuda-aware-open-mpi-applications">
-<h2><span class="section-number">11.2.6.11. </span>How do I develop CUDA-aware Open MPI applications?<a class="headerlink" href="#how-do-i-develop-cuda-aware-open-mpi-applications" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.10. </span>How do I develop CUDA-aware Open MPI applications?<a class="headerlink" href="#how-do-i-develop-cuda-aware-open-mpi-applications" title="Permalink to this heading"></a></h2>
 <p>Developing CUDA-aware applications is a complex topic, and beyond the
 scope of this document. CUDA-aware applications often have to take
 machine-specific considerations into account, including the number of
@@ -494,7 +488,7 @@ example of how to write CUDA-aware MPI applications.</p>
 <hr class="docutils" />
 </div>
 <div class="section" id="which-mpi-apis-work-with-cuda-aware">
-<span id="faq-cuda-mpi-apis-cuda-label"></span><h2><span class="section-number">11.2.6.12. </span>Which MPI APIs work with CUDA-aware?<a class="headerlink" href="#which-mpi-apis-work-with-cuda-aware" title="Permalink to this heading"></a></h2>
+<span id="faq-cuda-mpi-apis-cuda-label"></span><h2><span class="section-number">11.2.6.11. </span>Which MPI APIs work with CUDA-aware?<a class="headerlink" href="#which-mpi-apis-work-with-cuda-aware" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>MPI_Allgather</p></li>
 <li><p>MPI_Allgatherv</p></li>
@@ -535,7 +529,7 @@ example of how to write CUDA-aware MPI applications.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="which-mpi-apis-do-not-work-with-cuda-aware">
-<h2><span class="section-number">11.2.6.13. </span>Which MPI APIs do NOT work with CUDA-aware?<a class="headerlink" href="#which-mpi-apis-do-not-work-with-cuda-aware" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.12. </span>Which MPI APIs do NOT work with CUDA-aware?<a class="headerlink" href="#which-mpi-apis-do-not-work-with-cuda-aware" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>MPI_Accumulate</p></li>
 <li><p>MPI_Compare_and_swap</p></li>
@@ -555,7 +549,7 @@ example of how to write CUDA-aware MPI applications.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="how-do-i-use-cuda-aware-ucx-for-open-mpi">
-<h2><span class="section-number">11.2.6.14. </span>How do I use CUDA-aware UCX for Open MPI?<a class="headerlink" href="#how-do-i-use-cuda-aware-ucx-for-open-mpi" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.13. </span>How do I use CUDA-aware UCX for Open MPI?<a class="headerlink" href="#how-do-i-use-cuda-aware-ucx-for-open-mpi" title="Permalink to this heading"></a></h2>
 <p>Example of running <code class="docutils literal notranslate"><span class="pre">osu_latency</span></code> from the <a class="reference external" href="https://mvapich.cse.ohio-state.edu/benchmarks">OSU benchmarks</a> with CUDA buffers
 using Open MPI and UCX CUDA support:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ mpirun -n 2 --mca pml ucx \
@@ -565,7 +559,7 @@ using Open MPI and UCX CUDA support:</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="which-mpi-apis-work-with-cuda-aware-ucx">
-<h2><span class="section-number">11.2.6.15. </span>Which MPI APIs work with CUDA-aware UCX?<a class="headerlink" href="#which-mpi-apis-work-with-cuda-aware-ucx" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.14. </span>Which MPI APIs work with CUDA-aware UCX?<a class="headerlink" href="#which-mpi-apis-work-with-cuda-aware-ucx" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>MPI_Send</p></li>
 <li><p>MPI_Bsend</p></li>
@@ -610,7 +604,7 @@ using Open MPI and UCX CUDA support:</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="which-mpi-apis-do-not-work-with-cuda-aware-ucx">
-<h2><span class="section-number">11.2.6.16. </span>Which MPI APIs do NOT work with CUDA-aware UCX?<a class="headerlink" href="#which-mpi-apis-do-not-work-with-cuda-aware-ucx" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.15. </span>Which MPI APIs do NOT work with CUDA-aware UCX?<a class="headerlink" href="#which-mpi-apis-do-not-work-with-cuda-aware-ucx" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>All one-sided operations such as MPI_Put, MPI_Get, MPI_Accumulate,
 MPI_Rget, MPI_Rput, MPI_Get_Accumulate, MPI_Fetch_and_op,
@@ -622,7 +616,7 @@ MPI_Iallreduce, etc</p></li>
 </div>
 <hr class="docutils" />
 <div class="section" id="can-i-tell-at-compile-time-or-runtime-whether-i-have-cuda-aware-support">
-<h2><span class="section-number">11.2.6.17. </span>Can I tell at compile time or runtime whether I have CUDA-aware support?<a class="headerlink" href="#can-i-tell-at-compile-time-or-runtime-whether-i-have-cuda-aware-support" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.16. </span>Can I tell at compile time or runtime whether I have CUDA-aware support?<a class="headerlink" href="#can-i-tell-at-compile-time-or-runtime-whether-i-have-cuda-aware-support" title="Permalink to this heading"></a></h2>
 <p>There is both a compile time check and a run-time check available.
 You can use whichever is the most convenient for your program.  To
 access them, you need to include <code class="docutils literal notranslate"><span class="pre">mpi-ext.h</span></code>. Note that
@@ -643,6 +637,8 @@ example of using the CUDA-aware macro and run-time check.</p>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
 <span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span>
+
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Compile time check:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="cp">#if defined(MPIX_CUDA_AWARE_SUPPORT) &amp;&amp; MPIX_CUDA_AWARE_SUPPORT</span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;This MPI library has CUDA-aware support.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">MPIX_CUDA_AWARE_SUPPORT</span><span class="p">);</span>
@@ -652,7 +648,7 @@ example of using the CUDA-aware macro and run-time check.</p>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;This MPI library cannot determine if there is CUDA-aware support.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="cp">#endif </span><span class="cm">/* MPIX_CUDA_AWARE_SUPPORT */</span>
 
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Run time check:n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Run time check:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="cp">#if defined(MPIX_CUDA_AWARE_SUPPORT)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">MPIX_Query_cuda_support</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;This MPI library has CUDA-aware support.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
@@ -663,6 +659,8 @@ example of using the CUDA-aware macro and run-time check.</p>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;This MPI library cannot determine if there is CUDA-aware support.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="cp">#endif </span><span class="cm">/* MPIX_CUDA_AWARE_SUPPORT */</span>
 
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span>
+
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -670,7 +668,7 @@ example of using the CUDA-aware macro and run-time check.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="how-do-i-limit-how-much-cuda-ipc-memory-is-held-in-the-registration-cache">
-<h2><span class="section-number">11.2.6.18. </span>How do I limit how much CUDA IPC memory is held in the registration cache?<a class="headerlink" href="#how-do-i-limit-how-much-cuda-ipc-memory-is-held-in-the-registration-cache" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.17. </span>How do I limit how much CUDA IPC memory is held in the registration cache?<a class="headerlink" href="#how-do-i-limit-how-much-cuda-ipc-memory-is-held-in-the-registration-cache" title="Permalink to this heading"></a></h2>
 <p>As mentioned earlier, the Open MPI library will make use of CUDA IPC support where
 possible to move the GPU data quickly between GPUs that are on the same node and
 same PCI root complex. The library holds on to registrations even after the data
@@ -691,7 +689,7 @@ limit is reached:</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path">
-<h2><span class="section-number">11.2.6.19. </span>What are some guidelines for using CUDA and Open MPI with Omni-Path?<a class="headerlink" href="#what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.18. </span>What are some guidelines for using CUDA and Open MPI with Omni-Path?<a class="headerlink" href="#what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path" title="Permalink to this heading"></a></h2>
 <p>When developing CUDA-aware Open MPI applications for OPA-based
 fabrics, the PSM2 transport is preferred and a CUDA-aware version of
 PSM2 is provided with all versions of the Intel Omni-Path IFS software
@@ -726,7 +724,7 @@ Guide</em>, which can be found on the <a class="reference external" href="https:
 </div>
 <hr class="docutils" />
 <div class="section" id="when-do-i-need-to-select-a-cuda-device">
-<h2><span class="section-number">11.2.6.20. </span>When do I need to select a CUDA device?<a class="headerlink" href="#when-do-i-need-to-select-a-cuda-device" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.19. </span>When do I need to select a CUDA device?<a class="headerlink" href="#when-do-i-need-to-select-a-cuda-device" title="Permalink to this heading"></a></h2>
 <p>“mpi-cuda-dev-selection”</p>
 <p>OpenMPI requires CUDA resources allocated for internal use.  These
 are allocated lazily when they are first needed, e.g. CUDA IPC mem handles
@@ -754,7 +752,7 @@ application error to call cudaDeviceReset before MPI_Finalize is called.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="how-do-i-enable-cuda-support-in-hcoll-collective-component">
-<h2><span class="section-number">11.2.6.21. </span>How do I enable CUDA support in HCOLL collective component<a class="headerlink" href="#how-do-i-enable-cuda-support-in-hcoll-collective-component" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.2.6.20. </span>How do I enable CUDA support in HCOLL collective component<a class="headerlink" href="#how-do-i-enable-cuda-support-in-hcoll-collective-component" title="Permalink to this heading"></a></h2>
 <p>HCOLL component supports CUDA GPU buffers for the following
 collectives:</p>
 <p>MPI_Allreduce

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>12.4. Installing and running Sphinx (building the PRRTE docs) &mdash; PMIx Reference Run Time Environment 3.0.5rc2 documentation</title>
+  <title>11.4. Installing and running Sphinx (building the PRRTE docs) &mdash; PMIx Reference Run Time Environment 3.0.6rc1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="12.5. ReStructured Text for those who know Markdown" href="rst-for-markdown-expats.html" />
-    <link rel="prev" title="12.3. Manually installing the GNU Autootools" href="gnu-autotools.html" /> 
+    <link rel="next" title="11.5. ReStructured Text for those who know Markdown" href="rst-for-markdown-expats.html" />
+    <link rel="prev" title="11.3. Manually installing the GNU Autootools" href="gnu-autotools.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,35 +53,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../placement/index.html">8. Process placement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications.html">9. Notifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../session-directory.html">10. Session directory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../resilience.html">11. Resilience</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">12. Developer’s guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">12.1. Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git-github.html">12.2. GitHub, Git, and related topics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gnu-autotools.html">12.3. Manually installing the GNU Autootools</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">12.4. Installing and running Sphinx (building the PRRTE docs)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installing-python">12.4.1. Installing Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-sphinx">12.4.2. Installing Sphinx</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-in-a-python-virtual-environment">12.4.2.1. Install Sphinx in a Python virtual environment</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-globally">12.4.2.2. Install Sphinx globally</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-locally">12.4.2.3. Install Sphinx locally</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">11. Developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">11.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-github.html">11.2. GitHub, Git, and related topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gnu-autotools.html">11.3. Manually installing the GNU Autootools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.4. Installing and running Sphinx (building the PRRTE docs)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-python">11.4.1. Installing Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-sphinx">11.4.2. Installing Sphinx</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-in-a-python-virtual-environment">11.4.2.1. Install Sphinx in a Python virtual environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-globally">11.4.2.2. Install Sphinx globally</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-sphinx-locally">11.4.2.3. Install Sphinx locally</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#running-sphinx">12.4.3. Running Sphinx</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#sphinx-execution-time">12.4.3.1. Sphinx execution time</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#checking-sphinx-html-links">12.4.3.2. Checking Sphinx HTML links</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#viewing-docs-locally">12.4.3.3. Viewing docs locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-sphinx">11.4.3. Running Sphinx</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sphinx-execution-time">11.4.3.1. Sphinx execution time</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#checking-sphinx-html-links">11.4.3.2. Checking Sphinx HTML links</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-docs-locally">11.4.3.3. Viewing docs locally</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="rst-for-markdown-expats.html">12.5. ReStructured Text for those who know Markdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst-for-markdown-expats.html">11.5. ReStructured Text for those who know Markdown</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">13. Contributing to PRRTE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">14. License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man/index.html">15. PRRTE manual pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../versions.html">16. Software Version Numbers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news/index.html">17. News</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">12. Contributing to PRRTE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">13. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../man/index.html">14. PRRTE manual pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versions.html">15. Software Version Numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news/index.html">16. News</a></li>
 </ul>
 
         </div>
@@ -98,8 +97,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">12. </span>Developer’s guide</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">12.4. </span>Installing and running Sphinx (building the PRRTE docs)</li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">11. </span>Developer’s guide</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">11.4. </span>Installing and running Sphinx (building the PRRTE docs)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/developers/sphinx.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -112,14 +111,14 @@
   <style>
 .wy-table-responsive table td,.wy-table-responsive table th{white-space:normal}
 </style><div class="section" id="installing-and-running-sphinx-building-the-prrte-docs">
-<span id="developers-installing-sphinx-label"></span><h1><span class="section-number">12.4. </span>Installing and running Sphinx (building the PRRTE docs)<a class="headerlink" href="#installing-and-running-sphinx-building-the-prrte-docs" title="Permalink to this heading"></a></h1>
+<span id="developers-installing-sphinx-label"></span><h1><span class="section-number">11.4. </span>Installing and running Sphinx (building the PRRTE docs)<a class="headerlink" href="#installing-and-running-sphinx-building-the-prrte-docs" title="Permalink to this heading"></a></h1>
 <p>As with all content in the Developer’s Guide, this section is only
 relevant for developers who work in the PRRTE code base itself.
 End users who install a binary PRRTE package or build from an
 official PRRTE distribution tarball do not need to have Sphinx
 installed.</p>
 <div class="section" id="installing-python">
-<h2><span class="section-number">12.4.1. </span>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.4.1. </span>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx tool</a> is written in Python,
 and therefore needs to have Python available.  As of late 2022, Sphinx
 requires Python &gt;= v3.7.</p>
@@ -129,7 +128,7 @@ local OS documentation for how to obtain Python &gt;= v3.7, or search the
 internet for further information.</p>
 </div>
 <div class="section" id="installing-sphinx">
-<h2><span class="section-number">12.4.2. </span>Installing Sphinx<a class="headerlink" href="#installing-sphinx" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.4.2. </span>Installing Sphinx<a class="headerlink" href="#installing-sphinx" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/installation.html">The Sphinx documentation</a>
 recommends installing Sphinx (and its required Python dependencies)
 via <code class="docutils literal notranslate"><span class="pre">pip</span></code>, which typically requires connectivity to the general
@@ -144,7 +143,7 @@ install Sphinx.</p>
 <p>There are three general ways to install Sphinx; you only need one of
 them.</p>
 <div class="section" id="install-sphinx-in-a-python-virtual-environment">
-<h3><span class="section-number">12.4.2.1. </span>Install Sphinx in a Python virtual environment<a class="headerlink" href="#install-sphinx-in-a-python-virtual-environment" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.2.1. </span>Install Sphinx in a Python virtual environment<a class="headerlink" href="#install-sphinx-in-a-python-virtual-environment" title="Permalink to this heading"></a></h3>
 <p>The preferred method of installing Sphinx for PRRTE documentation
 development is to install Sphinx in a Python virtual environment.
 This places Sphinx in a sandbox that will not conflict with other
@@ -178,7 +177,7 @@ Sphinx in your <code class="docutils literal notranslate"><span class="pre">PATH
 </div>
 </div>
 <div class="section" id="install-sphinx-globally">
-<h3><span class="section-number">12.4.2.2. </span>Install Sphinx globally<a class="headerlink" href="#install-sphinx-globally" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.2.2. </span>Install Sphinx globally<a class="headerlink" href="#install-sphinx-globally" title="Permalink to this heading"></a></h3>
 <p>If Python virtual environments are not desirable on your system, you
 can install Sphinx globally on your system (you may need to run with
 root privileges):</p>
@@ -199,7 +198,7 @@ your <code class="docutils literal notranslate"><span class="pre">PATH</span></c
 </div>
 </div>
 <div class="section" id="install-sphinx-locally">
-<h3><span class="section-number">12.4.2.3. </span>Install Sphinx locally<a class="headerlink" href="#install-sphinx-locally" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.2.3. </span>Install Sphinx locally<a class="headerlink" href="#install-sphinx-locally" title="Permalink to this heading"></a></h3>
 <p>If you cannot or do not want to install Sphinx globally on your
 system, the following will install Sphinx somewhere under your
 <code class="docutils literal notranslate"><span class="pre">$HOME</span></code>.  It is the same <code class="docutils literal notranslate"><span class="pre">pip</span></code> command as shown above, but with
@@ -229,7 +228,7 @@ the version number of Python).  Or it may have installed to
 </div>
 </div>
 <div class="section" id="running-sphinx">
-<h2><span class="section-number">12.4.3. </span>Running Sphinx<a class="headerlink" href="#running-sphinx" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">11.4.3. </span>Running Sphinx<a class="headerlink" href="#running-sphinx" title="Permalink to this heading"></a></h2>
 <p>PRRTE’s build environment is setup to invoke Sphinx automatically;
 you should not need to invoke Sphinx manually.</p>
 <div class="admonition important">
@@ -255,7 +254,7 @@ available to build PRRTE or have its docs installed from
 an official distribution tarball.</p>
 </div>
 <div class="section" id="sphinx-execution-time">
-<h3><span class="section-number">12.4.3.1. </span>Sphinx execution time<a class="headerlink" href="#sphinx-execution-time" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.3.1. </span>Sphinx execution time<a class="headerlink" href="#sphinx-execution-time" title="Permalink to this heading"></a></h3>
 <p>Sphinx is stateful: subsequent runs can be significantly faster
 because Sphinx will only re-render HTML files that have changes.  This
 is a nice time saver for PRRTE (e.g., if you are iterating over
@@ -277,7 +276,7 @@ shell$<span class="w"> </span>make
 </div>
 </div>
 <div class="section" id="checking-sphinx-html-links">
-<h3><span class="section-number">12.4.3.2. </span>Checking Sphinx HTML links<a class="headerlink" href="#checking-sphinx-html-links" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.3.2. </span>Checking Sphinx HTML links<a class="headerlink" href="#checking-sphinx-html-links" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">linkcheck</span></code> will invoke Sphinx’s functionality to check all the
 external links in the documentation:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>shell$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>docs
@@ -291,7 +290,7 @@ to the internet when running this command.</p>
 </div>
 </div>
 <div class="section" id="viewing-docs-locally">
-<h3><span class="section-number">12.4.3.3. </span>Viewing docs locally<a class="headerlink" href="#viewing-docs-locally" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">11.4.3.3. </span>Viewing docs locally<a class="headerlink" href="#viewing-docs-locally" title="Permalink to this heading"></a></h3>
 <p>Once you have built the docs in your local Git clone, you can view
 them locally in the build tree:</p>
 <ol class="arabic">
@@ -341,8 +340,8 @@ see in these HTML pages:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="gnu-autotools.html" class="btn btn-neutral float-left" title="12.3. Manually installing the GNU Autootools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rst-for-markdown-expats.html" class="btn btn-neutral float-right" title="12.5. ReStructured Text for those who know Markdown" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="gnu-autotools.html" class="btn btn-neutral float-left" title="11.3. Manually installing the GNU Autootools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rst-for-markdown-expats.html" class="btn btn-neutral float-right" title="11.5. ReStructured Text for those who know Markdown" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

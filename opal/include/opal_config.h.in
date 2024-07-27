@@ -1392,11 +1392,20 @@
 /* AVX512 supported in the current build */
 #undef OMPI_MCA_OP_HAVE_AVX512
 
+/* NEON supported in the current build */
+#undef OMPI_MCA_OP_HAVE_NEON
+
+/* NEON FP supported in the current build */
+#undef OMPI_MCA_OP_HAVE_NEON_FP
+
 /* SSE3 supported in the current build */
 #undef OMPI_MCA_OP_HAVE_SSE3
 
 /* SSE4.1 supported in the current build */
 #undef OMPI_MCA_OP_HAVE_SSE41
+
+/* SVE supported in the current build */
+#undef OMPI_MCA_OP_HAVE_SVE
 
 /* Minor release number of Open MPI */
 #undef OMPI_MINOR_VERSION

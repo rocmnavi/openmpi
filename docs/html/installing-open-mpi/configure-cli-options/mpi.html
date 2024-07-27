@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4.9.6. MPI functionality &mdash; Open MPI 5.0.3 documentation</title>
+  <title>4.9.6. MPI functionality &mdash; Open MPI 5.0.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -179,6 +179,10 @@ module support.</p></li>
 with building the OpenSHMEM Fortran interface.</p></li>
 </ul>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-mpi-moduledir=DIR</span></code>:
+Specify a specific <code class="docutils literal notranslate"><span class="pre">DIR</span></code> directory where to install the MPI
+Fortran bindings modulefiles.  By default, Open MPI will install
+Fortran modulefiles into <code class="docutils literal notranslate"><span class="pre">$libdir</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--enable-mpi-ext[=LIST]</span></code>:
 Enable Open MPI’s non-portable API extensions.  <code class="docutils literal notranslate"><span class="pre">LIST</span></code> is a
 comma-delmited list of extensions.  If no <code class="docutils literal notranslate"><span class="pre">LIST</span></code> is specified, all

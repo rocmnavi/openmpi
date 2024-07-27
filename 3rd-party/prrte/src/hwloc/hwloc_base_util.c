@@ -516,6 +516,7 @@ static hwloc_obj_t df_search(hwloc_topology_t topo, hwloc_obj_t start, hwloc_obj
                              unsigned cache_level, unsigned int nobj, unsigned int *num_objs)
 {
     int search_depth;
+    PRTE_HIDE_UNUSED_PARAMS(start);
 
     search_depth = hwloc_get_type_depth(topo, target);
     if (HWLOC_TYPE_DEPTH_MULTIPLE == search_depth) {
@@ -1304,6 +1305,7 @@ static int bitmap_list_snprintf_exp(char *__hwloc_restrict buf, size_t buflen,
         }
     }
 #else
+    PRTE_HIDE_UNUSED_PARAMS(set, type);
     if (buflen > 0) {
         tmp[0] = '\0';
     }
@@ -1326,7 +1328,7 @@ void prte_hwloc_get_binding_info(hwloc_const_cpuset_t cpuset,
 
     /* if the cpuset is all zero, then something is wrong */
     if (hwloc_bitmap_iszero(cpuset)) {
-        snprintf(cores, sz, "\n%*c<NOT MAPPED/>\n", 20, ' ');
+        snprintf(cores, sz, "\n%*c<EMPTY CPUSET/>\n", 20, ' ');
     }
 
     /* if the cpuset includes all available cpus, and
@@ -1399,7 +1401,7 @@ char *prte_hwloc_base_cset2str(hwloc_const_cpuset_t cpuset,
 
     /* if the cpuset is all zero, then something is wrong */
     if (hwloc_bitmap_iszero(cpuset)) {
-        return strdup("NOT MAPPED");
+        return strdup("EMPTY CPUSET");
     }
 
     /* if the cpuset includes all available cpus, and
@@ -1865,27 +1867,23 @@ int prte_hwloc_base_topology_set_flags(hwloc_topology_t topology, unsigned long 
 {
     if (io) {
 #if HWLOC_API_VERSION < 0x00020000
-        flags |= HWLOC_TOPOLOGY_FLAG_WHOLE_SYSTEM;
         flags |= HWLOC_TOPOLOGY_FLAG_IO_DEVICES;
 #else
         int ret = hwloc_topology_set_io_types_filter(topology, HWLOC_TYPE_FILTER_KEEP_IMPORTANT);
         if (0 != ret) {
             return ret;
         }
-#    if HWLOC_API_VERSION < 0x00020100
-        flags |= HWLOC_TOPOLOGY_FLAG_WHOLE_SYSTEM;
-#    else
-        flags |= HWLOC_TOPOLOGY_FLAG_INCLUDE_DISALLOWED;
-#    endif
 #endif
     }
     // Blacklist the "gl" component due to potential conflicts.
     // See "https://github.com/open-mpi/ompi/issues/10025" for
     // an explanation
+#ifdef HWLOC_VERSION_MAJOR
 #if HWLOC_VERSION_MAJOR > 2
     hwloc_topology_set_components(topology, HWLOC_TOPOLOGY_COMPONENTS_FLAG_BLACKLIST, "gl");
 #elif HWLOC_VERSION_MAJOR == 2 && HWLOC_VERSION_MINOR >= 1
     hwloc_topology_set_components(topology, HWLOC_TOPOLOGY_COMPONENTS_FLAG_BLACKLIST, "gl");
+#endif
 #endif
     return hwloc_topology_set_flags(topology, flags);
 }
