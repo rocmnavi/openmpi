@@ -1525,8 +1525,8 @@ PMIX_EXPORT pmix_status_t PMIx_Resolve_peers(const char *nodename, const pmix_ns
     /* if I am a client and my server is earlier than v3.2.x, then
      * I need to look for this data under rank=PMIX_RANK_WILDCARD
      * with a key equal to the nodename */
-    if (PMIX_PEER_IS_CLIENT(pmix_globals.mypeer)
-        && PMIX_PEER_IS_EARLIER(pmix_client_globals.myserver, 3, 1, 100)) {
+    if (PMIX_PEER_IS_CLIENT(pmix_globals.mypeer) &&
+        PMIX_PEER_IS_EARLIER(pmix_client_globals.myserver, 3, 1, 100)) {
         proc.rank = PMIX_RANK_WILDCARD;
         iptr = NULL;
         ninfo = 0;
@@ -1538,7 +1538,7 @@ PMIX_EXPORT pmix_status_t PMIx_Resolve_peers(const char *nodename, const pmix_ns
         ninfo = 2;
     }
 
-    if (NULL == nspace || 0 == pmix_nslen(nspace)) {
+    if (0 == pmix_nslen(nspace)) {
         rc = PMIX_ERR_NOT_FOUND;
         np = 0;
         /* cycle across all known nspaces and aggregate the results */
@@ -1546,7 +1546,16 @@ PMIX_EXPORT pmix_status_t PMIx_Resolve_peers(const char *nodename, const pmix_ns
             PMIX_LOAD_NSPACE(proc.nspace, ns->nspace);
             rc = PMIx_Get(&proc, PMIX_LOCAL_PEERS, iptr, ninfo, &val);
             if (PMIX_SUCCESS != rc) {
-                continue;
+                if (PMIX_RANK_UNDEF == proc.rank) {
+                    // try again with wildcard
+                    proc.rank = PMIX_RANK_WILDCARD;
+                    rc = PMIx_Get(&proc, PMIX_LOCAL_PEERS, iptr, ninfo, &val);
+                    if (PMIX_SUCCESS != rc) {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
             }
 
             /* sanity check */
@@ -1620,11 +1629,20 @@ PMIX_EXPORT pmix_status_t PMIx_Resolve_peers(const char *nodename, const pmix_ns
     }
 
     /* get the list of local peers for this nspace and node */
-    PMIX_LOAD_NSPACE(proc.nspace, nspace);
+    PMIX_LOAD_PROCID(&proc, nspace, PMIX_RANK_UNDEF);
 
     rc = PMIx_Get(&proc, PMIX_LOCAL_PEERS, iptr, ninfo, &val);
     if (PMIX_SUCCESS != rc) {
-        goto done;
+        if (PMIX_RANK_UNDEF == proc.rank) {
+            // try again with wildcard
+            proc.rank = PMIX_RANK_WILDCARD;
+            rc = PMIx_Get(&proc, PMIX_LOCAL_PEERS, iptr, ninfo, &val);
+            if (PMIX_SUCCESS != rc) {
+                goto done;
+            }
+        } else {
+            goto done;
+        }
     }
 
     /* sanity check */

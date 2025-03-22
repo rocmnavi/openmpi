@@ -179,9 +179,9 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
 	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
+	$(top_srcdir)/src/mca/pcompress/zlibng/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
-	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
@@ -371,13 +371,6 @@ MCA_pmix_pdl_DSO_SUBDIRS = @MCA_pmix_pdl_DSO_SUBDIRS@
 MCA_pmix_pdl_STATIC_COMPONENTS = @MCA_pmix_pdl_STATIC_COMPONENTS@
 MCA_pmix_pdl_STATIC_LTLIBS = @MCA_pmix_pdl_STATIC_LTLIBS@
 MCA_pmix_pdl_STATIC_SUBDIRS = @MCA_pmix_pdl_STATIC_SUBDIRS@
-MCA_pmix_pfexec_ALL_COMPONENTS = @MCA_pmix_pfexec_ALL_COMPONENTS@
-MCA_pmix_pfexec_ALL_SUBDIRS = @MCA_pmix_pfexec_ALL_SUBDIRS@
-MCA_pmix_pfexec_DSO_COMPONENTS = @MCA_pmix_pfexec_DSO_COMPONENTS@
-MCA_pmix_pfexec_DSO_SUBDIRS = @MCA_pmix_pfexec_DSO_SUBDIRS@
-MCA_pmix_pfexec_STATIC_COMPONENTS = @MCA_pmix_pfexec_STATIC_COMPONENTS@
-MCA_pmix_pfexec_STATIC_LTLIBS = @MCA_pmix_pfexec_STATIC_LTLIBS@
-MCA_pmix_pfexec_STATIC_SUBDIRS = @MCA_pmix_pfexec_STATIC_SUBDIRS@
 MCA_pmix_pgpu_ALL_COMPONENTS = @MCA_pmix_pgpu_ALL_COMPONENTS@
 MCA_pmix_pgpu_ALL_SUBDIRS = @MCA_pmix_pgpu_ALL_SUBDIRS@
 MCA_pmix_pgpu_DSO_COMPONENTS = @MCA_pmix_pgpu_DSO_COMPONENTS@
@@ -595,6 +588,9 @@ oldincludedir = @oldincludedir@
 pcompress_zlib_CPPFLAGS = @pcompress_zlib_CPPFLAGS@
 pcompress_zlib_LDFLAGS = @pcompress_zlib_LDFLAGS@
 pcompress_zlib_LIBS = @pcompress_zlib_LIBS@
+pcompress_zlibng_CPPFLAGS = @pcompress_zlibng_CPPFLAGS@
+pcompress_zlibng_LDFLAGS = @pcompress_zlibng_LDFLAGS@
+pcompress_zlibng_LIBS = @pcompress_zlibng_LIBS@
 pdfdir = @pdfdir@
 pkgpyexecdir = @pkgpyexecdir@
 pkgpythondir = @pkgpythondir@
@@ -646,8 +642,15 @@ SPHINX_CONFIG = conf.py
 # Note: it is significantly more convenient to list all the source
 # files here using wildcards (vs. listing every single .rst file).
 # However, it is necessary to list $(srcdir) when using wildcards.
-TEXT_SOURCE_FILES = # if you have any .txt files, list them here
-IMAGE_SOURCE_FILES = # if you have any, list them here
+
+# if you have any .txt files, list them here
+TEXT_SOURCE_FILES = 
+
+# list image files here
+IMAGE_SOURCE_FILES = \
+        $(srcdir)/images/*.png \
+        $(srcdir)/images/*.jpg
+
 RST_SOURCE_FILES = \
         $(srcdir)/*.rst \
         $(srcdir)/building-apps/*.rst \

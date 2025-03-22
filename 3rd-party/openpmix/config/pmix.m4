@@ -392,7 +392,7 @@ AC_DEFUN([PMIX_SETUP_CORE],[
                       crt_externs.h signal.h \
                       ioLib.h sockLib.h hostLib.h limits.h \
                       sys/fcntl.h sys/statfs.h sys/statvfs.h \
-                      netdb.h ucred.h zlib.h sys/auxv.h \
+                      netdb.h ucred.h sys/auxv.h \
                       sys/sysctl.h termio.h termios.h pty.h \
                       libutil.h util.h grp.h sys/cdefs.h utmp.h stropts.h \
                       sys/utsname.h stdatomic.h mntent.h])
@@ -890,6 +890,19 @@ AC_DEFUN([PMIX_SETUP_CORE],[
     CPP_INCLUDES="$(echo $cpp_includes | $SED 's/[[^ \]]* */'"$pmix_cc_iquote"'&/g')"
     CPPFLAGS="$CPP_INCLUDES -I$PMIX_top_srcdir/include $CPPFLAGS"
 
+
+    # We do not currently support the "lto" optimizer as it
+    # aggregates all the headers from our plugins, resulting
+    # in a configuration that generates warnings/errors when
+    # passed through their optimizer phase. We therefore check
+    # for the flag, and if found, output a message explaining
+    # the situation and aborting configure
+    _PMIX_CHECK_LTO_FLAG($CPPFLAGS, CPPFLAGS)
+    _PMIX_CHECK_LTO_FLAG($CFLAGS, CFLAGS)
+    _PMIX_CHECK_LTO_FLAG($LDFLAGS, LDFLAGS)
+    _PMIX_CHECK_LTO_FLAG($LIBS, LIBS)
+
+
     ############################################################################
     # final wrapper compiler config
     ############################################################################
@@ -1328,15 +1341,15 @@ if test "$WANT_PYTHON_BINDINGS" = "1"; then
     AC_SUBST([PMIX_PYTHON_EGG_PATH], [$pmix_pythondir], [Path to installed Python egg])
 fi
 
-# If we didn't find a good Python and we don't have dictionary.h, then
+# If we didn't find a good Python and we don't have pmix_dictionary.h, then
 # see if we can find an older Python (because construct_dictionary.py
 # can use an older Python).
-AS_IF([test "$PYTHON" = "" && test ! -f $srcdir/include/dictionary.h],
+AS_IF([test "$PYTHON" = "" && test ! -f $srcdir/src/include/pmix_dictionary.h],
       [AC_MSG_CHECKING([python])
        PYTHON=
        AM_PATH_PYTHON
        # If we still can't find Python (and we don't have
-       # dictionary.h), then give up.
+       # pmix_dictionary.h), then give up.
        AC_MSG_RESULT([$PYTHON])
        AS_IF([test "$PYTHON" = ""],
              [AC_MSG_WARN([Could not find a modern enough Python])

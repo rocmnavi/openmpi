@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>16.1. PMIx v5.x series &mdash; OpenPMIx 5.0.3rc1 documentation</title>
+  <title>16.1. PMIx v5.x series &mdash; OpenPMIx 5.0.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -60,10 +60,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../security.html">15. OpenPMIx Security Policy</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">16. News</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">16.1. PMIx v5.x series</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.1. 5.0.3 – 8 Jul 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.2. 5.0.2 – 21 Mar 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.3. 5.0.1 – 9 Sep 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aug-2023">16.1.4. 5.0.0 – 7 Aug 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nov-2024">16.1.1. 5.0.4 – 13 Nov 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.2. 5.0.3 – 8 Jul 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.3. 5.0.2 – 21 Mar 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.4. 5.0.1 – 9 Sep 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aug-2023">16.1.5. 5.0.0 – 7 Aug 2023</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="news-v4.x.html">16.2. PMIx v4.x series</a></li>
@@ -106,8 +107,63 @@
 <h1><span class="section-number">16.1. </span>PMIx v5.x series<a class="headerlink" href="#pmix-v5-x-series" title="Permalink to this heading"></a></h1>
 <p>This file contains all the NEWS updates for the PMIx v5.x
 series, in reverse chronological order.</p>
+<div class="section" id="nov-2024">
+<h2><span class="section-number">16.1.1. </span>5.0.4 – 13 Nov 2024<a class="headerlink" href="#nov-2024" title="Permalink to this heading"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This release represents the expected end of
+the v5.0 series. Any follow-on bug fixes will
+be committed to the release branch, but are
+unlikely to generate an official release
+tarball.</p>
+</div>
+<dl class="simple">
+<dt>Detailed changes include:</dt><dd><ul class="simple">
+<li><p>PR #3441: Update NEWS and VERSION for final release</p></li>
+<li><p>PR #3440: Minor cleanups plus resolve peers example</p></li>
+<li><p>PR #3434: Collapse the pfexec framework</p></li>
+<li><p>PR #3432: Update VERSION for release</p></li>
+<li><p>PR #3430: Multiple commits
+- Update NEWS to include v5.0 branch
+- Drop the sphinx required level to match PRRTE
+- Ensure IOF respects formatting requests</p></li>
+<li><p>PR #3419: Add some missing attributes</p></li>
+<li><p>PR #3417: Multiple commits
+- Fix typo in equality check
+- Fix delayed get
+- avoid warn-as-error for variable init
+- Add support for libz-ng</p></li>
+<li><p>PR #3408: Update pmix_portable_platform_real.h from upstream gasnet</p></li>
+<li><p>PR #3404: Path must start with “src”</p></li>
+<li><p>PR #3402: Remove unused yaml</p></li>
+<li><p>PR #3400: add contrib/construct_event_strings.py to the dist tarball</p></li>
+<li><p>PR #3397: Multiple commits
+- Add missing files
+- mca/pif: fix pmix_found_linux typo
+- Add cross-version compatibility to docs</p></li>
+<li><p>PR #3393: Multiple commits
+- Add python directive
+- Cleanup pfexec spawn operations
+- Add missing function call</p></li>
+<li><p>PR #3387: Update OAC to latest HEAD</p></li>
+<li><p>PR #3385: Correctly check MCA params</p></li>
+<li><p>PR #3383: Protect against LTO optimizer</p></li>
+<li><p>PR #3381: Read The Docs updates</p></li>
+<li><p>PR #3379: Multiple commits
+- Revert Sphinx requirements
+- Warn against building tarball on MacOSX
+- configure: fix regression that caused python to be mandatory to build
+- configure: fix broken bashisms resulting in logic failure
+- Update the requirements for Sphinx</p></li>
+<li><p>PR #3372: Multiple commits
+- Update MLNX CI
+- Apply prefix to copied version of the app array</p></li>
+</ul>
+</dd>
+</dl>
+</div>
 <div class="section" id="jul-2024">
-<h2><span class="section-number">16.1.1. </span>5.0.3 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.2. </span>5.0.3 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
 <dl class="simple">
 <dt>Detailed changes include:</dt><dd><ul class="simple">
 <li><p>PR #3369: Update NEWS and VERSION for release</p></li>
@@ -131,7 +187,7 @@ series, in reverse chronological order.</p>
 </dl>
 </div>
 <div class="section" id="mar-2024">
-<h2><span class="section-number">16.1.2. </span>5.0.2 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.3. </span>5.0.2 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Cross-version incompatibility
@@ -266,7 +322,7 @@ v5.0.1 and v5.0.0 releases.</p>
 </dl>
 </div>
 <div class="section" id="sep-2023">
-<h2><span class="section-number">16.1.3. </span>5.0.1 – 9 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.4. </span>5.0.1 – 9 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>CVE-2023-41915</p>
@@ -337,7 +393,7 @@ versions.</p>
 </dl>
 </div>
 <div class="section" id="aug-2023">
-<h2><span class="section-number">16.1.4. </span>5.0.0 – 7 Aug 2023<a class="headerlink" href="#aug-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.5. </span>5.0.0 – 7 Aug 2023<a class="headerlink" href="#aug-2023" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This is the first release in the v5 family

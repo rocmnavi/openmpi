@@ -141,33 +141,6 @@ static void opcbfunc(pmix_status_t status, void *cbdata)
     PRTE_PMIX_WAKEUP_THREAD(lock);
 }
 
-static void setupcbfunc(pmix_status_t status, pmix_info_t info[], size_t ninfo,
-                        void *provided_cbdata, pmix_op_cbfunc_t cbfunc, void *cbdata)
-{
-    mylock_t *mylock = (mylock_t *) provided_cbdata;
-    size_t n;
-
-    if (NULL != info) {
-        mylock->ninfo = ninfo;
-        PMIX_INFO_CREATE(mylock->info, mylock->ninfo);
-        /* cycle across the provided info */
-        for (n = 0; n < ninfo; n++) {
-            PMIX_INFO_XFER(&mylock->info[n], &info[n]);
-        }
-    } else {
-        mylock->info = NULL;
-        mylock->ninfo = 0;
-    }
-    mylock->status = status;
-
-    /* release the caller */
-    if (NULL != cbfunc) {
-        cbfunc(PMIX_SUCCESS, cbdata);
-    }
-
-    PRTE_PMIX_WAKEUP_THREAD(&mylock->lock);
-}
-
 static void spcbfunc(pmix_status_t status, char nspace[], void *cbdata)
 {
     prte_pmix_lock_t *lock = (prte_pmix_lock_t *) cbdata;
@@ -283,7 +256,7 @@ int main(int argc, char *argv[])
     pmix_info_t *iptr, *iptr2, info;
     pmix_status_t ret;
     bool flag;
-    size_t n, m, ninfo, param_len;
+    size_t n, ninfo, param_len;
     pmix_app_t *papps;
     size_t napps;
     mylock_t mylock;
@@ -335,6 +308,10 @@ int main(int argc, char *argv[])
         }
     }
 
+    /* do a minimal setup of key infrastructure, including
+     * parsing the install-level and user-level PRRTE param
+     * files
+     */
     rc = prte_init_minimum();
     if (PRTE_SUCCESS != rc) {
         return rc;
@@ -459,16 +436,21 @@ int main(int argc, char *argv[])
 
     /* parse the input argv to get values, including everyone's MCA params */
     PMIX_CONSTRUCT(&results, pmix_cli_result_t);
-    rc = schizo->parse_cli(pargv, &results, PMIX_CLI_WARN);
-    if (PRTE_SUCCESS != rc) {
-        PMIX_DESTRUCT(&results);
-        if (PRTE_OPERATION_SUCCEEDED == rc) {
-            return PRTE_SUCCESS;
+    // check for special case of executable immediately following tool
+    if (proxyrun && pargc > 1 && '-' != pargv[1][0]) {
+        results.tail = PMIx_Argv_copy(&pargv[1]);
+    } else {
+        rc = schizo->parse_cli(pargv, &results, PMIX_CLI_WARN);
+        if (PRTE_SUCCESS != rc) {
+            PMIX_DESTRUCT(&results);
+            if (PRTE_OPERATION_SUCCEEDED == rc) {
+                return PRTE_SUCCESS;
+            }
+            if (PRTE_ERR_SILENT != rc) {
+                fprintf(stderr, "%s: command line error (%s)\n", prte_tool_basename, prte_strerror(rc));
+            }
+            return rc;
         }
-        if (PRTE_ERR_SILENT != rc) {
-            fprintf(stderr, "%s: command line error (%s)\n", prte_tool_basename, prte_strerror(rc));
-        }
-        return rc;
     }
 
     /* check if we are running as root - if we are, then only allow
@@ -1103,11 +1085,11 @@ int main(int argc, char *argv[])
     opt = pmix_cmd_line_get_param(&results, PRTE_CLI_TIMEOUT);
     if (NULL != opt || NULL != (timeoutenv = getenv("MPIEXEC_TIMEOUT"))) {
         if (NULL != timeoutenv) {
-            m = strtoul(timeoutenv, NULL, 10);
+            i = strtol(timeoutenv, NULL, 10);
             /* both cannot be present, or they must agree */
             if (NULL != opt) {
-                n = strtoul(opt->values[0], NULL, 10);
-                if (m != n) {
+                n = strtol(opt->values[0], NULL, 10);
+                if (i != (int)n) {
                     pmix_show_help("help-prun.txt", "prun:timeoutconflict", false,
                                    prte_tool_basename, n, timeoutenv);
                     PRTE_UPDATE_EXIT_STATUS(1);
@@ -1138,49 +1120,6 @@ int main(int argc, char *argv[])
 
     /* give the schizo components a chance to add to the job info */
     schizo->job_info(&results, jinfo);
-
-    /* pickup any relevant envars */
-    ninfo = 4;
-    PMIX_INFO_CREATE(iptr, ninfo);
-    flag = true;
-    PMIX_INFO_LOAD(&iptr[0], PMIX_SETUP_APP_ENVARS, &flag, PMIX_BOOL);
-    ui32 = geteuid();
-    PMIX_INFO_LOAD(&iptr[1], PMIX_USERID, &ui32, PMIX_UINT32);
-    ui32 = getegid();
-    PMIX_INFO_LOAD(&iptr[2], PMIX_GRPID, &ui32, PMIX_UINT32);
-    PMIX_INFO_LOAD(&iptr[3], PMIX_PERSONALITY, personality, PMIX_STRING);
-
-    PRTE_PMIX_CONSTRUCT_LOCK(&mylock.lock);
-    ret = PMIx_server_setup_application(prte_process_info.myproc.nspace, iptr, ninfo, setupcbfunc,
-                                        &mylock);
-    if (PMIX_SUCCESS != ret) {
-        pmix_output(0, "Error setting up application: %s", PMIx_Error_string(ret));
-        PRTE_PMIX_DESTRUCT_LOCK(&mylock.lock);
-        PRTE_UPDATE_EXIT_STATUS(ret);
-        goto DONE;
-    }
-    PRTE_PMIX_WAIT_THREAD(&mylock.lock);
-    PMIX_INFO_FREE(iptr, ninfo);
-    if (PMIX_SUCCESS != mylock.status) {
-        pmix_output(0, "Error setting up application: %s", PMIx_Error_string(mylock.status));
-        PRTE_UPDATE_EXIT_STATUS(mylock.status);
-        PRTE_PMIX_DESTRUCT_LOCK(&mylock.lock);
-        goto DONE;
-    }
-    PRTE_PMIX_DESTRUCT_LOCK(&mylock.lock);
-    /* transfer any returned ENVARS to the job_info */
-    if (NULL != mylock.info) {
-        for (n = 0; n < mylock.ninfo; n++) {
-            if (PMIX_CHECK_KEY(&mylock.info[n], PMIX_SET_ENVAR) ||
-                PMIX_CHECK_KEY(&mylock.info[n], PMIX_ADD_ENVAR) ||
-                PMIX_CHECK_KEY(&mylock.info[n], PMIX_UNSET_ENVAR) ||
-                PMIX_CHECK_KEY(&mylock.info[n], PMIX_PREPEND_ENVAR) ||
-                PMIX_CHECK_KEY(&mylock.info[n], PMIX_APPEND_ENVAR)) {
-                PMIX_INFO_LIST_XFER(ret, jinfo, &mylock.info[n]);
-            }
-        }
-        PMIX_INFO_FREE(mylock.info, mylock.ninfo);
-    }
 
     /* convert the job info into an array */
     PMIX_INFO_LIST_CONVERT(ret, jinfo, &darray);
@@ -1265,7 +1204,7 @@ int main(int argc, char *argv[])
         } else if (0 == strcmp(opt->values[0], "none")) {
             pname.rank = PMIX_RANK_INVALID;
         } else {
-            pname.rank = 0;
+            pname.rank = strtoul(opt->values[0], NULL, 10);
         }
     } else {
         pname.rank = 0;

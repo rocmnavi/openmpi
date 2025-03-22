@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>16.1. PRRTE v3.x series &mdash; PMIx Reference Run Time Environment 3.0.6rc1 documentation</title>
+  <title>16.1. PRRTE v3.x series &mdash; PMIx Reference Run Time Environment 3.0.7 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -60,13 +60,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../versions.html">15. Software Version Numbers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">16. News</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">16.1. PRRTE v3.x series</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.1. 3.0.6 – 8 Jul 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.2. 3.0.5 – 21 Mar 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#feb-2024">16.1.3. 3.0.4 – 4 Feb 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dec-2023">16.1.4. 3.0.3 – 19 Dec 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oct-2023">16.1.5. 3.0.2 – 23 Oct 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.6. 3.0.1 – 27 Sep 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nov-2022">16.1.7. 3.0.0 – 13 Nov 2022</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nov-2024">16.1.1. 3.0.7 – 13 Nov 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.2. 3.0.6 – 8 Jul 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.3. 3.0.5 – 21 Mar 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feb-2024">16.1.4. 3.0.4 – 4 Feb 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dec-2023">16.1.5. 3.0.3 – 19 Dec 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oct-2023">16.1.6. 3.0.2 – 23 Oct 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.7. 3.0.1 – 27 Sep 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nov-2022">16.1.8. 3.0.0 – 13 Nov 2022</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="news-v2.x.html">16.2. PRRTE v2.x series</a></li>
@@ -106,8 +107,78 @@
 <h1><span class="section-number">16.1. </span>PRRTE v3.x series<a class="headerlink" href="#prrte-v3-x-series" title="Permalink to this heading"></a></h1>
 <p>This file contains all the NEWS updates for the PRRTE v3.x
 series, in reverse chronological order.</p>
+<div class="section" id="nov-2024">
+<h2><span class="section-number">16.1.1. </span>3.0.7 – 13 Nov 2024<a class="headerlink" href="#nov-2024" title="Permalink to this heading"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This release represents the expected end of
+the v3.0 series. Any follow-on bug fixes will
+be committed to the release branch, but are
+unlikely to generate an official release
+tarball.</p>
+</div>
+<ul class="simple">
+<li><p>PR #2067: Update NEWS and VERSION for final release</p></li>
+<li><dl class="simple">
+<dt>PR #2064: Multiple commits</dt><dd><ul>
+<li><p>Update help message to PRTE MCA parameter handling</p></li>
+<li><p>Fix typo in Makefile</p></li>
+<li><p>Fix rankfile use of relative node indexing</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>PR #2060: Update NEWS and VERSION for release</p></li>
+<li><p>PR #2059: Protect against old PMIx versions</p></li>
+<li><p>PR #2057: Fix support for hetero LSF environments</p></li>
+<li><p>PR #2049: Cleanup show-help files</p></li>
+<li><p>PR #2047: Implement the PMIX_JOB_CHILD_SEP support</p></li>
+<li><dl class="simple">
+<dt>PR #2044: Multiple commits</dt><dd><ul>
+<li><p>Add a threaded client example</p></li>
+<li><p>Restore parsing of OMPI param files</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>PR #2039: Unlock stdin target</p></li>
+<li><p>PR #2037: Pull a couple of fixes from master branch</p></li>
+<li><p>PR #2034: Fix deprecation warnings for ppr on socket objects</p></li>
+<li><dl class="simple">
+<dt>PR #2032: Multiple commits</dt><dd><ul>
+<li><p>avoid warnings (as errors) spots (init vars, etc.)</p></li>
+<li><p>remove unused Level var</p></li>
+<li><p>init installdirs structure (avoids warn-as-error)</p></li>
+<li><p>Pay attention to interface include/exclude params</p></li>
+<li><p>Protect against the envar version of the Slurm custom args param</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>PR #2018: fix support for MPIEXEC_TIMEOUT</p></li>
+<li><p>PR #2017: Update prte_portable_platform_real.h from upstream gasnet</p></li>
+<li><p>PR #2015: Always have show-help available</p></li>
+<li><p>PR #2013: Remove unused yaml</p></li>
+<li><p>PR #2011: Cleanup show help formatting</p></li>
+<li><p>PR #2009: docs: update for Python 3.12</p></li>
+<li><p>PR #2007: Fix a segfault when no arguments are provided</p></li>
+<li><dl class="simple">
+<dt>PR #2005: Multiple commits</dt><dd><ul>
+<li><p>Remove unused function</p></li>
+<li><p>Revise cmd line parsing to handle special case</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>PR #2002: Update OAC to latest HEAD</p></li>
+<li><p>PR #2000: Use the PMIx functions to check params</p></li>
+<li><p>PR #1998: Protect against LTO optimizer</p></li>
+<li><p>PR #1996: Read the Docs updates</p></li>
+<li><p>PR #1994: Provide a warning of potentially unknown Slurm params</p></li>
+</ul>
+</div>
 <div class="section" id="jul-2024">
-<h2><span class="section-number">16.1.1. </span>3.0.6 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.2. </span>3.0.6 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1992: Update NEWS and VERSION for release</p></li>
 <li><dl class="simple">
@@ -168,7 +239,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="mar-2024">
-<h2><span class="section-number">16.1.2. </span>3.0.5 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.3. </span>3.0.5 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>PR #1952: Multiple commits</dt><dd><ul>
@@ -201,7 +272,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="feb-2024">
-<h2><span class="section-number">16.1.3. </span>3.0.4 – 4 Feb 2024<a class="headerlink" href="#feb-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.4. </span>3.0.4 – 4 Feb 2024<a class="headerlink" href="#feb-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>PR #1918: Multiple commits</dt><dd><ul>
@@ -226,7 +297,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="dec-2023">
-<h2><span class="section-number">16.1.4. </span>3.0.3 – 19 Dec 2023<a class="headerlink" href="#dec-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.5. </span>3.0.3 – 19 Dec 2023<a class="headerlink" href="#dec-2023" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1893: Check for stdatomic.h</p></li>
 <li><p>PR #1891: add nodes to job data for ALL jobs included in the launch message</p></li>
@@ -307,7 +378,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="oct-2023">
-<h2><span class="section-number">16.1.5. </span>3.0.2 – 23 Oct 2023<a class="headerlink" href="#oct-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.6. </span>3.0.2 – 23 Oct 2023<a class="headerlink" href="#oct-2023" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1832: Update NEWS for release</p></li>
 <li><p>PR #1831: Silence error log</p></li>
@@ -334,7 +405,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="sep-2023">
-<h2><span class="section-number">16.1.6. </span>3.0.1 – 27 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.7. </span>3.0.1 – 27 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This release contains a major revision of the PRRTE
@@ -545,7 +616,7 @@ releases.</p>
 </ul>
 </div>
 <div class="section" id="nov-2022">
-<h2><span class="section-number">16.1.7. </span>3.0.0 – 13 Nov 2022<a class="headerlink" href="#nov-2022" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.8. </span>3.0.0 – 13 Nov 2022<a class="headerlink" href="#nov-2022" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This release represents a major update to the PRRTE

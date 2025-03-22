@@ -57,6 +57,7 @@
 #include "src/mca/base/pmix_mca_base_vari.h"
 #include "src/mca/errmgr/errmgr.h"
 #include "src/mca/ess/base/base.h"
+#include "src/mca/pmdl/base/base.h"
 #include "src/mca/rmaps/base/base.h"
 #include "src/mca/state/base/base.h"
 #include "src/runtime/prte_globals.h"
@@ -928,6 +929,31 @@ static int convert_deprecated_cli(pmix_cli_result_t *results,
                 free(p1);
                 free(opt->values[0]);
                 opt->values[0] = tmp;
+            } else if (0 == strncasecmp(opt->values[0], "ppr", strlen("ppr"))) {
+                // see if they specified "socket" as the resource
+                p1 = strdup(opt->values[0]);
+                p2 = strrchr(p1, ':');
+                ++p2;
+                if (0 == strncasecmp(p2, "socket", strlen("socket")) ||
+                    0 == strncasecmp(p2, "skt", strlen("skt"))) {
+                    *p2 = '\0';
+                    pmix_asprintf(&p2, "%spackage", p1);
+                    if (warn) {
+                        pmix_asprintf(&tmp, "%s %s", option, opt->values[0]);
+                        pmix_asprintf(&tmp2, "%s %s", option, p2);
+                        /* can't just call show_help as we want every instance to be reported */
+                        output = pmix_show_help_string("help-schizo-base.txt",
+                                                       "deprecated-converted", true,
+                                                       tmp, tmp2);
+                        fprintf(stderr, "%s\n", output);
+                        free(output);
+                        free(tmp);
+                        free(tmp2);
+                    }
+                    free(opt->values[0]);
+                    opt->values[0] = p2;
+                }
+                free(p1);
             }
         }
         /* --rank-by socket ->  --rank-by package */
@@ -1821,6 +1847,11 @@ static int parse_env(char **srcenv, char ***dstenv,
     return PRTE_SUCCESS;
 }
 
+// NOTE: This code is fundamentally the same (module PMIX <-> OPAL)
+//      as the translate_params() routine in the OMPI repo's
+//      opal/mca/pmix/base/pmix_base_fns.c file.  If there are
+//      changes here, there are likely to be changes there.
+
 static bool check_prte_overlap(char *var, char *value)
 {
     char *tmp;
@@ -1882,7 +1913,6 @@ static bool check_prte_overlap(char *var, char *value)
     return false;
 }
 
-
 static bool check_pmix_overlap(char *var, char *value)
 {
     char *tmp;
@@ -1920,10 +1950,6 @@ static bool check_pmix_overlap(char *var, char *value)
     return false;
 }
 
-// NOTE: This code is fundamentally the same (module PMIX <-> OPAL)
-//      as the translate_params() routine in the OMPI repo's
-//      opal/mca/pmix/base/pmix_base_fns.c file.  If there are
-//      changes here, there are likely to be changes there.
 static int translate_params(void)
 {
     char *evar, *tmp, *e2;
@@ -1964,7 +1990,7 @@ static int translate_params(void)
             if (check_prte_overlap(&e2[len], evar)) {
                 // check for pmix overlap
                 check_pmix_overlap(&e2[len], evar);
-            } else if (prte_schizo_base_check_prte_param(&e2[len])) {
+            } else if (pmix_pmdl_base_check_prte_param(&e2[len])) {
                     pmix_asprintf(&tmp, "PRTE_MCA_%s", &e2[len]);
                     // set it, but don't overwrite if they already
                     // have a value in our environment
@@ -1972,7 +1998,7 @@ static int translate_params(void)
                     free(tmp);
                     // check for pmix overlap
                     check_pmix_overlap(&e2[len], evar);
-            } else if (prte_schizo_base_check_pmix_param(&e2[len])) {
+            } else if (pmix_pmdl_base_check_pmix_param(&e2[len])) {
                 pmix_asprintf(&tmp, "PMIX_MCA_%s", &e2[len]);
                 // set it, but don't overwrite if they already
                 // have a value in our environment
@@ -1997,7 +2023,7 @@ static int translate_params(void)
             // see if this param relates to PRRTE
             if (check_prte_overlap(fv->mbvfv_var, fv->mbvfv_value)) {
                 check_pmix_overlap(fv->mbvfv_var, fv->mbvfv_value);
-            } else if (prte_schizo_base_check_prte_param(fv->mbvfv_var)) {
+            } else if (pmix_pmdl_base_check_prte_param(fv->mbvfv_var)) {
                 pmix_asprintf(&tmp, "PRTE_MCA_%s", fv->mbvfv_var);
                 // set it, but don't overwrite if they already
                 // have a value in our environment
@@ -2007,7 +2033,7 @@ static int translate_params(void)
                 // REACHABLE frameworks, then we also need to set
                 // the equivalent PMIx value
                 check_pmix_overlap(fv->mbvfv_var, fv->mbvfv_value);
-            } else if (prte_schizo_base_check_pmix_param(fv->mbvfv_var)) {
+            } else if (pmix_pmdl_base_check_pmix_param(fv->mbvfv_var)) {
                 pmix_asprintf(&tmp, "PMIX_MCA_%s", fv->mbvfv_var);
                 // set it, but don't overwrite if they already
                 // have a value in our environment
@@ -2026,10 +2052,12 @@ static int translate_params(void)
         pmix_mca_base_parse_paramfile(file, &params);
         free(file);
         PMIX_LIST_FOREACH (fv, &params, pmix_mca_base_var_file_value_t) {
-            // see if this param relates to PRRTE
-            if (check_prte_overlap(fv->mbvfv_var, fv->mbvfv_value)) {
-                check_pmix_overlap(fv->mbvfv_var, fv->mbvfv_value);
-            } else if (prte_schizo_base_check_prte_param(fv->mbvfv_var)) {
+            // see if this param overlaps with PRRTE
+            check_prte_overlap(fv->mbvfv_var, fv->mbvfv_value);
+            // see if it overlaps with PMIx
+            check_pmix_overlap(fv->mbvfv_var, fv->mbvfv_value);
+            // see if it relates to PRRTE
+            if (pmix_pmdl_base_check_prte_param(fv->mbvfv_var)) {
                 pmix_asprintf(&tmp, "PRTE_MCA_%s", fv->mbvfv_var);
                 // set it, but don't overwrite if they already
                 // have a value in our environment
@@ -2039,6 +2067,14 @@ static int translate_params(void)
                 // REACHABLE frameworks, then we also need to set
                 // the equivalent PMIx value
                 check_pmix_overlap(fv->mbvfv_var, fv->mbvfv_value);
+            }
+            // see if it relates to PMIx
+            if (pmix_pmdl_base_check_pmix_param(fv->mbvfv_var)) {
+                pmix_asprintf(&tmp, "PMIX_MCA_%s", fv->mbvfv_var);
+                // set it, but don't overwrite if they already
+                // have a value in our environment
+                setenv(tmp, fv->mbvfv_value, false);
+                free(tmp);
             }
         }
         PMIX_LIST_DESTRUCT(&params);
@@ -2070,7 +2106,7 @@ static int detect_proxy(char *personalities)
     /* if we were told the proxy, then use it */
     if (NULL != (evar = getenv("PRTE_MCA_schizo_proxy"))) {
         if (0 == strcmp(evar, "ompi")) {
-            return translate_params();
+            return 100;
         } else {
             return 0;
         }

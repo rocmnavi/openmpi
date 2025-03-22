@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "MPI_PREADY_RANGE" "3" "Jul 22, 2024" "" "Open MPI"
+.TH "MPI_PREADY_RANGE" "3" "Nov 15, 2024" "" "Open MPI"
 .
 .nr rst2man-indent-level 0
 .
@@ -40,7 +40,7 @@ partitions are ready to be transferred.
 .ft C
 #include <mpi.h>
 
-int MPI_Pready_range(int partition_low, int partition_high, MPI_Request *request)
+int MPI_Pready_range(int partition_low, int partition_high, MPI_Request request)
 .ft P
 .fi
 .UNINDENT

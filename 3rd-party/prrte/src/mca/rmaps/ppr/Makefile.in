@@ -18,14 +18,13 @@
 # Copyright (c) 2011-2020 Cisco Systems, Inc.  All rights reserved
 # Copyright (c) 2017      IBM Corporation.  All rights reserved.
 # Copyright (c) 2017-2020 Intel, Inc.  All rights reserved.
-# Copyright (c) 2022      Nanook Consulting.  All rights reserved.
+# Copyright (c) 2022-2024 Nanook Consulting  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
 #
 # $HEADER$
 #
-
 
 VPATH = @srcdir@
 am__is_gnu_make = { \
@@ -190,8 +189,7 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(dist_prtedata_DATA) \
-	$(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/include/prte_config.h
 CONFIG_CLEAN_FILES =
@@ -223,8 +221,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(mcacomponentdir)" \
-	"$(DESTDIR)$(prtedatadir)"
+am__installdirs = "$(DESTDIR)$(mcacomponentdir)"
 LTLIBRARIES = $(mcacomponent_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libprtemca_rmaps_ppr_la_LIBADD =
 am__objects_1 = rmaps_ppr.lo rmaps_ppr_component.lo
@@ -294,7 +291,6 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(dist_prtedata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -674,7 +670,6 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-dist_prtedata_DATA = help-prte-rmaps-ppr.txt
 sources = \
         rmaps_ppr.c \
         rmaps_ppr.h \
@@ -826,27 +821,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-dist_prtedataDATA: $(dist_prtedata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(prtedatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(prtedatadir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(prtedatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(prtedatadir)" || exit $$?; \
-	done
-
-uninstall-dist_prtedataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(prtedatadir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -934,9 +908,9 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA)
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
-	for dir in "$(DESTDIR)$(mcacomponentdir)" "$(DESTDIR)$(prtedatadir)"; do \
+	for dir in "$(DESTDIR)$(mcacomponentdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -994,8 +968,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_prtedataDATA \
-	install-mcacomponentLTLIBRARIES
+install-data-am: install-mcacomponentLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -1042,8 +1015,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-dist_prtedataDATA \
-	uninstall-mcacomponentLTLIBRARIES
+uninstall-am: uninstall-mcacomponentLTLIBRARIES
 
 .MAKE: install-am install-strip
 
@@ -1052,17 +1024,16 @@ uninstall-am: uninstall-dist_prtedataDATA \
 	clean-noinstLTLIBRARIES cscopelist-am ctags ctags-am distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am \
-	install-dist_prtedataDATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
 	install-mcacomponentLTLIBRARIES install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am \
-	uninstall-dist_prtedataDATA uninstall-mcacomponentLTLIBRARIES
+	uninstall-mcacomponentLTLIBRARIES
 
 .PRECIOUS: Makefile
 

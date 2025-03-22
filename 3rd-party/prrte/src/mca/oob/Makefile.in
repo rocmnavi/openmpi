@@ -701,7 +701,7 @@ libprtemca_oob_la_SOURCES = $(headers) base/oob_base_stubs.c \
 	base/oob_base_frame.c base/oob_base_select.c
 
 # pkgdata setup
-dist_prtedata_DATA = base/help-oob-base.txt
+dist_prtedata_DATA = 
 
 # local files
 headers = oob.h base/base.h

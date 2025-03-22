@@ -10199,11 +10199,17 @@ lt_prog_compiler_static=
 	lt_prog_compiler_static='-Bstatic'
 	;;
       tcc*)
-	# Fabrice Bellard et al's Tiny C Compiler
-	lt_prog_compiler_wl='-Wl,'
-	lt_prog_compiler_pic='-fPIC'
-	lt_prog_compiler_static='-static'
-	;;
+        # Fabrice Bellard et al's Tiny C Compiler
+        lt_prog_compiler_wl='-Wl,'
+        lt_prog_compiler_pic='-fPIC'
+        lt_prog_compiler_static='-static'
+        ;;
+    nvc* | nvcc* | nvfortran*)
+	# NVIDIA Fortran compiler
+        lt_prog_compiler_wl='-Wl,'
+        lt_prog_compiler_pic='-fPIC'
+        lt_prog_compiler_static='-Bstatic'
+        ;;
       pgcc* | pgf77* | pgf90* | pgf95* | pgfortran*)
         # Portland Group compilers (*not* the Pentium gcc compiler,
 	# which looks to be a dead project)
@@ -18695,11 +18701,17 @@ lt_prog_compiler_static_FC=
 	lt_prog_compiler_static_FC='-Bstatic'
 	;;
       tcc*)
-	# Fabrice Bellard et al's Tiny C Compiler
-	lt_prog_compiler_wl_FC='-Wl,'
-	lt_prog_compiler_pic_FC='-fPIC'
-	lt_prog_compiler_static_FC='-static'
-	;;
+        # Fabrice Bellard et al's Tiny C Compiler
+        lt_prog_compiler_wl_FC='-Wl,'
+        lt_prog_compiler_pic_FC='-fPIC'
+        lt_prog_compiler_static_FC='-static'
+        ;;
+    nvc* | nvcc* | nvfortran*)
+	# NVIDIA Fortran compiler
+        lt_prog_compiler_wl_FC='-Wl,'
+        lt_prog_compiler_pic_FC='-fPIC'
+        lt_prog_compiler_static_FC='-Bstatic'
+        ;;
       pgcc* | pgf77* | pgf90* | pgf95* | pgfortran*)
         # Portland Group compilers (*not* the Pentium gcc compiler,
 	# which looks to be a dead project)

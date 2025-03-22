@@ -18,7 +18,7 @@
 # Copyright (c) 2015-2020 Intel, Inc.  All rights reserved.
 # Copyright (c) 2017      IBM Corporation.  All rights reserved.
 # Copyright (c) 2020      Cisco Systems, Inc.  All rights reserved
-# Copyright (c) 2021-2023 Nanook Consulting.  All rights reserved.
+# Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
 # Copyright (c) 2023      Jeffrey M. Squyres.  All rights reserved.
 # $COPYRIGHT$
 #
@@ -191,8 +191,8 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(dist_prtedata_DATA) \
-	$(dist_rst_DATA) $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(dist_rst_DATA) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/include/prte_config.h
 CONFIG_CLEAN_FILES =
@@ -224,8 +224,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(mcacomponentdir)" \
-	"$(DESTDIR)$(prtedatadir)" "$(DESTDIR)$(rstdir)"
+am__installdirs = "$(DESTDIR)$(mcacomponentdir)" "$(DESTDIR)$(rstdir)"
 LTLIBRARIES = $(mcacomponent_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libprtemca_schizo_ompi_la_LIBADD =
 am__objects_1 = schizo_ompi_component.lo schizo_ompi.lo
@@ -297,7 +296,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(dist_prtedata_DATA) $(dist_rst_DATA)
+DATA = $(dist_rst_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -695,11 +694,6 @@ rstdir = $(prtedatadir)/rst/schizo-ompi-rst-content
 dist_rst_DATA = \
         schizo-ompi-cli.rstxt
 
-
-# Install the help file
-dist_prtedata_DATA = \
-        help-schizo-ompi.txt
-
 sources = \
         schizo_ompi_component.c \
         schizo_ompi.h \
@@ -851,27 +845,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-dist_prtedataDATA: $(dist_prtedata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(prtedatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(prtedatadir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(prtedatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(prtedatadir)" || exit $$?; \
-	done
-
-uninstall-dist_prtedataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(prtedatadir)'; $(am__uninstall_files_from_dir)
 install-dist_rstDATA: $(dist_rst_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(dist_rst_DATA)'; test -n "$(rstdir)" || list=; \
@@ -982,7 +955,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(mcacomponentdir)" "$(DESTDIR)$(prtedatadir)" "$(DESTDIR)$(rstdir)"; do \
+	for dir in "$(DESTDIR)$(mcacomponentdir)" "$(DESTDIR)$(rstdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1040,8 +1013,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_prtedataDATA install-dist_rstDATA \
-	install-mcacomponentLTLIBRARIES
+install-data-am: install-dist_rstDATA install-mcacomponentLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -1088,8 +1060,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-dist_prtedataDATA uninstall-dist_rstDATA \
-	uninstall-mcacomponentLTLIBRARIES
+uninstall-am: uninstall-dist_rstDATA uninstall-mcacomponentLTLIBRARIES
 
 .MAKE: install-am install-strip
 
@@ -1099,17 +1070,15 @@ uninstall-am: uninstall-dist_prtedataDATA uninstall-dist_rstDATA \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am \
-	install-dist_prtedataDATA install-dist_rstDATA install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-mcacomponentLTLIBRARIES install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am \
-	uninstall-dist_prtedataDATA uninstall-dist_rstDATA \
-	uninstall-mcacomponentLTLIBRARIES
+	install-dist_rstDATA install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-mcacomponentLTLIBRARIES \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-dist_rstDATA uninstall-mcacomponentLTLIBRARIES
 
 .PRECIOUS: Makefile
 

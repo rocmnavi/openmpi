@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.1.1. Open MPI v5.0.x series &mdash; Open MPI 5.0.5 documentation</title>
+  <title>3.1.1. Open MPI v5.0.x series &mdash; Open MPI 5.0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -48,12 +48,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">3. Release notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">3.1. Changelog</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">3.1.1. Open MPI v5.0.x series</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-5">3.1.1.1. Open MPI version v5.0.5</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-4">3.1.1.2. Open MPI version v5.0.4</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-3">3.1.1.3. Open MPI version v5.0.3</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-2">3.1.1.4. Open MPI version v5.0.2</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-1">3.1.1.5. Open MPI version v5.0.1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-5-0-0">3.1.1.6. Open MPI version 5.0.0</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-6">3.1.1.1. Open MPI Version v5.0.6</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-5">3.1.1.2. Open MPI version v5.0.5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-4">3.1.1.3. Open MPI version v5.0.4</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-3">3.1.1.4. Open MPI version v5.0.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-2">3.1.1.5. Open MPI version v5.0.2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-1">3.1.1.6. Open MPI version v5.0.1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-5-0-0">3.1.1.7. Open MPI version 5.0.0</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="v4.1.x.html">3.1.2. Open MPI v4.1.x series</a></li>
@@ -125,8 +126,40 @@
 <h1><span class="section-number">3.1.1. </span>Open MPI v5.0.x series<a class="headerlink" href="#open-mpi-v5-0-x-series" title="Permalink to this heading"></a></h1>
 <p>This file contains all the NEWS updates for the Open MPI v5.0.x
 series, in reverse chronological order.</p>
+<div class="section" id="open-mpi-version-v5-0-6">
+<h2><span class="section-number">3.1.1.1. </span>Open MPI Version v5.0.6<a class="headerlink" href="#open-mpi-version-v5-0-6" title="Permalink to this heading"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>14 November 2024</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Internal PMIx and PRRTe version:</p>
+<ul>
+<li><p>PMIx (v5.0.4). Repo: <code class="docutils literal notranslate"><span class="pre">https://github.com/openpmix/openpmix</span></code>. Commit hash: <code class="docutils literal notranslate"><span class="pre">20ad9b16fe49ede4a76e7489bdf0e2ea05c3de95</span></code>.</p></li>
+<li><p>PRRTE (v3.0.7). repo: <code class="docutils literal notranslate"><span class="pre">https://github.com/openpmix/prrte</span></code>. Commit hash: <code class="docutils literal notranslate"><span class="pre">b2f4163e40a84fe777fa36dfbffa4db23d8d31dd</span></code>.</p></li>
+<li><p>Session Management Enhancements:</p></li>
+<li><p>Finalization Control: Ensures proper finalization of classes when references to the OPAL utility layer reach zero. A new smoke test has been added to validate this behavior.</p></li>
+<li><p>Test and CI Additions: A smoke test was introduced for session management, also integrated into macOS GitHub CI to ensure stability across platforms.</p></li>
+<li><p>Recognize requests from the same instance rather than same communicator, fixes Waitall/Waitany/Testall/Testany.</p></li>
+<li><p>Multiple Init/Finalize Handling: Improvements to handling session multiple initializations and finalizations, addressing issues with parameter management and session destruction.</p></li>
+<li><p>CUDA and NVIDIA HPC Compiler Compatibility:</p></li>
+<li><p>Stream-ordered Allocations: Adjustments for handling CUDA stream-ordered allocations and assigning primary device context in <cite>opal/cuda</cite> (Akshay Venkatesh).</p></li>
+<li><p>nvfortran Compatibility: Configure script updated to handle NVIDIA’s <cite>nvfortran</cite> compiler, enabling proper compilation with <cite>-fPIC</cite> flags for shared libraries (Gilles Gouaillardet).</p></li>
+<li><p>CUDA Memory Address Management: Improvements for handling virtual memory manager (VMM) pointers in CUDA applications to prevent runtime issues.</p></li>
+<li><p>MPI Communication and Resource Management:</p></li>
+<li><p>Info Duplication: Enhanced <cite>MPI_Info_dup</cite> function to ensure consistent key management across duplicated info objects, supporting better memory and resource handling.</p></li>
+<li><p>OFI/Initialization Improvements: Refactored code for OFI common components to support session-based initialization models per MPI 4 standards.</p></li>
+<li><p>Resource Leak Fixes: Addressed memory leaks and reference count issues in several components to improve memory management and stability in high-demand environments.</p></li>
+<li><p>Detailed Locking Protocol: Modified default file-locking protocols in UFS component to ensure data consistency, especially when using data-sieving operations, which require broader locking.</p></li>
+<li><p>MPI_T Interface Enhancements: Modified MCA parameter settings to allow runtime tuning of collectives through the MPI_T interface, adding flexibility for dynamic rules in collective operations.</p></li>
+<li><p>Corrected various documentation typos and clarified parameter settings in several API references, improving readability and usability for end users.</p></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="open-mpi-version-v5-0-5">
-<h2><span class="section-number">3.1.1.1. </span>Open MPI version v5.0.5<a class="headerlink" href="#open-mpi-version-v5-0-5" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.2. </span>Open MPI version v5.0.5<a class="headerlink" href="#open-mpi-version-v5-0-5" title="Permalink to this heading"></a></h2>
 <dl class="field-list">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>23 July 2024</p>
@@ -154,7 +187,7 @@ Many thanks to Lisandro Dalcin for reporting the issue.</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-4">
-<h2><span class="section-number">3.1.1.2. </span>Open MPI version v5.0.4<a class="headerlink" href="#open-mpi-version-v5-0-4" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.3. </span>Open MPI version v5.0.4<a class="headerlink" href="#open-mpi-version-v5-0-4" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>19 July 2024</p>
@@ -204,7 +237,7 @@ Roie Danino, Thomas Vegas</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-3">
-<h2><span class="section-number">3.1.1.3. </span>Open MPI version v5.0.3<a class="headerlink" href="#open-mpi-version-v5-0-3" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.4. </span>Open MPI version v5.0.3<a class="headerlink" href="#open-mpi-version-v5-0-3" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>9 April 2024</p>
@@ -240,7 +273,7 @@ Christoph Niethammer, Christoph van Wüllen, Jakub Klinkovský, Lisandro Dalcin<
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-2">
-<h2><span class="section-number">3.1.1.4. </span>Open MPI version v5.0.2<a class="headerlink" href="#open-mpi-version-v5-0-2" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.5. </span>Open MPI version v5.0.2<a class="headerlink" href="#open-mpi-version-v5-0-2" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>6 February 2024</p>
@@ -298,7 +331,7 @@ Erik Schnetter</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-1">
-<h2><span class="section-number">3.1.1.5. </span>Open MPI version v5.0.1<a class="headerlink" href="#open-mpi-version-v5-0-1" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.6. </span>Open MPI version v5.0.1<a class="headerlink" href="#open-mpi-version-v5-0-1" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>20 December 2023</p>
@@ -339,7 +372,7 @@ Tony Curtis, David Edwards Linaro, Niv Shpak for their contribution.</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-5-0-0">
-<h2><span class="section-number">3.1.1.6. </span>Open MPI version 5.0.0<a class="headerlink" href="#open-mpi-version-5-0-0" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.7. </span>Open MPI version 5.0.0<a class="headerlink" href="#open-mpi-version-5-0-0" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>25 October 2023</p>

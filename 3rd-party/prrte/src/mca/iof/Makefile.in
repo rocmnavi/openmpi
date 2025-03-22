@@ -49,14 +49,13 @@
 # Copyright (c) 2013      Los Alamos National Security, LLC. All rights reserved.
 # Copyright (c) 2019      Intel, Inc.  All rights reserved.
 # Copyright (c) 2020      Cisco Systems, Inc.  All rights reserved
-# Copyright (c) 2022      Nanook Consulting.  All rights reserved.
+# Copyright (c) 2022-2024 Nanook Consulting  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
 #
 # $HEADER$
 #
-
 
 
 VPATH = @srcdir@
@@ -222,8 +221,8 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(dist_prtedata_DATA) \
-	$(nobase_prte_HEADERS) $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(nobase_prte_HEADERS) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/include/prte_config.h
 CONFIG_CLEAN_FILES =
@@ -312,8 +311,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(prtedatadir)" "$(DESTDIR)$(prtedir)"
-DATA = $(dist_prtedata_DATA)
+am__installdirs = "$(DESTDIR)$(prtedir)"
 HEADERS = $(nobase_prte_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
@@ -710,7 +708,6 @@ headers = iof.h iof_types.h base/base.h base/iof_base_setup.h
 # Conditionally install the header files
 prtedir = $(prteincludedir)/$(subdir)
 nobase_prte_HEADERS = $(headers)
-dist_prtedata_DATA = base/help-iof-base.txt
 all: all-am
 
 .SUFFIXES:
@@ -823,27 +820,6 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf base/.libs base/_libs
-install-dist_prtedataDATA: $(dist_prtedata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(prtedatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(prtedatadir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(prtedatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(prtedatadir)" || exit $$?; \
-	done
-
-uninstall-dist_prtedataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_prtedata_DATA)'; test -n "$(prtedatadir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(prtedatadir)'; $(am__uninstall_files_from_dir)
 install-nobase_prteHEADERS: $(nobase_prte_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_prte_HEADERS)'; test -n "$(prtedir)" || list=; \
@@ -955,9 +931,9 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(prtedatadir)" "$(DESTDIR)$(prtedir)"; do \
+	for dir in "$(DESTDIR)$(prtedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1019,7 +995,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_prtedataDATA install-nobase_prteHEADERS
+install-data-am: install-nobase_prteHEADERS
 
 install-dvi: install-dvi-am
 
@@ -1068,7 +1044,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-dist_prtedataDATA uninstall-nobase_prteHEADERS
+uninstall-am: uninstall-nobase_prteHEADERS
 
 .MAKE: install-am install-strip
 
@@ -1077,17 +1053,16 @@ uninstall-am: uninstall-dist_prtedataDATA uninstall-nobase_prteHEADERS
 	cscopelist-am ctags ctags-am distclean distclean-compile \
 	distclean-generic distclean-libtool distclean-local \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am \
-	install-dist_prtedataDATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
 	install-nobase_prteHEADERS install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am \
-	uninstall-dist_prtedataDATA uninstall-nobase_prteHEADERS
+	uninstall-nobase_prteHEADERS
 
 .PRECIOUS: Makefile
 

@@ -388,7 +388,8 @@ void prte_rmaps_base_map_job(int fd, short args, void *cbdata)
             options.maptype = HWLOC_OBJ_CORE;
             options.mapdepth = PRTE_BIND_TO_CORE;
         } else if (0 == strncasecmp(ck[1], "package", len) ||
-                   0 == strncasecmp(ck[1], "skt", len)) {
+                   0 == strncasecmp(ck[1], "skt", len) ||
+                   0 == strncasecmp(ck[1], "socket", len)) {
             options.maptype = HWLOC_OBJ_PACKAGE;
             options.mapdepth = PRTE_BIND_TO_PACKAGE;
         } else if (0 == strncasecmp(ck[1], "numa", len) ||
@@ -435,7 +436,7 @@ void prte_rmaps_base_map_job(int fd, short args, void *cbdata)
         PMIX_CONSTRUCT(&nodes, pmix_list_t);
         rc = prte_rmaps_base_get_target_nodes(&nodes, &slots,
                                               jdata, app, jdata->map->mapping,
-                                              true, true);
+                                              true, true, false);
         if (PRTE_SUCCESS != rc) {
             PMIX_LIST_DESTRUCT(&nodes);
             jdata->exit_code = rc;
@@ -467,7 +468,7 @@ void prte_rmaps_base_map_job(int fd, short args, void *cbdata)
 #else
             } else if (HWLOC_OBJ_L1CACHE == options.maptype ||
                        HWLOC_OBJ_L2CACHE == options.maptype ||
-                       HWLOC_OBJ_L1CACHE == options.maptype) {
+                       HWLOC_OBJ_L3CACHE == options.maptype) {
                 /* add in #cache for each node */
                 PMIX_LIST_FOREACH (node, &nodes, prte_node_t) {
                     app->num_procs += options.pprn * prte_hwloc_base_get_nbobjs_by_type(node->topology->topo,

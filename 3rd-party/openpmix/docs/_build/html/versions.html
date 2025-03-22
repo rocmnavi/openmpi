@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>9. Version Numbers and Binary Compatibility &mdash; OpenPMIx 5.0.3rc1 documentation</title>
+  <title>9. Version Numbers and Binary Compatibility &mdash; OpenPMIx 5.0.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#software-version-number">9.1. Software Version Number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shared-library-version-number">9.2. Shared Library Version Number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#application-binary-interface-abi-compatibility">9.3. Application Binary Interface (ABI) Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-version-compatibility">9.4. Cross-Version Compatibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mca.html">10. The Modular Component Architecture (MCA)</a></li>
@@ -209,6 +210,19 @@ environment variable or other operating system mechanism).</p>
 release series.  For example, the same PMIx application from above
 (linked against PMIx v1.3.2 shared libraries) will <em>not</em> work with
 PMIx v1.5 shared libraries.</p>
+</div>
+<div class="section" id="cross-version-compatibility">
+<h2><span class="section-number">9.4. </span>Cross-Version Compatibility<a class="headerlink" href="#cross-version-compatibility" title="Permalink to this heading"></a></h2>
+<p>As PMIx adoption has grown, the problem of managing application-SMS interactions between different PMIx library versions has increased in visibility. It soon became clear that use of a common library version by both SMS and application could not be guaranteed, especially in the container-based application use-case. Thus, cross-version compatibility arose as a problem.</p>
+<p>PMIx has addressed this by utilizing a plugin-based architecture that allows both the client and server to select from a range of supported protocol levels. The resulting coordination is based on a client-driven handshake – i.e., the client selects the protocol to be used, and the server adapts to support it. The client’s selection is based on a combination of environmental parameters passed to it at launch by the server, filtered against the protocols available to that particular client. For example, a PMIx v1.2 client only has the <code class="docutils literal notranslate"><span class="pre">usock</span></code> messaging transport available to it, and so would select that transport even when a PMIx v3 server offered <code class="docutils literal notranslate"><span class="pre">usock</span></code> and <code class="docutils literal notranslate"><span class="pre">tcp</span></code> options. Note that if the PMIx v3 server had not been instructed to support <code class="docutils literal notranslate"><span class="pre">usock</span></code>, then the v1.2 client would have failed <code class="docutils literal notranslate"><span class="pre">PMIx_Init</span></code> with an error indicating the server was unreachable.</p>
+<p>Although the PMIx community is committed to supporting the cross-version use-case, early releases did not fully provide the necessary capabilities. Each release branch has since been updated to include the required translation logic for communicating to other versions, but full compatibility could not be provided due to the level of changes it would introduce to what would otherwise be considered a <code class="docutils literal notranslate"><span class="pre">stable</span></code> release series. Thus, the following chart shows the available compatibility:</p>
+<img alt="_images/compatibility.png" src="_images/compatibility.png" />
+<p>Starting with v2.1.1, all versions are fully cross-compatible – i.e., the client and server versions can be any combination of release level. Thus, a v2.1.1 client can connect to a v3.0.0 server, and vice versa.</p>
+<p>PMIx v1.2.5 servers can only serve v1.2.x clients, but v1.2.5 clients can connect to v2.0.3, and v2.1.1 or higher servers. Similarly, v2.0.3 servers can only serve v2.0.x and v1.2.5 clients, but v2.0.3 clients can connect to v2.1.1 or higher servers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cross-version guarantee only means that users of two different versions will be able to communicate requests and their responses. It does not guarantee that both sides will completely support the requests. It is possible, for example, for a server to not include support for an operation that was introduced in a newer version being used by a client. Likewise, it is possible that a bug existed in an earlier version that precludes correct completion of the request.</p>
+</div>
 </div>
 </div>
 

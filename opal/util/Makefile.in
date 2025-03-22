@@ -511,11 +511,12 @@ DATA = $(dist_opaldata_DATA)
 am__opal_HEADERS_DIST = alfg.h arch.h argv.h basename.h \
 	bipartite_graph.h bipartite_graph_internal.h bit_ops.h \
 	clock_gettime.h cmd_line.h crc.h ethtool.h error.h event.h \
-	fd.h few.h if.h keyval_parse.h malloc.h net.h numtostr.h \
-	opal_environ.h opal_getcwd.h opal_pty.h os_dirpath.h os_path.h \
-	output.h path.h printf.h proc.h qsort.h show_help.h \
-	show_help_lex.h stacktrace.h string_copy.h sys_limits.h \
-	timings.h uri.h info_subscriber.h info.h minmax.h sha256.h
+	fd.h few.h if.h keyval_parse.h malloc.h misc.h net.h \
+	numtostr.h opal_environ.h opal_getcwd.h opal_pty.h \
+	os_dirpath.h os_path.h output.h path.h printf.h proc.h qsort.h \
+	show_help.h show_help_lex.h stacktrace.h string_copy.h \
+	sys_limits.h timings.h uri.h info_subscriber.h info.h minmax.h \
+	sha256.h
 HEADERS = $(opal_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -1518,6 +1519,7 @@ headers = \
         if.h \
         keyval_parse.h \
         malloc.h \
+        misc.h \
         net.h \
         numtostr.h \
         opal_environ.h \

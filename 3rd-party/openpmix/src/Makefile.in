@@ -199,6 +199,7 @@
 #
 # Copyright (c) 2015-2019 Intel, Inc.  All rights reserved.
 # Copyright (c) 2016      Cisco Systems, Inc.  All rights reserved.
+# Copyright (c) 2023-2024 Nanook Consulting  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -336,9 +337,9 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
 	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
+	$(top_srcdir)/src/mca/pcompress/zlibng/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
-	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
@@ -423,7 +424,7 @@ am__objects_2 = threads/mutex.lo threads/thread.lo \
 	common/pmix_strings.lo common/pmix_log.lo \
 	common/pmix_control.lo common/pmix_data.lo \
 	common/pmix_security.lo common/pmix_iof.lo \
-	common/pmix_attributes.lo
+	common/pmix_attributes.lo common/pmix_pfexec.lo
 am_libpmix_la_OBJECTS = $(am__objects_1) $(am__objects_2)
 libpmix_la_OBJECTS = $(am_libpmix_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -461,7 +462,8 @@ am__depfiles_remade = client/$(DEPDIR)/pmix_client.Plo \
 	common/$(DEPDIR)/pmix_attributes.Plo \
 	common/$(DEPDIR)/pmix_control.Plo \
 	common/$(DEPDIR)/pmix_data.Plo common/$(DEPDIR)/pmix_iof.Plo \
-	common/$(DEPDIR)/pmix_log.Plo common/$(DEPDIR)/pmix_query.Plo \
+	common/$(DEPDIR)/pmix_log.Plo common/$(DEPDIR)/pmix_pfexec.Plo \
+	common/$(DEPDIR)/pmix_query.Plo \
 	common/$(DEPDIR)/pmix_security.Plo \
 	common/$(DEPDIR)/pmix_strings.Plo \
 	event/$(DEPDIR)/pmix_event_notification.Plo \
@@ -674,13 +676,6 @@ MCA_pmix_pdl_DSO_SUBDIRS = @MCA_pmix_pdl_DSO_SUBDIRS@
 MCA_pmix_pdl_STATIC_COMPONENTS = @MCA_pmix_pdl_STATIC_COMPONENTS@
 MCA_pmix_pdl_STATIC_LTLIBS = @MCA_pmix_pdl_STATIC_LTLIBS@
 MCA_pmix_pdl_STATIC_SUBDIRS = @MCA_pmix_pdl_STATIC_SUBDIRS@
-MCA_pmix_pfexec_ALL_COMPONENTS = @MCA_pmix_pfexec_ALL_COMPONENTS@
-MCA_pmix_pfexec_ALL_SUBDIRS = @MCA_pmix_pfexec_ALL_SUBDIRS@
-MCA_pmix_pfexec_DSO_COMPONENTS = @MCA_pmix_pfexec_DSO_COMPONENTS@
-MCA_pmix_pfexec_DSO_SUBDIRS = @MCA_pmix_pfexec_DSO_SUBDIRS@
-MCA_pmix_pfexec_STATIC_COMPONENTS = @MCA_pmix_pfexec_STATIC_COMPONENTS@
-MCA_pmix_pfexec_STATIC_LTLIBS = @MCA_pmix_pfexec_STATIC_LTLIBS@
-MCA_pmix_pfexec_STATIC_SUBDIRS = @MCA_pmix_pfexec_STATIC_SUBDIRS@
 MCA_pmix_pgpu_ALL_COMPONENTS = @MCA_pmix_pgpu_ALL_COMPONENTS@
 MCA_pmix_pgpu_ALL_SUBDIRS = @MCA_pmix_pgpu_ALL_SUBDIRS@
 MCA_pmix_pgpu_DSO_COMPONENTS = @MCA_pmix_pgpu_DSO_COMPONENTS@
@@ -898,6 +893,9 @@ oldincludedir = @oldincludedir@
 pcompress_zlib_CPPFLAGS = @pcompress_zlib_CPPFLAGS@
 pcompress_zlib_LDFLAGS = @pcompress_zlib_LDFLAGS@
 pcompress_zlib_LIBS = @pcompress_zlib_LIBS@
+pcompress_zlibng_CPPFLAGS = @pcompress_zlibng_CPPFLAGS@
+pcompress_zlibng_LDFLAGS = @pcompress_zlibng_LDFLAGS@
+pcompress_zlibng_LIBS = @pcompress_zlibng_LIBS@
 pdfdir = @pdfdir@
 pkgpyexecdir = @pkgpyexecdir@
 pkgpythondir = @pkgpythondir@
@@ -964,7 +962,7 @@ headers = threads/pmix_mutex.h threads/pmix_mutex_unix.h \
 	server/pmix_server_ops.h runtime/pmix_rte.h \
 	runtime/pmix_progress_threads.h runtime/pmix_init_util.h \
 	tool/pmix_tool_ops.h common/pmix_iof.h \
-	common/pmix_attributes.h
+	common/pmix_attributes.h common/pmix_pfexec.h
 sources = threads/mutex.c threads/thread.c \
 	event/pmix_event_notification.c \
 	event/pmix_event_registration.c hwloc/pmix_hwloc.c \
@@ -980,11 +978,11 @@ sources = threads/mutex.c threads/thread.c \
 	tool/pmix_tool.c tool/pmix_tool_ops.c common/pmix_query.c \
 	common/pmix_strings.c common/pmix_log.c common/pmix_control.c \
 	common/pmix_data.c common/pmix_security.c common/pmix_iof.c \
-	common/pmix_attributes.c
+	common/pmix_attributes.c common/pmix_pfexec.c
 nodist_headers = 
 EXTRA_DIST = 
 dist_pmixdata_DATA = hwloc/help-ploc.txt server/help-pmix-server.txt \
-	runtime/help-pmix-runtime.txt
+	runtime/help-pmix-runtime.txt common/help-pfexec-base.txt
 nobase_pmix_HEADERS = $(headers)
 pmixdir = $(pmixincludedir)/$(subdir)
 libpmix_la_LIBADD = mca/base/libpmix_mca_base.la \
@@ -1178,6 +1176,8 @@ common/pmix_iof.lo: common/$(am__dirstamp) \
 	common/$(DEPDIR)/$(am__dirstamp)
 common/pmix_attributes.lo: common/$(am__dirstamp) \
 	common/$(DEPDIR)/$(am__dirstamp)
+common/pmix_pfexec.lo: common/$(am__dirstamp) \
+	common/$(DEPDIR)/$(am__dirstamp)
 
 libpmix.la: $(libpmix_la_OBJECTS) $(libpmix_la_DEPENDENCIES) $(EXTRA_libpmix_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libpmix_la_LINK) -rpath $(libdir) $(libpmix_la_OBJECTS) $(libpmix_la_LIBADD) $(LIBS)
@@ -1219,6 +1219,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_data.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_iof.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_log.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_pfexec.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_query.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_security.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/pmix_strings.Plo@am__quote@ # am--include-marker
@@ -1559,6 +1560,7 @@ distclean: distclean-recursive
 	-rm -f common/$(DEPDIR)/pmix_data.Plo
 	-rm -f common/$(DEPDIR)/pmix_iof.Plo
 	-rm -f common/$(DEPDIR)/pmix_log.Plo
+	-rm -f common/$(DEPDIR)/pmix_pfexec.Plo
 	-rm -f common/$(DEPDIR)/pmix_query.Plo
 	-rm -f common/$(DEPDIR)/pmix_security.Plo
 	-rm -f common/$(DEPDIR)/pmix_strings.Plo
@@ -1637,6 +1639,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f common/$(DEPDIR)/pmix_data.Plo
 	-rm -f common/$(DEPDIR)/pmix_iof.Plo
 	-rm -f common/$(DEPDIR)/pmix_log.Plo
+	-rm -f common/$(DEPDIR)/pmix_pfexec.Plo
 	-rm -f common/$(DEPDIR)/pmix_query.Plo
 	-rm -f common/$(DEPDIR)/pmix_security.Plo
 	-rm -f common/$(DEPDIR)/pmix_strings.Plo

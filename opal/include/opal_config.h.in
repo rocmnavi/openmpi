@@ -1688,6 +1688,9 @@
 /* Whether we have CUDA CU_POINTER_ATTRIBUTE_SYNC_MEMOPS support available */
 #undef OPAL_CUDA_SYNC_MEMOPS
 
+/* Whether we have CU_MEM_LOCATION_TYPE_HOST_NUMA support available */
+#undef OPAL_CUDA_VMM_SUPPORT
+
 /* Whether C compiler supports GCC style inline assembly */
 #undef OPAL_C_GCC_INLINE_ASSEMBLY
 

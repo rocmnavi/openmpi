@@ -57,7 +57,7 @@
 # Copyright (c) 2012      Los Alamos National Security, Inc.  All rights reserved.
 # Copyright (c) 2013      Mellanox Technologies, Inc.  All rights reserved.
 # Copyright (c) 2016-2020 Intel, Inc.  All rights reserved.
-# Copyright (c) 2021-2022 Nanook Consulting.  All rights reserved.
+# Copyright (c) 2021-2024 Nanook Consulting  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -725,7 +725,7 @@ EXTRA_DIST = README.md VERSION LICENSE autogen.pl examples/README \
 	examples/pmi1client.c examples/probe.c examples/pub.c \
 	examples/server.c examples/showkeys.c examples/target.c \
 	examples/tool.c examples/colocate.c examples/pset.c \
-	examples/nodeid.c
+	examples/nodeid.c examples/client-threaded.c
 ACLOCAL_AMFLAGS = -I config
 all: all-recursive
 

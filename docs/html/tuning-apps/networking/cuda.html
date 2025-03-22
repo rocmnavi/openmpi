@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2.6. CUDA &mdash; Open MPI 5.0.5 documentation</title>
+  <title>11.2.6. CUDA &mdash; Open MPI 5.0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -275,17 +275,17 @@ with the OB1 (<code class="docutils literal notranslate"><span class="pre">ob1</
 <div class="section" id="psm2-support-for-cuda">
 <h2><span class="section-number">11.2.6.6. </span>PSM2 support for CUDA<a class="headerlink" href="#psm2-support-for-cuda" title="Permalink to this heading"></a></h2>
 <p>CUDA-aware support is present in PSM2 MTL.  When running CUDA-aware
-Open MPI on Intel Omni-path, the PSM2 MTL will automatically set
+Open MPI on Cornelis Networks Omni-Path, the PSM2 MTL will automatically set
 <code class="docutils literal notranslate"><span class="pre">PSM2_CUDA</span></code> environment variable which enables PSM2 to handle GPU
 buffers.  If the user wants to use host buffers with a CUDA-aware Open
 MPI, it is recommended to set <code class="docutils literal notranslate"><span class="pre">PSM2_CUDA</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> in the execution
 environment. PSM2 also has support for the NVIDIA GPUDirect support
 feature. To enable this, users will need to set <code class="docutils literal notranslate"><span class="pre">PSM2_GPUDIRECT</span></code>
 to <code class="docutils literal notranslate"><span class="pre">1</span></code> in the execution environment.</p>
-<p>Note: The PSM2 library and <code class="docutils literal notranslate"><span class="pre">hfi1</span></code> driver with CUDA support are
-requirements to use GPUDirect support on Intel Omni-Path. The minimum
+<p>Note: The PSM2 library and <code class="docutils literal notranslate"><span class="pre">hfi1</span></code> driver with CUDA support are requirements
+to use GPUDirect support on Cornelis Networks Omni-Path. The minimum
 PSM2 build version required is <a class="reference external" href="https://github.com/01org/opa-psm2/releases/tag/PSM2_10.2-175">PSM2 10.2.175</a>.</p>
-<p>For more information refer to the <a class="reference external" href="https://www.intel.com/content/www/us/en/support/articles/000016242/network-and-i-o/fabric-products.html">Intel Omni-Path documentation</a>.</p>
+<p>For more information refer to the <a class="reference external" href="https://customercenter.cornelisnetworks.com/">Cornelis Networks Customer Center</a>.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="ofi-support-for-cuda">
@@ -690,10 +690,9 @@ limit is reached:</p>
 <hr class="docutils" />
 <div class="section" id="what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path">
 <h2><span class="section-number">11.2.6.18. </span>What are some guidelines for using CUDA and Open MPI with Omni-Path?<a class="headerlink" href="#what-are-some-guidelines-for-using-cuda-and-open-mpi-with-omni-path" title="Permalink to this heading"></a></h2>
-<p>When developing CUDA-aware Open MPI applications for OPA-based
-fabrics, the PSM2 transport is preferred and a CUDA-aware version of
-PSM2 is provided with all versions of the Intel Omni-Path IFS software
-suite.</p>
+<p>When developing CUDA-aware Open MPI applications for OPA-based fabrics, the
+PSM2 transport is preferred and a CUDA-aware version of PSM2 is provided with
+all versions of the Cornelis Networks Omni-Path OPXS software suite.</p>
 <div class="admonition error">
 <p class="admonition-title">Error</p>
 <p>TODO Are Intel/OPA references still correct?</p>
@@ -714,9 +713,9 @@ running on. You will also want to use the <code class="docutils literal notransl
 processes do not move between NUMA nodes. See the section on
 <a class="reference internal" href="#faq-cuda-mpi-cuda-numa-issues-label"><span class="std std-ref">NUMA Node Issues</span></a>, for
 more information.</p>
-<p>For more information see the <em>Intel Performance Scaled Messaging 2
-(PSM2) Programmer’s Guide</em> and the <em>Intel Omni-Path Performance Tuning
-Guide</em>, which can be found on the <a class="reference external" href="https://www.intel.com/omnipath/FabricSoftwarePublications">Intel Omni-Path web site</a>.</p>
+<p>For more information see the <em>Cornelis Networks Performance Scaled Messaging 2
+(PSM2) Programmer’s Guide</em> and the <em>Cornelis Networks Omni-Path Performance
+Tuning Guide</em>, which can be found in the <a class="reference external" href="https://customercenter.cornelisnetworks.com/">Cornelis Networks Customer Center</a>.</p>
 <div class="admonition error">
 <p class="admonition-title">Error</p>
 <p>TODO Are Intel/OPA references still correct?</p>

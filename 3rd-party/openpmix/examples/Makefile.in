@@ -96,7 +96,8 @@ noinst_PROGRAMS = client$(EXEEXT) client2$(EXEEXT) dmodex$(EXEEXT) \
 	group_dmodex$(EXEEXT) asyncgroup$(EXEEXT) hello$(EXEEXT) \
 	nodeinfo$(EXEEXT) abi_no_init$(EXEEXT) abi_with_init$(EXEEXT) \
 	group_lcl_cid$(EXEEXT) pset$(EXEEXT) log$(EXEEXT) \
-	client3$(EXEEXT) $(am__EXEEXT_1)
+	client3$(EXEEXT) launcher$(EXEEXT) resolve$(EXEEXT) \
+	$(am__EXEEXT_1)
 
 # these examples use internal symbols
 # use --disable-visibility
@@ -154,9 +155,9 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
 	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
+	$(top_srcdir)/src/mca/pcompress/zlibng/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
-	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
@@ -299,6 +300,12 @@ jctrl_DEPENDENCIES = $(top_builddir)/src/libpmix.la
 jctrl_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(jctrl_LDFLAGS) $(LDFLAGS) -o $@
+am_launcher_OBJECTS = launcher.$(OBJEXT)
+launcher_OBJECTS = $(am_launcher_OBJECTS)
+launcher_DEPENDENCIES = $(top_builddir)/src/libpmix.la
+launcher_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(launcher_LDFLAGS) $(LDFLAGS) -o $@
 am_log_OBJECTS = log.$(OBJEXT)
 log_OBJECTS = $(am_log_OBJECTS)
 log_DEPENDENCIES = $(top_builddir)/src/libpmix.la
@@ -329,6 +336,12 @@ pubi_DEPENDENCIES = $(top_builddir)/src/libpmix.la
 pubi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(pubi_LDFLAGS) $(LDFLAGS) -o $@
+am_resolve_OBJECTS = resolve.$(OBJEXT)
+resolve_OBJECTS = $(am_resolve_OBJECTS)
+resolve_DEPENDENCIES = $(top_builddir)/src/libpmix.la
+resolve_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(resolve_LDFLAGS) $(LDFLAGS) -o $@
 am__server_SOURCES_DIST = server.c examples.h
 @WANT_HIDDEN_FALSE@am_server_OBJECTS = server.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
@@ -366,9 +379,11 @@ am__depfiles_remade = ./$(DEPDIR)/abi_no_init.Po \
 	./$(DEPDIR)/dmodex.Po ./$(DEPDIR)/dynamic.Po \
 	./$(DEPDIR)/fault.Po ./$(DEPDIR)/group.Po \
 	./$(DEPDIR)/group_dmodex.Po ./$(DEPDIR)/group_lcl_cid.Po \
-	./$(DEPDIR)/hello.Po ./$(DEPDIR)/jctrl.Po ./$(DEPDIR)/log.Po \
+	./$(DEPDIR)/hello.Po ./$(DEPDIR)/jctrl.Po \
+	./$(DEPDIR)/launcher.Po ./$(DEPDIR)/log.Po \
 	./$(DEPDIR)/nodeinfo.Po ./$(DEPDIR)/pset.Po ./$(DEPDIR)/pub.Po \
-	./$(DEPDIR)/pubi.Po ./$(DEPDIR)/server.Po ./$(DEPDIR)/tool.Po
+	./$(DEPDIR)/pubi.Po ./$(DEPDIR)/resolve.Po \
+	./$(DEPDIR)/server.Po ./$(DEPDIR)/tool.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -394,18 +409,18 @@ SOURCES = $(abi_no_init_SOURCES) $(abi_with_init_SOURCES) \
 	$(debuggerd_SOURCES) $(dmodex_SOURCES) $(dynamic_SOURCES) \
 	$(fault_SOURCES) $(group_SOURCES) $(group_dmodex_SOURCES) \
 	$(group_lcl_cid_SOURCES) $(hello_SOURCES) $(jctrl_SOURCES) \
-	$(log_SOURCES) $(nodeinfo_SOURCES) $(pset_SOURCES) \
-	$(pub_SOURCES) $(pubi_SOURCES) $(server_SOURCES) \
-	$(tool_SOURCES)
+	$(launcher_SOURCES) $(log_SOURCES) $(nodeinfo_SOURCES) \
+	$(pset_SOURCES) $(pub_SOURCES) $(pubi_SOURCES) \
+	$(resolve_SOURCES) $(server_SOURCES) $(tool_SOURCES)
 DIST_SOURCES = $(abi_no_init_SOURCES) $(abi_with_init_SOURCES) \
 	$(alloc_SOURCES) $(asyncgroup_SOURCES) $(client_SOURCES) \
 	$(client2_SOURCES) $(client3_SOURCES) $(debugger_SOURCES) \
 	$(debuggerd_SOURCES) $(dmodex_SOURCES) $(dynamic_SOURCES) \
 	$(fault_SOURCES) $(group_SOURCES) $(group_dmodex_SOURCES) \
 	$(group_lcl_cid_SOURCES) $(hello_SOURCES) $(jctrl_SOURCES) \
-	$(log_SOURCES) $(nodeinfo_SOURCES) $(pset_SOURCES) \
-	$(pub_SOURCES) $(pubi_SOURCES) $(am__server_SOURCES_DIST) \
-	$(tool_SOURCES)
+	$(launcher_SOURCES) $(log_SOURCES) $(nodeinfo_SOURCES) \
+	$(pset_SOURCES) $(pub_SOURCES) $(pubi_SOURCES) \
+	$(resolve_SOURCES) $(am__server_SOURCES_DIST) $(tool_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -528,13 +543,6 @@ MCA_pmix_pdl_DSO_SUBDIRS = @MCA_pmix_pdl_DSO_SUBDIRS@
 MCA_pmix_pdl_STATIC_COMPONENTS = @MCA_pmix_pdl_STATIC_COMPONENTS@
 MCA_pmix_pdl_STATIC_LTLIBS = @MCA_pmix_pdl_STATIC_LTLIBS@
 MCA_pmix_pdl_STATIC_SUBDIRS = @MCA_pmix_pdl_STATIC_SUBDIRS@
-MCA_pmix_pfexec_ALL_COMPONENTS = @MCA_pmix_pfexec_ALL_COMPONENTS@
-MCA_pmix_pfexec_ALL_SUBDIRS = @MCA_pmix_pfexec_ALL_SUBDIRS@
-MCA_pmix_pfexec_DSO_COMPONENTS = @MCA_pmix_pfexec_DSO_COMPONENTS@
-MCA_pmix_pfexec_DSO_SUBDIRS = @MCA_pmix_pfexec_DSO_SUBDIRS@
-MCA_pmix_pfexec_STATIC_COMPONENTS = @MCA_pmix_pfexec_STATIC_COMPONENTS@
-MCA_pmix_pfexec_STATIC_LTLIBS = @MCA_pmix_pfexec_STATIC_LTLIBS@
-MCA_pmix_pfexec_STATIC_SUBDIRS = @MCA_pmix_pfexec_STATIC_SUBDIRS@
 MCA_pmix_pgpu_ALL_COMPONENTS = @MCA_pmix_pgpu_ALL_COMPONENTS@
 MCA_pmix_pgpu_ALL_SUBDIRS = @MCA_pmix_pgpu_ALL_SUBDIRS@
 MCA_pmix_pgpu_DSO_COMPONENTS = @MCA_pmix_pgpu_DSO_COMPONENTS@
@@ -752,6 +760,9 @@ oldincludedir = @oldincludedir@
 pcompress_zlib_CPPFLAGS = @pcompress_zlib_CPPFLAGS@
 pcompress_zlib_LDFLAGS = @pcompress_zlib_LDFLAGS@
 pcompress_zlib_LIBS = @pcompress_zlib_LIBS@
+pcompress_zlibng_CPPFLAGS = @pcompress_zlibng_CPPFLAGS@
+pcompress_zlibng_LDFLAGS = @pcompress_zlibng_LDFLAGS@
+pcompress_zlibng_LIBS = @pcompress_zlibng_LIBS@
 pdfdir = @pdfdir@
 pkgpyexecdir = @pkgpyexecdir@
 pkgpythondir = @pkgpythondir@
@@ -894,6 +905,12 @@ pset_LDADD = $(top_builddir)/src/libpmix.la
 log_SOURCES = log.c examples.h
 log_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
 log_LDADD = $(top_builddir)/src/libpmix.la
+launcher_SOURCES = launcher.c examples.h
+launcher_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+launcher_LDADD = $(top_builddir)/src/libpmix.la
+resolve_SOURCES = resolve.c examples.h
+resolve_LDFLAGS = $(PMIX_PKG_CONFIG_LDFLAGS)
+resolve_LDADD = $(top_builddir)/src/libpmix.la
 all: all-am
 
 .SUFFIXES:
@@ -1005,6 +1022,10 @@ jctrl$(EXEEXT): $(jctrl_OBJECTS) $(jctrl_DEPENDENCIES) $(EXTRA_jctrl_DEPENDENCIE
 	@rm -f jctrl$(EXEEXT)
 	$(AM_V_CCLD)$(jctrl_LINK) $(jctrl_OBJECTS) $(jctrl_LDADD) $(LIBS)
 
+launcher$(EXEEXT): $(launcher_OBJECTS) $(launcher_DEPENDENCIES) $(EXTRA_launcher_DEPENDENCIES) 
+	@rm -f launcher$(EXEEXT)
+	$(AM_V_CCLD)$(launcher_LINK) $(launcher_OBJECTS) $(launcher_LDADD) $(LIBS)
+
 log$(EXEEXT): $(log_OBJECTS) $(log_DEPENDENCIES) $(EXTRA_log_DEPENDENCIES) 
 	@rm -f log$(EXEEXT)
 	$(AM_V_CCLD)$(log_LINK) $(log_OBJECTS) $(log_LDADD) $(LIBS)
@@ -1024,6 +1045,10 @@ pub$(EXEEXT): $(pub_OBJECTS) $(pub_DEPENDENCIES) $(EXTRA_pub_DEPENDENCIES)
 pubi$(EXEEXT): $(pubi_OBJECTS) $(pubi_DEPENDENCIES) $(EXTRA_pubi_DEPENDENCIES) 
 	@rm -f pubi$(EXEEXT)
 	$(AM_V_CCLD)$(pubi_LINK) $(pubi_OBJECTS) $(pubi_LDADD) $(LIBS)
+
+resolve$(EXEEXT): $(resolve_OBJECTS) $(resolve_DEPENDENCIES) $(EXTRA_resolve_DEPENDENCIES) 
+	@rm -f resolve$(EXEEXT)
+	$(AM_V_CCLD)$(resolve_LINK) $(resolve_OBJECTS) $(resolve_LDADD) $(LIBS)
 
 server$(EXEEXT): $(server_OBJECTS) $(server_DEPENDENCIES) $(EXTRA_server_DEPENDENCIES) 
 	@rm -f server$(EXEEXT)
@@ -1056,11 +1081,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/group_lcl_cid.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hello.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jctrl.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/launcher.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nodeinfo.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pset.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pub.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pubi.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/resolve.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/server.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tool.Po@am__quote@ # am--include-marker
 
@@ -1242,11 +1269,13 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/group_lcl_cid.Po
 	-rm -f ./$(DEPDIR)/hello.Po
 	-rm -f ./$(DEPDIR)/jctrl.Po
+	-rm -f ./$(DEPDIR)/launcher.Po
 	-rm -f ./$(DEPDIR)/log.Po
 	-rm -f ./$(DEPDIR)/nodeinfo.Po
 	-rm -f ./$(DEPDIR)/pset.Po
 	-rm -f ./$(DEPDIR)/pub.Po
 	-rm -f ./$(DEPDIR)/pubi.Po
+	-rm -f ./$(DEPDIR)/resolve.Po
 	-rm -f ./$(DEPDIR)/server.Po
 	-rm -f ./$(DEPDIR)/tool.Po
 	-rm -f Makefile
@@ -1311,11 +1340,13 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/group_lcl_cid.Po
 	-rm -f ./$(DEPDIR)/hello.Po
 	-rm -f ./$(DEPDIR)/jctrl.Po
+	-rm -f ./$(DEPDIR)/launcher.Po
 	-rm -f ./$(DEPDIR)/log.Po
 	-rm -f ./$(DEPDIR)/nodeinfo.Po
 	-rm -f ./$(DEPDIR)/pset.Po
 	-rm -f ./$(DEPDIR)/pub.Po
 	-rm -f ./$(DEPDIR)/pubi.Po
+	-rm -f ./$(DEPDIR)/resolve.Po
 	-rm -f ./$(DEPDIR)/server.Po
 	-rm -f ./$(DEPDIR)/tool.Po
 	-rm -f Makefile
@@ -1360,7 +1391,7 @@ distclean-local:
         debugger debuggerd dmodex dynamic fault group \
         hello jctrl launcher log pub pubi server tool \
         abi_no_init abi_with_init group_lcl_cid pset \
-        async_group group_dmodex client3
+        async_group group_dmodex client3 resolve
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

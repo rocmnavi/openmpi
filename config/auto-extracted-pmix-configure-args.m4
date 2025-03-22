@@ -22,73 +22,73 @@ AC_DEFUN([OMPI_PMIX_ADD_ARGS],[
 # ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:837
 
 # Warning: Excluded: dlopen
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1031
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1044
 
 AC_ARG_ENABLE(devel-check,
     AS_HELP_STRING([--enable-devel-check],
                    [enable developer-level compiler pickyness when building PMIx (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1074
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1087
 
 AC_ARG_ENABLE(memory-sanitizers,
     AS_HELP_STRING([--memory-sanitizers],
                    [enable developer-level memory sanitizers when building PMIx (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1095
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1108
 
 # Warning: Excluded: debug
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1116
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1129
 
 # Warning: Excluded: debug-symbols
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1134
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1147
 
 AC_ARG_WITH(pmix-headers,
     AS_HELP_STRING([--with-pmix-headers],
                    [Install the PMIx header files (pmix.h and friends) (default: enabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1141
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1154
 
 AC_ARG_WITH([tests-examples],
     [AS_HELP_STRING([--with-tests-examples],
             [Whether or not to install the tests and example programs.])])
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1156
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1169
 
 # Warning: Excluded: per-user-config-files
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1173
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1186
 
 # Warning: Excluded: pretty-print-stacktrace
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1189
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1202
 
 # Warning: Excluded: ident-string
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1208
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1221
 
 AC_ARG_ENABLE(pmix-timing,
               AS_HELP_STRING([--enable-pmix-timing],
                              [enable PMIx developer-level timing code (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1234
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1247
 
 AC_ARG_ENABLE(pmix-binaries,
               AS_HELP_STRING([--enable-pmix-binaries],
                              [enable PMIx tools]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1252
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1265
 
 AC_ARG_ENABLE(python-bindings,
               AS_HELP_STRING([--enable-python-bindings],
                              [enable Python bindings (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1269
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1282
 
 AC_ARG_ENABLE([nonglobal-dlopen],
               AS_HELP_STRING([--enable-nonglobal-dlopen],
                              [enable non-global dlopen (default: enabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1352
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1365
 
 # Warning: Excluded: pty-support
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1366
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1379
 
 AC_ARG_ENABLE(dummy-handshake,
               AS_HELP_STRING([--enable-dummy-handshake],
                              [Enables psec dummy component intended to check the PTL handshake scenario (default: disabled)]))
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1386
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1399
 
 # Warning: Excluded: ipv6
-# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1400
+# ---------------------------------------- Above from 3rd-party/openpmix//config/pmix.m4:1413
 
     AC_ARG_WITH([alps-libdir],
                 [AS_HELP_STRING([--with-alps-libdir=DIR],
@@ -250,6 +250,16 @@ AC_ARG_ENABLE(werror,
                 [AS_HELP_STRING([--with-zlib-libdir=DIR],
                                 [Search for zlib libraries in DIR ])])
 # ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pcompress/zlib/configure.m4:27
+
+    AC_ARG_WITH([zlibng],
+                [AS_HELP_STRING([--with-zlibng=DIR],
+                                [Search for zlib-ng headers and libraries in DIR ])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pcompress/zlibng/configure.m4:24
+
+    AC_ARG_WITH([zlibng-libdir],
+                [AS_HELP_STRING([--with-zlibng-libdir=DIR],
+                                [Search for zlib-ng libraries in DIR ])])
+# ---------------------------------------- Above from 3rd-party/openpmix//src/mca/pcompress/zlibng/configure.m4:27
 
     AC_ARG_ENABLE([pmix-dlopen],
         [AS_HELP_STRING([--disable-pmix-dlopen],

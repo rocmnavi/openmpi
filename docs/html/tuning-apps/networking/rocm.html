@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.2.7. ROCm &mdash; Open MPI 5.0.5 documentation</title>
+  <title>11.2.7. ROCm &mdash; Open MPI 5.0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -134,7 +134,7 @@ accelerators. More information can be found at the following
 data from AMD GPU device buffers directly. As of today, ROCm support
 is available through UCX. While other communication transports might
 work as well, UCX is the only transport formally supported in Open MPI
-v5.0.5 for ROCm devices.</p>
+v5.0.6 for ROCm devices.</p>
 <p>Since UCX will be providing the ROCm support, it is important to
 ensure that UCX itself is built with ROCm support.</p>
 <p>To see if your UCX library was built with ROCm support, run the
@@ -181,7 +181,7 @@ support in the libraries. For example, the command to execute the
 <code class="docutils literal notranslate"><span class="pre">osu_latency</span></code> benchmark from the <a class="reference external" href="https://mvapich.cse.ohio-state.edu/benchmarks">OSU benchmarks</a> with ROCm buffers
 using Open MPI and UCX ROCm support is something like this:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ mpirun -n 2 --mca pml ucx \
-        ./osu_latency -d rocm D D
+        ./osu_latency D D
 </pre></div>
 </div>
 <p>Note: some additional configure flags are required to compile the OSU

@@ -32,6 +32,8 @@
 #                         reserved.
 # Copyright (c) 2013-2020 Intel, Inc.  All rights reserved.
 # Copyright (c) 2022-2023 Nanook Consulting  All rights reserved.
+# Copyright (c) 2024      Research Organization for Information Science
+#                         and Technology (RIST).  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -191,9 +193,9 @@ am__aclocal_m4_deps = $(top_srcdir)/config/oac/oac_assert.m4 \
 	$(top_srcdir)/src/mca/gds/hash/configure.m4 \
 	$(top_srcdir)/src/mca/gds/shmem2/configure.m4 \
 	$(top_srcdir)/src/mca/pcompress/zlib/configure.m4 \
+	$(top_srcdir)/src/mca/pcompress/zlibng/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/pdlopen/configure.m4 \
 	$(top_srcdir)/src/mca/pdl/plibltdl/configure.m4 \
-	$(top_srcdir)/src/mca/pfexec/linux/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/amd/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/intel/configure.m4 \
 	$(top_srcdir)/src/mca/pgpu/nvd/configure.m4 \
@@ -379,13 +381,6 @@ MCA_pmix_pdl_DSO_SUBDIRS = @MCA_pmix_pdl_DSO_SUBDIRS@
 MCA_pmix_pdl_STATIC_COMPONENTS = @MCA_pmix_pdl_STATIC_COMPONENTS@
 MCA_pmix_pdl_STATIC_LTLIBS = @MCA_pmix_pdl_STATIC_LTLIBS@
 MCA_pmix_pdl_STATIC_SUBDIRS = @MCA_pmix_pdl_STATIC_SUBDIRS@
-MCA_pmix_pfexec_ALL_COMPONENTS = @MCA_pmix_pfexec_ALL_COMPONENTS@
-MCA_pmix_pfexec_ALL_SUBDIRS = @MCA_pmix_pfexec_ALL_SUBDIRS@
-MCA_pmix_pfexec_DSO_COMPONENTS = @MCA_pmix_pfexec_DSO_COMPONENTS@
-MCA_pmix_pfexec_DSO_SUBDIRS = @MCA_pmix_pfexec_DSO_SUBDIRS@
-MCA_pmix_pfexec_STATIC_COMPONENTS = @MCA_pmix_pfexec_STATIC_COMPONENTS@
-MCA_pmix_pfexec_STATIC_LTLIBS = @MCA_pmix_pfexec_STATIC_LTLIBS@
-MCA_pmix_pfexec_STATIC_SUBDIRS = @MCA_pmix_pfexec_STATIC_SUBDIRS@
 MCA_pmix_pgpu_ALL_COMPONENTS = @MCA_pmix_pgpu_ALL_COMPONENTS@
 MCA_pmix_pgpu_ALL_SUBDIRS = @MCA_pmix_pgpu_ALL_SUBDIRS@
 MCA_pmix_pgpu_DSO_COMPONENTS = @MCA_pmix_pgpu_DSO_COMPONENTS@
@@ -603,6 +598,9 @@ oldincludedir = @oldincludedir@
 pcompress_zlib_CPPFLAGS = @pcompress_zlib_CPPFLAGS@
 pcompress_zlib_LDFLAGS = @pcompress_zlib_LDFLAGS@
 pcompress_zlib_LIBS = @pcompress_zlib_LIBS@
+pcompress_zlibng_CPPFLAGS = @pcompress_zlibng_CPPFLAGS@
+pcompress_zlibng_LDFLAGS = @pcompress_zlibng_LDFLAGS@
+pcompress_zlibng_LIBS = @pcompress_zlibng_LIBS@
 pdfdir = @pdfdir@
 pkgpyexecdir = @pkgpyexecdir@
 pkgpythondir = @pkgpythondir@
@@ -649,8 +647,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = make_dist_tarball buildrpm.sh construct_dictionary.py \
-	pmix_jenkins.sh pmix-release.sh pmix.spec \
-	update-my-copyright.pl whitespace-purge.sh \
+	construct_event_strings.py pmix_jenkins.sh pmix-release.sh \
+	pmix.spec update-my-copyright.pl whitespace-purge.sh \
 	platform/intel/bend/mac platform/intel/bend/mac.conf \
 	platform/intel/bend/linux platform/intel/bend/linux.conf \
 	check_compat.py perf_tools/Makefile \

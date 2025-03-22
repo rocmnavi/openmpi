@@ -19200,7 +19200,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libevent library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for libevent library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -19215,12 +19215,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -20731,7 +20731,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libev library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for libev library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -20746,12 +20746,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -22010,7 +22010,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for pmix library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for pmix library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -22025,12 +22025,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -23446,7 +23446,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for hwloc library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for hwloc library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -23461,12 +23461,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -29068,7 +29068,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -29083,12 +29083,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -30059,7 +30059,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -30074,12 +30074,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -32820,7 +32820,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -32835,12 +32835,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -33804,7 +33804,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -33819,12 +33819,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -34802,7 +34802,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -34817,12 +34817,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -35800,7 +35800,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -35815,12 +35815,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -43041,7 +43041,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -43056,12 +43056,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -44032,7 +44032,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -44047,12 +44047,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -47042,7 +47042,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -47057,12 +47057,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -48026,7 +48026,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -48041,12 +48041,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -49024,7 +49024,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -49039,12 +49039,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -50022,7 +50022,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for tm library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -50037,12 +50037,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -52520,7 +52520,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for dlopen library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for dlopen library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -52535,12 +52535,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -53701,7 +53701,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libltdl library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for libltdl library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -53716,12 +53716,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -55788,7 +55788,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libnl_route library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for libnl_route library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -55803,12 +55803,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -59395,7 +59395,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsf library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -59410,12 +59410,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -60386,7 +60386,7 @@ then :
 then :
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}" >&5
 printf %s "checking for lsfbatch library (${check_package_generic_search_lib}) in ${check_package_libdir}... " >&6; }
-                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_libdir}/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_happy=1
@@ -60401,12 +60401,12 @@ else $as_nop
   check_package_generic_prefix_lib=0
                   check_package_generic_prefix_lib64=0
 
-                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib=1
 fi
-                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  1>&/dev/null 2>&1
+                  ls ${check_package_prefix}/lib64/lib${check_package_generic_search_lib}.*  >/dev/null 2>&1
                   if test $? -eq 0
 then :
   check_package_generic_prefix_lib64=1
@@ -70588,11 +70588,17 @@ lt_prog_compiler_static=
 	lt_prog_compiler_static='-Bstatic'
 	;;
       tcc*)
-	# Fabrice Bellard et al's Tiny C Compiler
-	lt_prog_compiler_wl='-Wl,'
-	lt_prog_compiler_pic='-fPIC'
-	lt_prog_compiler_static='-static'
-	;;
+        # Fabrice Bellard et al's Tiny C Compiler
+        lt_prog_compiler_wl='-Wl,'
+        lt_prog_compiler_pic='-fPIC'
+        lt_prog_compiler_static='-static'
+        ;;
+    nvc* | nvcc* | nvfortran*)
+	# NVIDIA Fortran compiler
+        lt_prog_compiler_wl='-Wl,'
+        lt_prog_compiler_pic='-fPIC'
+        lt_prog_compiler_static='-Bstatic'
+        ;;
       pgcc* | pgf77* | pgf90* | pgf95* | pgfortran*)
         # Portland Group compilers (*not* the Pentium gcc compiler,
 	# which looks to be a dead project)
@@ -75485,6 +75491,71 @@ CPPFLAGS="$CPP_INCLUDES $CPPFLAGS $PRTE_FINAL_CPPFLAGS"
 LDFLAGS="$LDFLAGS $PRTE_FINAL_LDFLAGS"
 LIBS="$LIBS $PRTE_FINAL_LIBS"
 
+
+# We do not currently support the "lto" optimizer as it
+# aggregates all the headers from our plugins, resulting
+# in a configuration that generates warnings/errors when
+# passed through their optimizer phase. We therefore check
+# for the flag, and if found, output a message explaining
+# the situation and aborting configure
+
+    chkflg=`echo $CPPFLAGS | grep -- -flto`
+    if test -n "$chkflg"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Configure has detected the presence of the -flto" >&5
+printf "%s\n" "$as_me: WARNING: Configure has detected the presence of the -flto" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: compiler directive in CPPFLAGS. PRRTE does not currently" >&5
+printf "%s\n" "$as_me: WARNING: compiler directive in CPPFLAGS. PRRTE does not currently" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: support this flag as it conflicts with the" >&5
+printf "%s\n" "$as_me: WARNING: support this flag as it conflicts with the" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: plugin architecture of the PRRTE code base." >&5
+printf "%s\n" "$as_me: WARNING: plugin architecture of the PRRTE code base." >&2;}
+        as_fn_error $? "Please remove this directive and re-run configure." "$LINENO" 5
+    fi
+
+
+    chkflg=`echo $CFLAGS | grep -- -flto`
+    if test -n "$chkflg"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Configure has detected the presence of the -flto" >&5
+printf "%s\n" "$as_me: WARNING: Configure has detected the presence of the -flto" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: compiler directive in CFLAGS. PRRTE does not currently" >&5
+printf "%s\n" "$as_me: WARNING: compiler directive in CFLAGS. PRRTE does not currently" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: support this flag as it conflicts with the" >&5
+printf "%s\n" "$as_me: WARNING: support this flag as it conflicts with the" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: plugin architecture of the PRRTE code base." >&5
+printf "%s\n" "$as_me: WARNING: plugin architecture of the PRRTE code base." >&2;}
+        as_fn_error $? "Please remove this directive and re-run configure." "$LINENO" 5
+    fi
+
+
+    chkflg=`echo $LDFLAGS | grep -- -flto`
+    if test -n "$chkflg"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Configure has detected the presence of the -flto" >&5
+printf "%s\n" "$as_me: WARNING: Configure has detected the presence of the -flto" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: compiler directive in LDFLAGS. PRRTE does not currently" >&5
+printf "%s\n" "$as_me: WARNING: compiler directive in LDFLAGS. PRRTE does not currently" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: support this flag as it conflicts with the" >&5
+printf "%s\n" "$as_me: WARNING: support this flag as it conflicts with the" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: plugin architecture of the PRRTE code base." >&5
+printf "%s\n" "$as_me: WARNING: plugin architecture of the PRRTE code base." >&2;}
+        as_fn_error $? "Please remove this directive and re-run configure." "$LINENO" 5
+    fi
+
+
+    chkflg=`echo $LIBS | grep -- -flto`
+    if test -n "$chkflg"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Configure has detected the presence of the -flto" >&5
+printf "%s\n" "$as_me: WARNING: Configure has detected the presence of the -flto" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: compiler directive in LIBS. PRRTE does not currently" >&5
+printf "%s\n" "$as_me: WARNING: compiler directive in LIBS. PRRTE does not currently" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: support this flag as it conflicts with the" >&5
+printf "%s\n" "$as_me: WARNING: support this flag as it conflicts with the" >&2;}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: plugin architecture of the PRRTE code base." >&5
+printf "%s\n" "$as_me: WARNING: plugin architecture of the PRRTE code base." >&2;}
+        as_fn_error $? "Please remove this directive and re-run configure." "$LINENO" 5
+    fi
+
+
+
 # restore any user-provided Werror flags
 if test ! -z "$PRTE_CFLAGS_cache"
 then :
@@ -76981,7 +77052,7 @@ prte_want_prd=0
 
 prte_show_subtitle "Final output"
 
-ac_config_files="$ac_config_files Makefile config/Makefile contrib/Makefile include/Makefile include/prte_version.h docs/Makefile src/docs/Makefile src/docs/show-help-files/Makefile src/docs/prrte-rst-content/Makefile"
+ac_config_files="$ac_config_files Makefile config/Makefile contrib/Makefile include/Makefile include/prte_version.h docs/Makefile src/docs/Makefile src/docs/prrte-rst-content/Makefile"
 
 
 
@@ -78274,7 +78345,6 @@ do
     "include/prte_version.h") CONFIG_FILES="$CONFIG_FILES include/prte_version.h" ;;
     "docs/Makefile") CONFIG_FILES="$CONFIG_FILES docs/Makefile" ;;
     "src/docs/Makefile") CONFIG_FILES="$CONFIG_FILES src/docs/Makefile" ;;
-    "src/docs/show-help-files/Makefile") CONFIG_FILES="$CONFIG_FILES src/docs/show-help-files/Makefile" ;;
     "src/docs/prrte-rst-content/Makefile") CONFIG_FILES="$CONFIG_FILES src/docs/prrte-rst-content/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/etc/Makefile") CONFIG_FILES="$CONFIG_FILES src/etc/Makefile" ;;
