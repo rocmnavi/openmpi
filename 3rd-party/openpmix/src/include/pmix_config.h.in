@@ -50,9 +50,6 @@
 /* The normal alignment of `size_t', in bytes. */
 #undef ALIGNOF_SIZE_T
 
-/* defined to 1 if cray wlm available, 0 otherwise */
-#undef CRAY_WLM_DETECT
-
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #undef HAVE_ARPA_INET_H
 
@@ -624,9 +621,6 @@
 /* whether clock_gettime is found and available */
 #undef PMIX_HAVE_CLOCK_GETTIME
 
-/* defined to 1 if cray alps env, 0 otherwise */
-#undef PMIX_HAVE_CRAY_ALPS
-
 /* whether dirname is found and available */
 #undef PMIX_HAVE_DIRNAME
 
@@ -764,9 +758,6 @@
 
 /* The size of `_Bool', as computed by sizeof. */
 #undef SIZEOF__BOOL
-
-/* defined to 1 if slurm cray env, 0 otherwise */
-#undef SLURM_CRAY_ENV
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

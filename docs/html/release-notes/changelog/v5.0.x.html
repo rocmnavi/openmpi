@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.1.1. Open MPI v5.0.x series &mdash; Open MPI 5.0.6 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>3.1.1. Open MPI v5.0.x series &mdash; Open MPI 5.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -48,13 +50,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">3. Release notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">3.1. Changelog</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">3.1.1. Open MPI v5.0.x series</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-6">3.1.1.1. Open MPI Version v5.0.6</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-5">3.1.1.2. Open MPI version v5.0.5</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-4">3.1.1.3. Open MPI version v5.0.4</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-3">3.1.1.4. Open MPI version v5.0.3</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-2">3.1.1.5. Open MPI version v5.0.2</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-1">3.1.1.6. Open MPI version v5.0.1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-5-0-0">3.1.1.7. Open MPI version 5.0.0</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-7">3.1.1.1. Open MPI Version v5.0.7</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-6">3.1.1.2. Open MPI Version v5.0.6</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-5">3.1.1.3. Open MPI version v5.0.5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-4">3.1.1.4. Open MPI version v5.0.4</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-3">3.1.1.5. Open MPI version v5.0.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-2">3.1.1.6. Open MPI version v5.0.2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-v5-0-1">3.1.1.7. Open MPI version v5.0.1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open-mpi-version-5-0-0">3.1.1.8. Open MPI version 5.0.0</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="v4.1.x.html">3.1.2. Open MPI v4.1.x series</a></li>
@@ -126,8 +129,44 @@
 <h1><span class="section-number">3.1.1. </span>Open MPI v5.0.x series<a class="headerlink" href="#open-mpi-v5-0-x-series" title="Permalink to this heading"></a></h1>
 <p>This file contains all the NEWS updates for the Open MPI v5.0.x
 series, in reverse chronological order.</p>
+<div class="section" id="open-mpi-version-v5-0-7">
+<h2><span class="section-number">3.1.1.1. </span>Open MPI Version v5.0.7<a class="headerlink" href="#open-mpi-version-v5-0-7" title="Permalink to this heading"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>14 February January 2025</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Internal PMIx and PRRTe version:
+- PMIx (v5.0.5). Repo: <code class="docutils literal notranslate"><span class="pre">https://github.com/openpmix/openpmix</span></code>. Commit hash: <code class="docutils literal notranslate"><span class="pre">707920c99de946a5c3a1850da457340f38c0caf2</span></code>.
+- PRRTE (v3.0.8). repo: <code class="docutils literal notranslate"><span class="pre">https://github.com/openpmix/prrte</span></code>. Commit hash: <code class="docutils literal notranslate"><span class="pre">f6f5c181c1dec317c31f61effd73f960ce2eac25</span></code>.</p></li>
+<li><p>Updated UCX version requirement to v1.9</p></li>
+<li><p>Documentation Improvements
+- Updated <cite>coll tuned</cite> rules file documentation to reflect changes in versioning and features.
+- Updated CUDA-related networking documentation for consistency.
+- Improved descriptions for <cite>mpirun</cite> options, including <code class="docutils literal notranslate"><span class="pre">--pmixmca</span></code> and <code class="docutils literal notranslate"><span class="pre">--prtemca</span></code>.
+- Fixed typos and formatting issues in <cite>mpirun</cite> man pages.</p></li>
+<li><p>Functionality Enhancements
+- Improved argument checking for <code class="docutils literal notranslate"><span class="pre">MPI_Comm_create_from_group</span></code> and <code class="docutils literal notranslate"><span class="pre">MPI_Intercomm_create_from_groups</span></code> to align with MPI 4.0 standards.
+- Addressed potential race conditions in <cite>PMIx_Group_construct</cite> calls by adding discriminators.
+- Fixed <code class="docutils literal notranslate"><span class="pre">MPI_Wtime</span></code> to initialize timing relative to <code class="docutils literal notranslate"><span class="pre">MPI_Init</span></code> for accurate session-level measurements.
+- Added support for the <cite>alltoall_algorithm_max_requests</cite> parameter in the <cite>coll tuned</cite> rules file, maintaining backward compatibility.
+- Introduced a version identifier for the <cite>coll tuned</cite> rules file for better parser handling.
+- Adjusted MCA variable scopes across multiple components to allow setting via the <cite>MPI_T</cite> interface: <cite>coll adapt,ucc, han, basic, hcoll</cite></p></li>
+<li><p>Bug Fixes and Minor Enhancements
+- Ensures that singletons properly create their own sessions directory trees.
+- Fixed community Jenkins build pipeline to handle branch commits properly.
+- Resolved missing profiling symbols in the <cite>mpi_f08</cite> Fortran library.
+- Corrected parameter mismatches in <cite>coll/cuda</cite> functions to avoid type issues.
+- Fixed build issues on Hurd.
+- Removed unused portions of rcache base structure.
+- Fixed oshmem base segment address exchange.
+- Fixed UCC collective fallback issue.
+- Updated Nvidia/Mellanox platform file</p></li>
+</ul>
+</div>
 <div class="section" id="open-mpi-version-v5-0-6">
-<h2><span class="section-number">3.1.1.1. </span>Open MPI Version v5.0.6<a class="headerlink" href="#open-mpi-version-v5-0-6" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.2. </span>Open MPI Version v5.0.6<a class="headerlink" href="#open-mpi-version-v5-0-6" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>14 November 2024</p>
@@ -159,7 +198,7 @@ series, in reverse chronological order.</p>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-5">
-<h2><span class="section-number">3.1.1.2. </span>Open MPI version v5.0.5<a class="headerlink" href="#open-mpi-version-v5-0-5" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.3. </span>Open MPI version v5.0.5<a class="headerlink" href="#open-mpi-version-v5-0-5" title="Permalink to this heading"></a></h2>
 <dl class="field-list">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>23 July 2024</p>
@@ -187,7 +226,7 @@ Many thanks to Lisandro Dalcin for reporting the issue.</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-4">
-<h2><span class="section-number">3.1.1.3. </span>Open MPI version v5.0.4<a class="headerlink" href="#open-mpi-version-v5-0-4" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.4. </span>Open MPI version v5.0.4<a class="headerlink" href="#open-mpi-version-v5-0-4" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>19 July 2024</p>
@@ -237,7 +276,7 @@ Roie Danino, Thomas Vegas</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-3">
-<h2><span class="section-number">3.1.1.4. </span>Open MPI version v5.0.3<a class="headerlink" href="#open-mpi-version-v5-0-3" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.5. </span>Open MPI version v5.0.3<a class="headerlink" href="#open-mpi-version-v5-0-3" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>9 April 2024</p>
@@ -273,7 +312,7 @@ Christoph Niethammer, Christoph van Wüllen, Jakub Klinkovský, Lisandro Dalcin<
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-2">
-<h2><span class="section-number">3.1.1.5. </span>Open MPI version v5.0.2<a class="headerlink" href="#open-mpi-version-v5-0-2" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.6. </span>Open MPI version v5.0.2<a class="headerlink" href="#open-mpi-version-v5-0-2" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>6 February 2024</p>
@@ -331,7 +370,7 @@ Erik Schnetter</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-v5-0-1">
-<h2><span class="section-number">3.1.1.6. </span>Open MPI version v5.0.1<a class="headerlink" href="#open-mpi-version-v5-0-1" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.7. </span>Open MPI version v5.0.1<a class="headerlink" href="#open-mpi-version-v5-0-1" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>20 December 2023</p>
@@ -372,7 +411,7 @@ Tony Curtis, David Edwards Linaro, Niv Shpak for their contribution.</p></li>
 </ul>
 </div>
 <div class="section" id="open-mpi-version-5-0-0">
-<h2><span class="section-number">3.1.1.7. </span>Open MPI version 5.0.0<a class="headerlink" href="#open-mpi-version-5-0-0" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1.8. </span>Open MPI version 5.0.0<a class="headerlink" href="#open-mpi-version-5-0-0" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>25 October 2023</p>
@@ -666,7 +705,7 @@ limited to):</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2025, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

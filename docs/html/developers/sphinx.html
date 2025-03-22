@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>13.10. Installing and running Sphinx (building the Open MPI docs) &mdash; Open MPI 5.0.6 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>13.10. Installing and running Sphinx (building the Open MPI docs) &mdash; Open MPI 5.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -218,9 +220,11 @@ shell$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"
 </pre></div>
 </div>
 <p>This will install Sphinx and some Python modules required for building
-the Open MPI documentation in a system-wide location.</p>
+the Open MPI documentation in a user-specific location, likely
+somewhere under <code class="docutils literal notranslate"><span class="pre">$HOME</span></code></p>
 <p>You will likely need to find the location where <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> was
-installed and add it to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+installed and add it to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> (e.g., on macOS, it might appear
+under <code class="docutils literal notranslate"><span class="pre">$HOME/Library/Python/PYTHON_VERSION/bin/sphinx-build</span></code>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>On MacOS, look for <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> under
@@ -358,7 +362,7 @@ see in these HTML pages:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2025, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

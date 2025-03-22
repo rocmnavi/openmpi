@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>9.7. Building fully-static MPI applications &mdash; Open MPI 5.0.6 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>9.7. Building fully-static MPI applications &mdash; Open MPI 5.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -157,7 +159,7 @@ of shared libraries at launch time.  Even if Open MPI is installed on
 a network filesystem, these libraries are likely to be cached on nodes
 over time, and therefore generate a fairly small amount network
 filesystem traffic when MPI jobs are launched.</p>
-<p>In short: Open MPI v5.0.6’s impact on network filesystems is
+<p>In short: Open MPI v5.0.7’s impact on network filesystems is
 greatly diminished compared to prior versions.  Compiling fully-static
 applications to eliminate the open-every-DSO-file-at-launch-time
 behavior is no longer necessary.</p>
@@ -290,7 +292,7 @@ behavior, <em>all</em> users will be creating static applications!).</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2025, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

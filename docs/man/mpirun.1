@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "MPIRUN" "1" "Nov 15, 2024" "" "Open MPI"
+.TH "MPIRUN" "1" "Feb 14, 2025" "" "Open MPI"
 .
 .nr rst2man-indent-level 0
 .
@@ -360,7 +360,7 @@ Alias for \fB\-\-map\-by :oversubscribe\fP\&.
 .IP \(bu 2
 \fB\-\-bynode\fP: Launch processes one per node, cycling by node in a
 round\-robin fashion.  This spreads processes evenly among nodes and
-assigns MPI_COMM_WORLD ranks in a round\-robin, “by node” manner.
+assigns \fBMPI_COMM_WORLD\fP ranks in a round\-robin, “by node” manner.
 (deprecated in favor of \fB\-\-map\-by node\fP)
 .IP \(bu 2
 \fB\-\-cpu\-list <cpus>\fP: Comma\-delimited list of processor IDs to
@@ -376,7 +376,7 @@ list of available cores and their logical IDs.
 .UNINDENT
 .UNINDENT
 .sp
-To order processes’ ranks in MPI_COMM_WORLD:
+To order processes’ ranks in \fBMPI_COMM_WORLD\fP:
 .INDENT 0.0
 .IP \(bu 2
 \fB\-\-rank\-by <mode>\fP: Rank in round\-robin fashion according to the
@@ -422,15 +422,15 @@ stddiag of all processes to a process\-unique version of the
 specified filename. Any directories in the filename will
 automatically be created.  Each output file will consist of
 \fBfilename.id\fP, where the \fBid\fP will be the processes’ rank in
-MPI_COMM_WORLD, left\-filled with zero’s for correct ordering in
+\fBMPI_COMM_WORLD\fP, left\-filled with zero’s for correct ordering in
 listings. A relative path value will be converted to an absolute
 path based on the cwd where mpirun is executed. Note that this will
 not work on environments where the file system on compute nodes
 differs from that where \fI\%mpirun(1)\fP is
 executed.
 .IP \(bu 2
-\fB\-\-stdin <rank>\fP: The MPI_COMM_WORLD rank of the process that is
-to receive stdin.  The default is to forward stdin to MPI_COMM_WORLD
+\fB\-\-stdin <rank>\fP: The \fBMPI_COMM_WORLD\fP rank of the process that is
+to receive stdin.  The default is to forward stdin to \fBMPI_COMM_WORLD\fP
 rank 0, but this option can be used to forward stdin to any
 process. It is also acceptable to specify none, indicating that no
 processes are to receive stdin.
@@ -440,7 +440,7 @@ process.
 .IP \(bu 2
 \fB\-\-tag\-output\fP: Tag each line of output to stdout, stderr, and
 stddiag with \fB[jobid, MCW_rank]<stdxxx>\fP indicating the process
-jobid and MPI_COMM_WORLD rank of the process that generated the
+jobid and \fBMPI_COMM_WORLD\fP rank of the process that generated the
 output, and the channel which generated it.
 .IP \(bu 2
 \fB\-\-timestamp\-output\fP: Timestamp each line of output to stdout,
@@ -453,7 +453,7 @@ XML format.
 specified file.
 .IP \(bu 2
 \fB\-\-xterm <ranks>\fP: Display the output from the processes
-identified by their MPI_COMM_WORLD ranks in separate xterm
+identified by their \fBMPI_COMM_WORLD\fP ranks in separate xterm
 windows. The ranks are specified as a comma\-separated list of
 ranges, with a \fB\-1\fP indicating all. A separate window will be created
 for each specified process.
@@ -545,7 +545,26 @@ applicable to all contexts.  \fB<key>\fP is the parameter name;
 \fB<value>\fP is the parameter value.
 .IP \(bu 2
 \fB\-\-mca <key> <value>\fP: Send arguments to various MCA modules.  See
-the \fI\%Setting MCA Parameters\fP section for mode details.
+the \fI\%Setting MCA Parameters\fP section for more details.
+.sp
+\fBNOTE:\fP
+.INDENT 2.0
+.INDENT 3.5
+Open MPI will attempt to discern PMIx and PRRTE MCA
+parameters passed via \fB\-\-mca\fP and handle them
+appropriately, but it may not always guess correctly.  It
+is best to use \fB\-\-pmixmca\fP and \fB\-\-prtemca\fP when
+passing MCA parammeters to PMIx and PRRTE, respectively.
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+\fB\-\-pmixmca <key> <value>\fP: Send arguments to MCA modules in the
+PMIx subsystem.  See the \fI\%Setting MCA Parameters\fP section for more details.
+.IP \(bu 2
+\fB\-\-prtemca <key> <value>\fP: Send arguments to MCA modules in the
+PMIx Reference Runtime Environment (PRRTE) subsystem.  See the
+\fI\%Setting MCA Parameters\fP
+section for more details.
 .IP \(bu 2
 \fB\-\-tune <tune_file>\fP: Specify a tune file to set arguments for
 various MCA modules and environment variables.  See the :ref:\(ga
@@ -658,11 +677,11 @@ mapped location of each process prior to launch.
 just before launch.
 .IP \(bu 2
 \fB\-\-launch\-agent\fP: Name of the executable that is to be used to
-start processes on the remote nodes. The default is \fBPRRTEd\fP\&. This
+start processes on the remote nodes. The default is \fBprted\fP\&. This
 option can be used to test new daemon concepts, or to pass options
 back to the daemons without having mpirun itself see them. For
-example, specifying a launch agent of \fBPRRTEd \-mca odls_base_verbose
-5\fP allows the developer to ask the \fBPRRTEd\fP for debugging output
+example, specifying a launch agent of \fBprted \-\-prtemca odls_base_verbose
+5\fP allows the developer to ask the \fBprted\fP for debugging output
 without clutter from \fBmpirun\fP itself.
 .IP \(bu 2
 \fB\-\-report\-state\-on\-timeout\fP: When paired with the \fB\-\-timeout\fP
@@ -911,7 +930,7 @@ options that describe mapping policies.
 .sp
 Consider the same hostfile as above, again with \fB\-n 6\fP\&.  The table
 below lists a few \fBmpirun\fP variations, and shows which
-MPI_COMM_WORLD ranks end up on which node:
+\fBMPI_COMM_WORLD\fP ranks end up on which node:
 .TS
 center;
 |l|l|l|l|.
@@ -1083,7 +1102,7 @@ and ranks:
 .IP 1. 3
 \fBMapping\fP: Assigns a default location to each process
 .IP 2. 3
-\fBRanking\fP: Assigns an MPI_COMM_WORLD rank value to each process
+\fBRanking\fP: Assigns an \fBMPI_COMM_WORLD\fP rank value to each process
 .IP 3. 3
 \fBBinding\fP: Constrains each process to run on specific processors
 .UNINDENT
@@ -1123,7 +1142,7 @@ gives you detailed control over process binding as well.  Rankfiles
 are discussed \fI\%below\fP\&.
 .sp
 The second phase focuses on the ranking of the process within the
-job’s MPI_COMM_WORLD.  Open MPI separates this from the mapping
+job’s \fBMPI_COMM_WORLD\fP\&.  Open MPI separates this from the mapping
 procedure to allow more flexibility in the relative placement of MPI
 processes. This is best illustrated by considering the following
 cases where we used the \fB\-\-np 8 \-\-map\-by ppr:2:package \-\-host aa:4,bb:4\fP option:
@@ -1326,10 +1345,12 @@ MCA parameters can be set not only on the mpirun command line, but
 alternatively in a system or user \fBmca\-params.conf\fP file or as
 environment variables, as described in the \fI\%Setting MCA
 Parameters\fP\&. These are MCA parameters for
-the PRRTE runtime so the command line argument \fB\-\-PRRTEmca\fP must be used to
-pass the MCA parameter key/value pair. Alternatively, the MCA parameter key/
-value pair may be specific on the command line by prefixing the key with
-\fBPRRTE_MCA_\fP\&. Some examples include:
+the PRRTE runtime so the command line argument \fB\-\-prtemca\fP
+(yes, \fBprte\fP with a single \fBr\fP, not two \fBr\fP’s) must be used to
+pass the MCA parameter key/value pair. Alternatively, the MCA parameter
+key/value pair may be specific on the command line by prefixing the key with
+\fBPRTE_MCA_\fP (again, that is not a typo: \fBPRTE\fP not \fBPRRTE\fP).
+Some examples include:
 .TS
 center;
 |l|l|l|.
@@ -1586,7 +1607,7 @@ Rankfiles are text files that specify detailed information about how
 individual processes should be mapped to nodes, and to which
 processor(s) they should be bound.  Each line of a rankfile specifies
 the location of one process (for MPI jobs, the process’ “rank” refers
-to its rank in MPI_COMM_WORLD).  The general form of each line in the
+to its rank in \fBMPI_COMM_WORLD\fP).  The general form of each line in the
 rankfile is:
 .INDENT 0.0
 .INDENT 3.5
@@ -1744,14 +1765,14 @@ retained, or removed?
 .UNINDENT
 .sp
 Open MPI directs UNIX standard input to \fB/dev/null\fP on all processes
-except the MPI_COMM_WORLD rank 0 process. The MPI_COMM_WORLD rank 0
+except the \fBMPI_COMM_WORLD\fP rank 0 process. The \fBMPI_COMM_WORLD\fP rank 0
 process inherits standard input from \fBmpirun\fP\&.
 .sp
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
 The node that invoked \fBmpirun\fP need not be the same as the
-node where the MPI_COMM_WORLD rank 0 process resides. Open
+node where the \fBMPI_COMM_WORLD\fP rank 0 process resides. Open
 MPI handles the redirection of \fBmpirun\fP’s standard input
 to the rank 0 process.
 .UNINDENT
@@ -1776,7 +1797,7 @@ shell$ mpirun \-n 2 my_app < my_input > my_output
 .UNINDENT
 .UNINDENT
 .sp
-Note that in this example only the MPI_COMM_WORLD rank 0 process will
+Note that in this example only the \fBMPI_COMM_WORLD\fP rank 0 process will
 receive the stream from \fBmy_input\fP on stdin.  The stdin on all the other
 nodes will be tied to \fB/dev/null\fP\&.  However, the stdout from all nodes
 will be collected into the \fBmy_output\fP file.
@@ -2140,7 +2161,7 @@ status 0, \fBmpirun\fP returns 0.
 .IP \(bu 2
 If one or more processes in the primary job normally terminate with
 non\-zero exit status, \fBmpirun\fP returns the exit status of the
-process with the lowest MPI_COMM_WORLD rank to have a non\-zero
+process with the lowest \fBMPI_COMM_WORLD\fP rank to have a non\-zero
 status.
 .IP \(bu 2
 If all processes in the primary job normally terminate with exit
@@ -2149,7 +2170,7 @@ terminate with non\-zero exit status, \fBmpirun\fP:
 .INDENT 2.0
 .IP 1. 3
 Returns the exit status of the process with the lowest
-MPI_COMM_WORLD rank in the lowest jobid to have a non\-zero
+\fBMPI_COMM_WORLD\fP rank in the lowest jobid to have a non\-zero
 status, and
 .IP 2. 3
 Outputs a message summarizing the exit status of the primary and
@@ -2163,7 +2184,7 @@ summary print statement.
 .UNINDENT
 .sp
 By default, the job will abort when any process terminates with
-non\-zero status. The MCA parameter \fB\-\-PRRTEmca state_base_error_non_zero_exit\fP
+non\-zero status. The MCA parameter \fB\-\-prtemca state_base_error_non_zero_exit\fP
 can be set to “false” (or “0”) to cause Open MPI to not abort a job if
 one or more processes return a non\-zero status. In that situation the
 Open MPI records and notes that processes exited with non\-zero
@@ -2211,7 +2232,7 @@ processes exited before calling \fI\%MPI_FINALIZE(3)\fP\&.
 If an internal error occurred in mpirun, the corresponding error code
 is returned.  In the event that one or more processes exit before
 calling \fI\%MPI_FINALIZE(3)\fP, the return value of
-the MPI_COMM_WORLD rank of the process that mpirun first notices died
+the \fBMPI_COMM_WORLD\fP rank of the process that mpirun first notices died
 before calling \fI\%MPI_FINALIZE(3)\fP will be
 returned.  Note that, in general, this will be the first process that
 died but is not guaranteed to be so.
@@ -2231,6 +2252,6 @@ ETIMEDOUT (which is typically 110 on Linux and OS X systems).
 .UNINDENT
 .UNINDENT
 .SH COPYRIGHT
-2003-2024, The Open MPI Community
+2003-2025, The Open MPI Community
 .\" Generated by docutils manpage writer.
 .

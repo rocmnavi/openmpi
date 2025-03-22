@@ -17,7 +17,7 @@
 
 major=5
 minor=0
-release=6
+release=7
 
 # MPI Standard Compliance Level
 mpi_standard_version=3
@@ -48,7 +48,7 @@ greek=
 # command, or with the date (if "git describe" fails) in the form of
 # "date<date>".
 
-repo_rev=v5.0.6
+repo_rev=v5.0.7
 
 # If tarball_version is not empty, it is used as the version string in
 # the tarball filename, regardless of all other versions listed in
@@ -62,7 +62,7 @@ tarball_version=
 
 # The date when this release was created
 
-date="Nov 15, 2024"
+date="Feb 14, 2025"
 
 # The shared library version of each of Open MPI's public libraries.
 # These versions are maintained in accordance with the "Library
@@ -94,7 +94,7 @@ date="Nov 15, 2024"
 # Version numbers are described in the Libtool current:revision:age
 # format.
 
-libmpi_so_version=80:6:40
+libmpi_so_version=80:7:40
 libmpi_mpifh_so_version=80:1:40
 libmpi_usempi_tkr_so_version=80:1:40
 libmpi_usempi_ignore_tkr_so_version=80:1:40

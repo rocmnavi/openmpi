@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>17.1.2. mpirun / mpiexec &mdash; Open MPI 5.0.6 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>17.1.2. mpirun / mpiexec &mdash; Open MPI 5.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -347,7 +349,7 @@ a managed system, and overloading of processing elements.
 Alias for <code class="docutils literal notranslate"><span class="pre">--map-by</span> <span class="pre">:oversubscribe</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--bynode</span></code>: Launch processes one per node, cycling by node in a
 round-robin fashion.  This spreads processes evenly among nodes and
-assigns MPI_COMM_WORLD ranks in a round-robin, “by node” manner.
+assigns <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> ranks in a round-robin, “by node” manner.
 (deprecated in favor of <code class="docutils literal notranslate"><span class="pre">--map-by</span> <span class="pre">node</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--cpu-list</span> <span class="pre">&lt;cpus&gt;</span></code>: Comma-delimited list of processor IDs to
 which to bind processes [default=``NULL``].  Processor IDs are
@@ -359,7 +361,7 @@ list of available cores and their logical IDs.</p>
 </div>
 </li>
 </ul>
-<p>To order processes’ ranks in MPI_COMM_WORLD:</p>
+<p>To order processes’ ranks in <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--rank-by</span> <span class="pre">&lt;mode&gt;</span></code>: Rank in round-robin fashion according to the
 specified mode, defaults to slot. Supported options include
@@ -393,14 +395,14 @@ stddiag of all processes to a process-unique version of the
 specified filename. Any directories in the filename will
 automatically be created.  Each output file will consist of
 <code class="docutils literal notranslate"><span class="pre">filename.id</span></code>, where the <code class="docutils literal notranslate"><span class="pre">id</span></code> will be the processes’ rank in
-MPI_COMM_WORLD, left-filled with zero’s for correct ordering in
+<code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>, left-filled with zero’s for correct ordering in
 listings. A relative path value will be converted to an absolute
 path based on the cwd where mpirun is executed. Note that this will
 not work on environments where the file system on compute nodes
 differs from that where <a class="reference internal" href="#man1-mpirun"><span class="std std-ref">mpirun(1)</span></a> is
 executed.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--stdin</span> <span class="pre">&lt;rank&gt;</span></code>: The MPI_COMM_WORLD rank of the process that is
-to receive stdin.  The default is to forward stdin to MPI_COMM_WORLD
+<li><p><code class="docutils literal notranslate"><span class="pre">--stdin</span> <span class="pre">&lt;rank&gt;</span></code>: The <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank of the process that is
+to receive stdin.  The default is to forward stdin to <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>
 rank 0, but this option can be used to forward stdin to any
 process. It is also acceptable to specify none, indicating that no
 processes are to receive stdin.</p></li>
@@ -408,7 +410,7 @@ processes are to receive stdin.</p></li>
 process.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--tag-output</span></code>: Tag each line of output to stdout, stderr, and
 stddiag with <code class="docutils literal notranslate"><span class="pre">[jobid,</span> <span class="pre">MCW_rank]&lt;stdxxx&gt;</span></code> indicating the process
-jobid and MPI_COMM_WORLD rank of the process that generated the
+jobid and <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank of the process that generated the
 output, and the channel which generated it.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--timestamp-output</span></code>: Timestamp each line of output to stdout,
 stderr, and stddiag.</p></li>
@@ -417,7 +419,7 @@ XML format.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--xml-file</span> <span class="pre">&lt;filename&gt;</span></code> Provide all output in XML format to the
 specified file.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--xterm</span> <span class="pre">&lt;ranks&gt;</span></code>: Display the output from the processes
-identified by their MPI_COMM_WORLD ranks in separate xterm
+identified by their <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> ranks in separate xterm
 windows. The ranks are specified as a comma-separated list of
 ranges, with a <code class="docutils literal notranslate"><span class="pre">-1</span></code> indicating all. A separate window will be created
 for each specified process.</p>
@@ -482,12 +484,27 @@ define) them.</p>
 </li>
 </ul>
 <p>Setting MCA parameters:</p>
-<ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">--gmca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Pass global MCA parameters that are
 applicable to all contexts.  <code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> is the parameter name;
 <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> is the parameter value.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--mca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Send arguments to various MCA modules.  See
-the <a class="reference internal" href="#man1-mpirun-setting-mca-parameters"><span class="std std-ref">Setting MCA Parameters</span></a> section for mode details.</p></li>
+the <a class="reference internal" href="#man1-mpirun-setting-mca-parameters"><span class="std std-ref">Setting MCA Parameters</span></a> section for more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Open MPI will attempt to discern PMIx and PRRTE MCA
+parameters passed via <code class="docutils literal notranslate"><span class="pre">--mca</span></code> and handle them
+appropriately, but it may not always guess correctly.  It
+is best to use <code class="docutils literal notranslate"><span class="pre">--pmixmca</span></code> and <code class="docutils literal notranslate"><span class="pre">--prtemca</span></code> when
+passing MCA parammeters to PMIx and PRRTE, respectively.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pmixmca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Send arguments to MCA modules in the
+PMIx subsystem.  See the <a class="reference internal" href="#man1-mpirun-setting-mca-parameters"><span class="std std-ref">Setting MCA Parameters</span></a> section for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--prtemca</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code>: Send arguments to MCA modules in the
+PMIx Reference Runtime Environment (PRRTE) subsystem.  See the
+<a class="reference internal" href="#man1-mpirun-setting-mca-parameters"><span class="std std-ref">Setting MCA Parameters</span></a>
+section for more details.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--tune</span> <span class="pre">&lt;tune_file&gt;</span></code>: Specify a tune file to set arguments for
 various MCA modules and environment variables.  See the :ref:`
 Setting MCA parameters and environment variables from file
@@ -571,11 +588,11 @@ mapped location of each process prior to launch.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--display-topo</span></code>: Display the topology as part of the process map
 just before launch.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--launch-agent</span></code>: Name of the executable that is to be used to
-start processes on the remote nodes. The default is <code class="docutils literal notranslate"><span class="pre">PRRTEd</span></code>. This
+start processes on the remote nodes. The default is <code class="docutils literal notranslate"><span class="pre">prted</span></code>. This
 option can be used to test new daemon concepts, or to pass options
 back to the daemons without having mpirun itself see them. For
-example, specifying a launch agent of <code class="docutils literal notranslate"><span class="pre">PRRTEd</span> <span class="pre">-mca</span> <span class="pre">odls_base_verbose</span>
-<span class="pre">5</span></code> allows the developer to ask the <code class="docutils literal notranslate"><span class="pre">PRRTEd</span></code> for debugging output
+example, specifying a launch agent of <code class="docutils literal notranslate"><span class="pre">prted</span> <span class="pre">--prtemca</span> <span class="pre">odls_base_verbose</span>
+<span class="pre">5</span></code> allows the developer to ask the <code class="docutils literal notranslate"><span class="pre">prted</span></code> for debugging output
 without clutter from <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> itself.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--report-state-on-timeout</span></code>: When paired with the <code class="docutils literal notranslate"><span class="pre">--timeout</span></code>
 command line option, report the run-time subsystem state of each
@@ -714,7 +731,7 @@ to nodes.  This mapping can also be controlled with various <code class="docutil
 options that describe mapping policies.</p>
 <p>Consider the same hostfile as above, again with <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">6</span></code>.  The table
 below lists a few <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> variations, and shows which
-MPI_COMM_WORLD ranks end up on which node:</p>
+<code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> ranks end up on which node:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 25%" />
@@ -815,7 +832,7 @@ retained, or removed?</p>
 and ranks:</p>
 <ol class="arabic simple">
 <li><p><strong>Mapping</strong>: Assigns a default location to each process</p></li>
-<li><p><strong>Ranking</strong>: Assigns an MPI_COMM_WORLD rank value to each process</p></li>
+<li><p><strong>Ranking</strong>: Assigns an <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank value to each process</p></li>
 <li><p><strong>Binding</strong>: Constrains each process to run on specific processors</p></li>
 </ol>
 <p>The mapping step is used to assign a default location to each process
@@ -841,7 +858,7 @@ per line on whatever node is listed on the line.</p>
 gives you detailed control over process binding as well.  Rankfiles
 are discussed <a class="reference internal" href="#man1-mpirun-rankfiles"><span class="std std-ref">below</span></a>.</p>
 <p>The second phase focuses on the ranking of the process within the
-job’s MPI_COMM_WORLD.  Open MPI separates this from the mapping
+job’s <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>.  Open MPI separates this from the mapping
 procedure to allow more flexibility in the relative placement of MPI
 processes. This is best illustrated by considering the following
 cases where we used the <code class="docutils literal notranslate"><span class="pre">--np</span> <span class="pre">8</span> <span class="pre">--map-by</span> <span class="pre">ppr:2:package</span> <span class="pre">--host</span> <span class="pre">aa:4,bb:4</span></code> option:</p>
@@ -978,10 +995,12 @@ MCA parameters can be set not only on the mpirun command line, but
 alternatively in a system or user <code class="docutils literal notranslate"><span class="pre">mca-params.conf</span></code> file or as
 environment variables, as described in the <a class="reference internal" href="#man1-mpirun-setting-mca-parameters"><span class="std std-ref">Setting MCA
 Parameters</span></a>. These are MCA parameters for
-the PRRTE runtime so the command line argument <code class="docutils literal notranslate"><span class="pre">--PRRTEmca</span></code> must be used to
-pass the MCA parameter key/value pair. Alternatively, the MCA parameter key/
-value pair may be specific on the command line by prefixing the key with
-<code class="docutils literal notranslate"><span class="pre">PRRTE_MCA_</span></code>. Some examples include:</p>
+the PRRTE runtime so the command line argument <code class="docutils literal notranslate"><span class="pre">--prtemca</span></code>
+(yes, <code class="docutils literal notranslate"><span class="pre">prte</span></code> with a single <code class="docutils literal notranslate"><span class="pre">r</span></code>, not two <code class="docutils literal notranslate"><span class="pre">r</span></code>’s) must be used to
+pass the MCA parameter key/value pair. Alternatively, the MCA parameter
+key/value pair may be specific on the command line by prefixing the key with
+<code class="docutils literal notranslate"><span class="pre">PRTE_MCA_</span></code> (again, that is not a typo: <code class="docutils literal notranslate"><span class="pre">PRTE</span></code> not <code class="docutils literal notranslate"><span class="pre">PRRTE</span></code>).
+Some examples include:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -1139,7 +1158,7 @@ retained, or removed?</p>
 individual processes should be mapped to nodes, and to which
 processor(s) they should be bound.  Each line of a rankfile specifies
 the location of one process (for MPI jobs, the process’ “rank” refers
-to its rank in MPI_COMM_WORLD).  The general form of each line in the
+to its rank in <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>).  The general form of each line in the
 rankfile is:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rank &lt;N&gt;=&lt;hostname&gt; slot=&lt;slot list&gt;
 </pre></div>
@@ -1249,12 +1268,12 @@ does not wait until <a class="reference internal" href="../man3/MPI_Init.3.html#
 retained, or removed?</p>
 </div>
 <p>Open MPI directs UNIX standard input to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code> on all processes
-except the MPI_COMM_WORLD rank 0 process. The MPI_COMM_WORLD rank 0
+except the <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank 0 process. The <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank 0
 process inherits standard input from <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The node that invoked <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> need not be the same as the
-node where the MPI_COMM_WORLD rank 0 process resides. Open
+node where the <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank 0 process resides. Open
 MPI handles the redirection of <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>’s standard input
 to the rank 0 process.</p>
 </div>
@@ -1268,7 +1287,7 @@ example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>shell$<span class="w"> </span>mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span>my_app<span class="w"> </span>&lt;<span class="w"> </span>my_input<span class="w"> </span>&gt;<span class="w"> </span>my_output
 </pre></div>
 </div>
-<p>Note that in this example only the MPI_COMM_WORLD rank 0 process will
+<p>Note that in this example only the <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank 0 process will
 receive the stream from <code class="docutils literal notranslate"><span class="pre">my_input</span></code> on stdin.  The stdin on all the other
 nodes will be tied to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code>.  However, the stdout from all nodes
 will be collected into the <code class="docutils literal notranslate"><span class="pre">my_output</span></code> file.</p>
@@ -1535,14 +1554,14 @@ that job are designated “secondary” jobs):</p>
 status 0, <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> returns 0.</p></li>
 <li><p>If one or more processes in the primary job normally terminate with
 non-zero exit status, <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> returns the exit status of the
-process with the lowest MPI_COMM_WORLD rank to have a non-zero
+process with the lowest <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank to have a non-zero
 status.</p></li>
 <li><p>If all processes in the primary job normally terminate with exit
 status 0, and one or more processes in a secondary job normally
 terminate with non-zero exit status, <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>:</p>
 <ol class="arabic simple">
 <li><p>Returns the exit status of the process with the lowest
-MPI_COMM_WORLD rank in the lowest jobid to have a non-zero
+<code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank in the lowest jobid to have a non-zero
 status, and</p></li>
 <li><p>Outputs a message summarizing the exit status of the primary and
 all secondary jobs.</p></li>
@@ -1554,7 +1573,7 @@ non-zero exit status in secondary jobs will be reported solely in a
 summary print statement.</p></li>
 </ul>
 <p>By default, the job will abort when any process terminates with
-non-zero status. The MCA parameter <code class="docutils literal notranslate"><span class="pre">--PRRTEmca</span> <span class="pre">state_base_error_non_zero_exit</span></code>
+non-zero status. The MCA parameter <code class="docutils literal notranslate"><span class="pre">--prtemca</span> <span class="pre">state_base_error_non_zero_exit</span></code>
 can be set to “false” (or “0”) to cause Open MPI to not abort a job if
 one or more processes return a non-zero status. In that situation the
 Open MPI records and notes that processes exited with non-zero
@@ -1591,7 +1610,7 @@ processes exited before calling <a class="reference internal" href="../man3/MPI_
 If an internal error occurred in mpirun, the corresponding error code
 is returned.  In the event that one or more processes exit before
 calling <a class="reference internal" href="../man3/MPI_Finalize.3.html#mpi-finalize"><span class="std std-ref">MPI_FINALIZE(3)</span></a>, the return value of
-the MPI_COMM_WORLD rank of the process that mpirun first notices died
+the <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> rank of the process that mpirun first notices died
 before calling <a class="reference internal" href="../man3/MPI_Finalize.3.html#mpi-finalize"><span class="std std-ref">MPI_FINALIZE(3)</span></a> will be
 returned.  Note that, in general, this will be the first process that
 died but is not guaranteed to be so.</p>
@@ -1620,7 +1639,7 @@ ETIMEDOUT (which is typically 110 on Linux and OS X systems).</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2025, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

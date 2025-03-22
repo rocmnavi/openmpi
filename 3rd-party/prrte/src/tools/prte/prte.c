@@ -104,6 +104,7 @@
 #include "src/runtime/runtime.h"
 
 #include "include/prte.h"
+#include "src/prted/pmix/pmix_server.h"
 #include "src/prted/pmix/pmix_server_internal.h"
 #include "src/prted/prted.h"
 
@@ -451,6 +452,18 @@ int main(int argc, char *argv[])
             }
             return rc;
         }
+    }
+    // check if they asked for XML output from us
+    opt = pmix_cmd_line_get_param(&results, PRTE_CLI_OUTPUT);
+    if (NULL != opt) {
+        split = PMIX_ARGV_SPLIT_COMPAT(opt->values[0], ',');
+        for (n = 0; NULL != split[n]; n++) {
+            if (PMIX_CHECK_CLI_OPTION(split[n], PRTE_CLI_XML)) {
+                prte_xml_output = true;
+                break;
+            }
+        }
+        PMIX_ARGV_FREE_COMPAT(split);
     }
 
     /* check if we are running as root - if we are, then only allow
@@ -1435,7 +1448,10 @@ static int prep_singleton(const char *name)
     node->num_procs = 1;
     node->slots_inuse = 1;
 
-    return PRTE_SUCCESS;
+    // register the info with our PMIx server
+    rc = prte_pmix_server_register_nspace(jdata);
+
+    return rc;
 }
 
 static void signal_forward_callback(int signum, short args, void *cbdata)

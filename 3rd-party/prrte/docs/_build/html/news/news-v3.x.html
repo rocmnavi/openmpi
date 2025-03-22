@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>16.1. PRRTE v3.x series &mdash; PMIx Reference Run Time Environment 3.0.7 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>16.1. PRRTE v3.x series &mdash; PMIx Reference Run Time Environment 3.0.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -60,14 +62,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../versions.html">15. Software Version Numbers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">16. News</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">16.1. PRRTE v3.x series</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#nov-2024">16.1.1. 3.0.7 – 13 Nov 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.2. 3.0.6 – 8 Jul 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.3. 3.0.5 – 21 Mar 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#feb-2024">16.1.4. 3.0.4 – 4 Feb 2024</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dec-2023">16.1.5. 3.0.3 – 19 Dec 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oct-2023">16.1.6. 3.0.2 – 23 Oct 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.7. 3.0.1 – 27 Sep 2023</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nov-2022">16.1.8. 3.0.0 – 13 Nov 2022</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dec-2024">16.1.1. 3.0.8 – 15 Dec 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nov-2024">16.1.2. 3.0.7 – 13 Nov 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jul-2024">16.1.3. 3.0.6 – 8 Jul 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mar-2024">16.1.4. 3.0.5 – 21 Mar 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feb-2024">16.1.5. 3.0.4 – 4 Feb 2024</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dec-2023">16.1.6. 3.0.3 – 19 Dec 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oct-2023">16.1.7. 3.0.2 – 23 Oct 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sep-2023">16.1.8. 3.0.1 – 27 Sep 2023</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nov-2022">16.1.9. 3.0.0 – 13 Nov 2022</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="news-v2.x.html">16.2. PRRTE v2.x series</a></li>
@@ -107,8 +110,36 @@
 <h1><span class="section-number">16.1. </span>PRRTE v3.x series<a class="headerlink" href="#prrte-v3-x-series" title="Permalink to this heading"></a></h1>
 <p>This file contains all the NEWS updates for the PRRTE v3.x
 series, in reverse chronological order.</p>
+<div class="section" id="dec-2024">
+<h2><span class="section-number">16.1.1. </span>3.0.8 – 15 Dec 2024<a class="headerlink" href="#dec-2024" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>PR #2103: Final update for release</p></li>
+<li><p>PR #2102: Remove stale config .m4 files</p></li>
+<li><p>PR #2100: Update NEWS and VERSION</p></li>
+<li><p>PR #2099: maintain correct ref count of child jobs</p></li>
+<li><p>PR #2097: Correctly parse map-by modifiers</p></li>
+<li><p>PR #2086: Propertly compute number of procs when not given</p></li>
+<li><dl class="simple">
+<dt>PR #2082: Multiple commits</dt><dd><ul>
+<li><p>Enclose XML output in a high-level tag</p></li>
+<li><p>Add support for show_help XML output</p></li>
+<li><p>Properly build the nidmap</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PR #2076: Multiple commits</dt><dd><ul>
+<li><p>Register the singleton’s nspace with the PMIx server</p></li>
+<li><p>Fix data type declaration in data server</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
 <div class="section" id="nov-2024">
-<h2><span class="section-number">16.1.1. </span>3.0.7 – 13 Nov 2024<a class="headerlink" href="#nov-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.2. </span>3.0.7 – 13 Nov 2024<a class="headerlink" href="#nov-2024" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This release represents the expected end of
@@ -178,7 +209,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="jul-2024">
-<h2><span class="section-number">16.1.2. </span>3.0.6 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.3. </span>3.0.6 – 8 Jul 2024<a class="headerlink" href="#jul-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1992: Update NEWS and VERSION for release</p></li>
 <li><dl class="simple">
@@ -239,7 +270,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="mar-2024">
-<h2><span class="section-number">16.1.3. </span>3.0.5 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.4. </span>3.0.5 – 21 Mar 2024<a class="headerlink" href="#mar-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>PR #1952: Multiple commits</dt><dd><ul>
@@ -272,7 +303,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="feb-2024">
-<h2><span class="section-number">16.1.4. </span>3.0.4 – 4 Feb 2024<a class="headerlink" href="#feb-2024" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.5. </span>3.0.4 – 4 Feb 2024<a class="headerlink" href="#feb-2024" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt>PR #1918: Multiple commits</dt><dd><ul>
@@ -297,7 +328,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="dec-2023">
-<h2><span class="section-number">16.1.5. </span>3.0.3 – 19 Dec 2023<a class="headerlink" href="#dec-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.6. </span>3.0.3 – 19 Dec 2023<a class="headerlink" href="#dec-2023" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1893: Check for stdatomic.h</p></li>
 <li><p>PR #1891: add nodes to job data for ALL jobs included in the launch message</p></li>
@@ -378,7 +409,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="oct-2023">
-<h2><span class="section-number">16.1.6. </span>3.0.2 – 23 Oct 2023<a class="headerlink" href="#oct-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.7. </span>3.0.2 – 23 Oct 2023<a class="headerlink" href="#oct-2023" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>PR #1832: Update NEWS for release</p></li>
 <li><p>PR #1831: Silence error log</p></li>
@@ -405,7 +436,7 @@ tarball.</p>
 </ul>
 </div>
 <div class="section" id="sep-2023">
-<h2><span class="section-number">16.1.7. </span>3.0.1 – 27 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.8. </span>3.0.1 – 27 Sep 2023<a class="headerlink" href="#sep-2023" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This release contains a major revision of the PRRTE
@@ -616,7 +647,7 @@ releases.</p>
 </ul>
 </div>
 <div class="section" id="nov-2022">
-<h2><span class="section-number">16.1.8. </span>3.0.0 – 13 Nov 2022<a class="headerlink" href="#nov-2022" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.1.9. </span>3.0.0 – 13 Nov 2022<a class="headerlink" href="#nov-2022" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This release represents a major update to the PRRTE
@@ -681,7 +712,7 @@ minimum of PMIx v2.5).</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The PRRTE Community.</p>
+    <p>&#169; Copyright 2003-2025, The PRRTE Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

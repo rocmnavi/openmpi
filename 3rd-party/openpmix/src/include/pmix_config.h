@@ -51,9 +51,6 @@
 /* The normal alignment of `size_t', in bytes. */
 #define ALIGNOF_SIZE_T 8
 
-/* defined to 1 if cray wlm available, 0 otherwise */
-/* #undef CRAY_WLM_DETECT */
-
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #define HAVE_ARPA_INET_H 1
 
@@ -448,7 +445,7 @@
 #define PACKAGE_NAME "pmix"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "pmix 5.0.4"
+#define PACKAGE_STRING "pmix 5.0.5"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "pmix"
@@ -457,7 +454,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "5.0.4"
+#define PACKAGE_VERSION "5.0.5"
 
 /* The compiler $lower which OMPI was built with */
 #define PMIX_BUILD_PLATFORM_COMPILER_FAMILYID 0
@@ -472,10 +469,10 @@
 #define PMIX_CONFIGURE_CLI " \'--disable-option-checking\' \'--prefix=NONE\' \'--without-tests-examples\' \'--enable-pmix-binaries\' \'--disable-pmix-backward-compatibility\' \'--disable-visibility\' \'--disable-devel-check\' \'--cache-file=/dev/null\' \'--srcdir=.\'"
 
 /* Date when PMIx was built */
-#define PMIX_CONFIGURE_DATE "Fri Nov 15 14:22:36 UTC 2024"
+#define PMIX_CONFIGURE_DATE "Fri Feb 14 16:55:46 UTC 2025"
 
 /* Hostname where PMIx was built */
-#define PMIX_CONFIGURE_HOST "ip-172-31-0-101.us-west-2.compute.internal"
+#define PMIX_CONFIGURE_HOST "ip-172-31-7-238.us-west-2.compute.internal"
 
 /* User who built PMIx */
 #define PMIX_CONFIGURE_USER "ec2-user"
@@ -625,9 +622,6 @@
 /* whether clock_gettime is found and available */
 #define PMIX_HAVE_CLOCK_GETTIME 1
 
-/* defined to 1 if cray alps env, 0 otherwise */
-#define PMIX_HAVE_CRAY_ALPS 0
-
 /* whether dirname is found and available */
 #define PMIX_HAVE_DIRNAME 1
 
@@ -695,7 +689,7 @@
 #define PMIX_NO_LIB_DESTRUCTOR 0
 
 /* package/branding string for PMIx */
-#define PMIX_PACKAGE_STRING "PMIx ec2-user@ip-172-31-0-101.us-west-2.compute.internal Distribution"
+#define PMIX_PACKAGE_STRING "PMIx ec2-user@ip-172-31-7-238.us-west-2.compute.internal Distribution"
 
 /* Whether we have lt_dladvise or not */
 #define PMIX_PDL_PLIBLTDL_HAVE_LT_DLADVISE 0
@@ -710,10 +704,10 @@
 #define PMIX_PTRDIFF_TYPE ptrdiff_t
 
 /* The library release version is always available, contrary to VERSION */
-#define PMIX_RELEASE_VERSION 4
+#define PMIX_RELEASE_VERSION 5
 
 /* The OpenPMIx Git Revision */
-#define PMIX_REPO_REV "v5.0.4"
+#define PMIX_REPO_REV "v5.0.5"
 
 /* Default value for mca_base_component_show_load_errors MCA variable */
 #define PMIX_SHOW_LOAD_ERRORS_DEFAULT "all"
@@ -737,7 +731,7 @@
 #define PMIX_USE_STDBOOL_H 1
 
 /* The library version is always available, contrary to VERSION */
-#define PMIX_VERSION "5.0.4"
+#define PMIX_VERSION "5.0.5"
 
 /* Enable per-user config files */
 #define PMIX_WANT_HOME_CONFIG_FILES 1
@@ -765,9 +759,6 @@
 
 /* The size of `_Bool', as computed by sizeof. */
 #define SIZEOF__BOOL 1
-
-/* defined to 1 if slurm cray env, 0 otherwise */
-#define SLURM_CRAY_ENV 0
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

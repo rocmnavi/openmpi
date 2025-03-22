@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11.10. Tuning Collectives &mdash; Open MPI 5.0.6 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>11.10. Tuning Collectives &mdash; Open MPI 5.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -196,7 +198,7 @@ forced on the command line, the <em>fixed decision</em> rules are used.</p>
 <span id="rulesfile"></span><h2><span class="section-number">11.10.3. </span>Dynamic Decisions and the Rules File<a class="headerlink" href="#dynamic-decisions-and-the-rules-file" title="Permalink to this heading"></a></h2>
 <p>Given that the best choice of algorithm for a given collective depends on a
 number of factors only known at run time, and that some of these factors may
-vary with in a run, setting an algorithm on the command line often is an
+vary within a run, setting an algorithm on the command line often is an
 ineffective means of tuning.  The rules file provides a means of choosing
 an algorithm at run time based on communicator and message size.  The rules
 file can be specified on the command line, or the other usual ways to set MCA
@@ -211,13 +213,29 @@ to use based on the collective, the communicator size, and the message size.
 Collectives for which rules have not be specified in the file will make use of
 the <em>fixed decision</em> rules as usual.</p>
 <p>Dynamic tuning files are organized in this format:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="m">1</span><span class="w">             </span><span class="c1"># Number of collectives</span>
-<span class="linenos">2</span><span class="m">1</span><span class="w">             </span><span class="c1"># Collective ID</span>
-<span class="linenos">3</span><span class="m">1</span><span class="w">             </span><span class="c1"># Number of comm sizes</span>
-<span class="linenos">4</span><span class="m">2</span><span class="w">             </span><span class="c1"># Comm size</span>
-<span class="linenos">5</span><span class="m">2</span><span class="w">             </span><span class="c1"># Number of message sizes</span>
-<span class="linenos">6</span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">       </span><span class="c1"># Message size 0, algorithm 1, topo and segmentation at 0</span>
-<span class="linenos">7</span><span class="m">1024</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c1"># Message size 1024, algorithm 2, topo and segmentation at 0</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>rule-file-version-2
+<span class="linenos"> 2</span><span class="m">1</span><span class="w">   </span><span class="c1"># num of collectives</span>
+<span class="linenos"> 3</span><span class="m">3</span><span class="w">   </span><span class="c1"># collective ID</span>
+<span class="linenos"> 4</span><span class="m">1</span><span class="w">   </span><span class="c1"># number of comm sizes</span>
+<span class="linenos"> 5</span><span class="c1">#=====================</span>
+<span class="linenos"> 6</span><span class="m">64</span><span class="w">   </span><span class="c1"># comm size</span>
+<span class="linenos"> 7</span><span class="m">14</span><span class="w">   </span><span class="c1"># number of rules</span>
+<span class="linenos"> 8</span><span class="c1"># Bytes   alg topo segs reqs</span>
+<span class="linenos"> 9</span><span class="c1">#----------------------</span>
+<span class="linenos">10</span><span class="m">0</span><span class="w">            </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+<span class="linenos">11</span><span class="m">512000</span><span class="w">       </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">64</span>
+<span class="linenos">12</span><span class="m">1536000</span><span class="w">      </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">64</span>
+<span class="linenos">13</span><span class="m">3072000</span><span class="w">      </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">64</span>
+<span class="linenos">14</span><span class="m">6144000</span><span class="w">      </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">64</span>
+<span class="linenos">15</span><span class="m">12288000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">16</span>
+<span class="linenos">16</span><span class="m">24576000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">16</span>
+<span class="linenos">17</span><span class="m">49152000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">16</span>
+<span class="linenos">18</span><span class="m">98304000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">16</span>
+<span class="linenos">19</span><span class="m">196608000</span><span class="w">    </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">8</span>
+<span class="linenos">20</span><span class="m">393216000</span><span class="w">    </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">8</span>
+<span class="linenos">21</span><span class="m">786432000</span><span class="w">    </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span>
+<span class="linenos">22</span><span class="m">1572864000</span><span class="w">   </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span>
+<span class="linenos">23</span><span class="m">2621440000</span><span class="w">   </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 <p>The rules file effectively defines, for one or more collectives, a function of
@@ -235,10 +253,19 @@ for details.</p>
 <p>One may provide rules for as many collectives, communicator sizes, and message
 sizes as desired. Simply repeat the sections as needed and adjust the relevant
 count parameters.  One must always provide a rule for message size of zero.
-Message size rules are expected in ascending order.  The last two parameters in
-the rule may or may not be used and have different meaning depending on the
-collective and algorithm.  As of writing not all of the relevant control
-parameters can be set by the rules file (See issue #12589).</p>
+Message size rules are expected in ascending order. The last parameters in the
+message size rule may or may not be used and have different meaning depending
+on the collective and algorithm. The first two parameters in the rule following
+the algorithm ID, <cite>topo</cite> and <cite>segment size</cite>, are always required. In version 2
+of the file format a third parameter, <cite>max requests</cite>, may also be provided. A
+release of Open MPI at least v5.0.7 is required for version 2 features.</p>
+<p>The file format version specifier, <cite>rule-file-version-N</cite> where N is an integer
+greater or equal to 1, should appear on the first line of the file.  If the
+version specifier is not present, the file format is assumed to be version 1.
+Version 2 or greater is required to use the <cite>max requests</cite> parameter. Open MPI
+releases older than v5.0.7 do not support the file format version
+identifier. When using older releases of Open MPI do not include a version
+specifier and do not use the <cite>max requests</cite> parameter in message size rules.</p>
 </div>
 <div class="section" id="collectives-and-their-algorithms">
 <span id="collectivesandalgorithms"></span><h2><span class="section-number">11.10.4. </span>Collectives and their Algorithms<a class="headerlink" href="#collectives-and-their-algorithms" title="Permalink to this heading"></a></h2>
@@ -931,7 +958,7 @@ Tables describing the algorithms available for each collective, and there identi
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2003-2024, The Open MPI Community.</p>
+    <p>&#169; Copyright 2003-2025, The Open MPI Community.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

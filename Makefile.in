@@ -1461,7 +1461,8 @@ EXTRA_DIST = README.md VERSION Doxyfile LICENSE autogen.pl AUTHORS \
 	examples/oshmem_circular_shift.c \
 	examples/oshmem_max_reduction.c examples/oshmem_strided_puts.c \
 	examples/oshmem_symmetric_data.c examples/Hello.java \
-	examples/Ring.java examples/spc_example.c
+	examples/Ring.java examples/spc_example.c \
+	examples/hello_sessions_c.c
 ACLOCAL_AMFLAGS = -I config
 all: all-recursive
 

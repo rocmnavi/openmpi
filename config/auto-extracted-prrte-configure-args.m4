@@ -13,11 +13,15 @@ AC_DEFUN([OMPI_PRRTE_ADD_ARGS],[
 # Warning: Excluded: noarch-pkgconfigdir
 # ---------------------------------------- Above from 3rd-party/prrte//config/pkg.m4:193
 
-# Warning: Excluded: alps-libdir
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_alps.m4:41
+    AC_ARG_WITH([alps-libdir],
+                [AS_HELP_STRING([--with-alps-libdir=DIR],
+                [Location of alps libraries (alpslli, alpsutil) (default: /usr/lib/alps (/opt/cray/xe-sysroot/default/user on eslogin nodes))])])
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_alps.m4:43
 
-# Warning: Excluded: alps
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_alps.m4:92
+        AC_ARG_WITH([alps],
+                    [AS_HELP_STRING([--with-alps(=DIR|yes|no)],
+                    [Build with ALPS scheduler component, optionally adding DIR/include, DIR/lib, and DIR/lib64 to the search path for headers and libraries (default: auto)])])
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_alps.m4:94
 
        AC_ARG_WITH([lsf],
                [AS_HELP_STRING([--with-lsf(=DIR)],
@@ -29,28 +33,15 @@ AC_DEFUN([OMPI_PRRTE_ADD_ARGS],[
                        [Search for LSF libraries in DIR])])
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_lsf.m4:37
 
-        AC_ARG_WITH([moab],
-                    [AS_HELP_STRING([--with-moab],
-                                    [Build MOAB scheduler component (default: yes)])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_moab.m4:34
-
-        AC_ARG_WITH([moab-libdir],
-                    [AS_HELP_STRING([--with-moab-libdir=DIR],
-                    [Search for Moab libraries in DIR])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_moab.m4:37
-
 	AC_ARG_WITH([sge],
                     [AS_HELP_STRING([--with-sge],
                                     [Build SGE or Grid Engine support (default: no)])])
 # ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_sge.m4:36
 
-    AC_ARG_WITH([singularity],
-                [AS_HELP_STRING([--with-singularity(=DIR)],
-                                [Build support for the Singularity container, optionally adding DIR to the search path])])
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_singularity.m4:20
-
-# Warning: Excluded: slurm
-# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_slurm.m4:31
+	AC_ARG_WITH([slurm],
+           [AS_HELP_STRING([--with-slurm],
+                           [Build SLURM scheduler component (default: yes)])])
+# ---------------------------------------- Above from 3rd-party/prrte//config/prte_check_slurm.m4:33
 
     AC_ARG_WITH([tm],
                 [AS_HELP_STRING([--with-tm(=DIR)],
@@ -230,8 +221,10 @@ AC_ARG_WITH(proxy-bugreport,
 # Warning: Excluded: libltdl-libdir
 # ---------------------------------------- Above from 3rd-party/prrte//src/mca/prtedl/libltdl/configure.m4:51
 
-# Warning: Excluded: pbs
-# ---------------------------------------- Above from 3rd-party/prrte//src/mca/ras/pbs/configure.m4:34
+	AC_ARG_WITH([pbs],
+           [AS_HELP_STRING([--with-pbs],
+                           [Build PBS scheduler component (default: yes)])])
+# ---------------------------------------- Above from 3rd-party/prrte//src/mca/ras/pbs/configure.m4:36
 
     AC_ARG_ENABLE([ompi-support],
                   [AS_HELP_STRING([--disable-ompi-support],

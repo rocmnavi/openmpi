@@ -36,6 +36,7 @@
 #                         and Technology (RIST).  All rights reserved.
 # Copyright (c) 2022      Triad National Security, LLC. All rights
 #                         reserved.
+# Copyright (c) 2024      Jeffrey M. Squyres.  All rights reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -402,6 +403,7 @@ libmpi_usempif08_pmpi_la_LIBADD =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pallgatherv_init_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	palloc_mem_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pallreduce_f08.lo \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pallreduce_init_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	palltoall_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	palltoall_init_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	palltoallv_f08.lo \
@@ -563,6 +565,7 @@ libmpi_usempif08_pmpi_la_LIBADD =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_difference_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_excl_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_free_f08.lo \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_from_session_pset_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_incl_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_intersection_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	pgroup_range_excl_f08.lo \
@@ -680,6 +683,7 @@ libmpi_usempif08_pmpi_la_LIBADD =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psend_init_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psendrecv_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psendrecv_replace_f08.lo \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psession_call_errhandler_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psession_create_errhandler_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psession_get_errhandler_f08.lo \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@	psession_get_info_f08.lo \
@@ -1829,6 +1833,7 @@ AM_CPPFLAGS =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pallgatherv_init_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        palloc_mem_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pallreduce_f08.F90 \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pallreduce_init_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        palltoall_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        palltoall_init_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        palltoallv_f08.F90 \
@@ -1990,6 +1995,7 @@ AM_CPPFLAGS =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_difference_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_excl_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_free_f08.F90 \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_from_session_pset_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_incl_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_intersection_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        pgroup_range_excl_f08.F90 \
@@ -2107,6 +2113,7 @@ AM_CPPFLAGS =
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psend_init_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psendrecv_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psendrecv_replace_f08.F90 \
+@OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psession_call_errhandler_f08.F90 \
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psession_create_errhandler_f08.F90\
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psession_get_errhandler_f08.F90\
 @OMPI_BUILD_FORTRAN_USEMPIF08_BINDINGS_TRUE@        psession_get_info_f08.F90 \
